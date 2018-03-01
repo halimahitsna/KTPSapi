@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f2f2"
+    tools:context="id.sapi.ktp.aplikasiktpsapi.HalamanLogin">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masuk"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textColor="#000000"/>
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_marginTop="50dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:src="@drawable/sapi2"
+            android:layout_gravity="center"/>
+        <EditText
+            android:id="@+id/username"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:hint="Username"
+            android:background="@drawable/rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rounded"
+            android:layout_width="match_parent"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnMasuk"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masuk"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/linkdaftar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daftar"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:background="#3ab54b"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

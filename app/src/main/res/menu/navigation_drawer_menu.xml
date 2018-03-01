@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Utama">
+        <menu>
+            <item
+                android:id="@+id/item_navigation_drawer_home"
+                android:icon="@drawable/ic_folder_black_24dp"
+                android:title="Halaman Utama" />
+            <item
+                android:id="@+id/item_navigation_drawer_ujian"
+                android:icon="@drawable/ic_assessment_black_24dp"
+                android:title="Riwayat Ujian" />
+
+        </menu>
+    </item>
+
+    <item android:title="Akun">
+        <menu>
+            <item
+                android:id="@+id/item_navigation_drawer_settings"
+                android:icon="@drawable/ic_account_circle_black_24dp"
+                android:title="Profil" />
+            <item
+                android:id="@+id/item_navigation_drawer_help"
+                android:icon="@drawable/ic_assessment_black_24dp"
+                android:title="Bantuan" />
+            <item
+                android:id="@+id/item_navigation_drawer_about"
+                android:icon="@drawable/ic_wb_cloudy_black_24dp"
+                android:title="Tentang Kami" />
+        </menu>
+    </item>
+
+        <item
+            android:checked="true"
+            android:id="@+id/item_navigation_drawer_exit"
+            android:icon="@drawable/ic_dehaze_black_24dp"
+            android:title="Keluar"/>
+
+</menu>

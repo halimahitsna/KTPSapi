@@ -1,0 +1,57 @@
+{
+  "project_info": {
+    "project_number": "270199661426",
+    "firebase_url": "https://ktpsapi.firebaseio.com",
+    "project_id": "ktpsapi",
+    "storage_bucket": "ktpsapi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270199661426:android:e7264f18574508e8",
+        "android_client_info": {
+          "package_name": "id.sapi.ktp.aplikasiktpsapi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270199661426-nmit53vtukcavk806b09acjuac1rcakb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.sapi.ktp.aplikasiktpsapi",
+            "certificate_hash": "a39f445806a035e9fb091d8ed572d84afff7a4b3"
+          }
+        },
+        {
+          "client_id": "270199661426-8cbpaq11635kmhdpgqieck5h2t0rrsjn.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "270199661426-ne7c3u4hhg77vtnbo5b4onacqo3bfpjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCouz9hRYq-U6__F1UGpGsmvfMvpnkIniI"
+        },
+        {
+          "current_key": "AIzaSyDZJxCHAWtfvsYY-drqsn3v72rQBZMpcqQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="id.sapi.ktp.aplikasiktpsapi">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/sapi2"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/sapi2"
+        android:supportsRtl="true"
+        android:theme="@style/AppThemeNo">
+        <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".SplashScreen"></activity>
+        <activity android:name=".tab.tab1" />
+        <activity android:name=".tab.tab2" />
+        <activity android:name=".Beranda" />
+        <activity android:name=".HalamanData" />
+        <activity android:name=".HalamanLogin" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".HalamanDaftar">
+
+        </activity>
+
+        <!-- Firebase Notifications -->
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- ./Firebase Notifications -->
+    </application>
+
+
+
+</manifest>
