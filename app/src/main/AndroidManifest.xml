@@ -15,22 +15,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNo">
         <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".SplashScreen"></activity>
-        <activity android:name=".tab.tab1" />
-        <activity android:name=".tab.tab2" />
-        <activity android:name=".Beranda" />
-        <activity android:name=".HalamanData" />
-        <activity android:name=".HalamanLogin" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HalamanDaftar">
+        <activity android:name=".SplashScreen" />
+        <activity android:name=".tab.tab1" />
+        <activity android:name=".tab.tab2" />
+        <activity android:name=".Beranda" />
+        <activity android:name=".HalamanData">
 
         </activity>
+        <activity android:name=".HalamanLogin">
+
+        </activity>
+        <activity android:name=".HalamanDaftar"></activity>
 
         <!-- Firebase Notifications -->
         <service android:name=".MyFirebaseMessagingService">
@@ -38,15 +39,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
+        <activity android:name=".EditData">
+
+        </activity>
     </application>
-
-
 
 </manifest>

@@ -5,59 +5,64 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
  */
 
 public class Sapi {
-    //SELECT `id_sapi`, `id_jenis`, `id_indukan`, `id_pakan`, `id_kandang`, `tgl_lahir`, `bobot_lahir`, `bobot_hidup`, `warna`, `umur`,
-    // `foto`, `input_date`, `update_date` FROM `data_sapi` WHERE 1
-    private int id_sapi;
-    private int id_jenis;
-    private int id_indukan;
-    private int id_pakan;
-    private int id_kandang;
+
+    private String id_sapi;
+    private String id_jenis;
+    private String id_indukan;
+    private String id_pakan;
+    private String id_kandang;
     private String tgl_lahir;
     private String bobot_lahir;
     private String bobot_hidup;
     private String warna;
-    private int umur;
+    private String umur;
     private String foto;
     private String input_date;
     private String update_date;
 
-    public int getId_sapi() {
+    public Sapi(String id_sapi, String id_jenis, String umur){
+        this.id_sapi =id_sapi;
+        this.id_jenis = id_jenis;
+        this.umur = umur;
+    }
+
+    public String getId_sapi() {
         return id_sapi;
     }
 
-    public void setId_sapi(int id_sapi) {
+    public void setId_sapi(String id_sapi) {
         this.id_sapi = id_sapi;
     }
 
-    public int getId_jenis() {
+    public String getId_jenis() {
         return id_jenis;
     }
 
-    public void setId_jenis(int id_jenis) {
+    public void setId_jenis(String id_jenis) {
         this.id_jenis = id_jenis;
     }
 
-    public int getId_indukan() {
+    public String getId_indukan() {
         return id_indukan;
     }
 
-    public void setId_indukan(int id_indukan) {
+    public void setId_indukan(String id_indukan) {
         this.id_indukan = id_indukan;
     }
 
-    public int getId_pakan() {
+    public String getId_pakan() {
         return id_pakan;
     }
 
-    public void setId_pakan(int id_pakan) {
+    public void setId_pakan(String id_pakan) {
         this.id_pakan = id_pakan;
     }
 
-    public int getId_kandang() {
+    public String getId_kandang() {
         return id_kandang;
     }
 
-    public void setId_kandang(int id_kandang) {
+    public void setId_kandang(String id_kandang) {
         this.id_kandang = id_kandang;
     }
 
@@ -93,11 +98,11 @@ public class Sapi {
         this.warna = warna;
     }
 
-    public int getUmur() {
+    public String getUmur() {
         return umur;
     }
 
-    public void setUmur(int umur) {
+    public void setUmur(String umur) {
         this.umur = umur;
     }
 

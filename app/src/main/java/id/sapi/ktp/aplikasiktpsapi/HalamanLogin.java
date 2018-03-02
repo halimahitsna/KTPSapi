@@ -43,12 +43,14 @@ public class HalamanLogin extends AppCompatActivity {
 
     Button btnlogin, btnDaftar;//btn masuk
     EditText Euser, Epass;
-    ProgressDialog pDialog;
+    ProgressDialog loading;
     Context mContext;
     private SharedPreferences pref;
     private static final int REQ_CODE = 9001;
     Toolbar toolbar;
+    TextView textToolbar;
     SharedPrefManager sharedPrefManager;
+    ApiService mApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,124 +58,87 @@ public class HalamanLogin extends AppCompatActivity {
         setContentView(R.layout.activity_halaman_login);
 
         mContext = this;
-        sharedPrefManager = new SharedPrefManager(this);
 
-        if (sharedPrefManager.getLogin()){
-            startActivity(new Intent(HalamanLogin.this, MainActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-            //finish();
-        }
+        textToolbar = (TextView)findViewById(R.id.toolbar_title);
 
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        //login
-        pDialog = new ProgressDialog(this, R.style.AppTheme_Dark_Dialog);
+        loading = new ProgressDialog(this, R.style.AppTheme);
         DoubleBounce doubleBounce = new DoubleBounce();
-        pDialog.setIndeterminate(true);
-        pDialog.setIndeterminateDrawable(doubleBounce);
-        pDialog.setMessage("Please Wait...");
-        pDialog.setCancelable(false);
+        loading.setIndeterminate(true);
+        loading.setIndeterminateDrawable(doubleBounce);
+        loading.setMessage("Please wait...");
+        loading.setCancelable(false);
 
         Euser = (EditText) findViewById(R.id.username);
-        Epass = (EditText) findViewById(R.id.password);
-        btnlogin = (Button) findViewById(R.id.btnMasuk);
+        Epass = (EditText)findViewById(R.id.password);
+        btnlogin = (Button)findViewById(R.id.btnMasuk);
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (validate()){
-                    loginByServer();
-                }
-            }
-        });
-        btnDaftar = (Button)findViewById(R.id.linkdaftar);
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
-                Intent dft = new Intent(HalamanLogin.this, HalamanDaftar.class);
-                startActivity(dft);
+               /* if(validate()){
+                    login();
+                }*/
             }
         });
     }
+   /* private boolean validate(){
+            boolean valid = true;
+            String user = Euser.getText().toString();
+            String password = Epass.getText().toString();
 
-    private boolean validate() {
-        boolean valid = true;
-
-        String user = Euser.getText().toString();
-        String password = Epass.getText().toString();
-
-        if (user.isEmpty()) {
-            Euser.setError("Username is empty");
-            valid = false;
-        } else {
-            Euser.setError(null);
-        }
-
-        if (password.isEmpty()) {
-            Epass.setError("Password is empty");
-            valid = false;
-        } else {
-            Epass.setError(null);
-        }
-        return valid;
+            if(user .isEmpty()){
+                Euser.setError("Username masih kosong!");
+                valid = false;
+            }else {
+                Euser.setError(null);
+            }
+            if(password.isEmpty()){
+                Epass.setError("Password masih kosong!");
+                valid = false;
+            }
+            return valid;
     }
 
-    private void loginByServer() {
-        showpDialog();
-        koneksi();
-        sharedPrefManager.saveSPBoolean(SharedPrefManager.KEY_LOGIN, true);
-        final String name = Euser.getText().toString();
-        final String password = Epass.getText().toString();
-        ApiService service = UtilsApi.getClient().create(ApiService.class);
-        final Call<UserData> userCall = service.loginRequest(name,password);
-        userCall.enqueue(new Callback<UserData>() {
+    private void login(){
+        //showpDialog();
+        final String nama = Euser.getText().toString().trim();
+        final String password = Epass.getText().toString().trim();
+        ApiService service = UtilsApi.getAPIService();
+        final Call<UserData> userDataCall = service.loginRequest(nama, password);
+        userDataCall.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
-                if(response.body().getStatus() == "true") {
+               // hidepDialog();
+                Toast.makeText(HalamanLogin.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                *//*if(response.body().getStatus() == "true"){
                     hidepDialog();
                     Toast.makeText(HalamanLogin.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
-                    sharedPrefManager.saveSPString(SharedPrefManager.KEY_USER_USER, name);
-                    sharedPrefManager.saveSPString(SharedPrefManager.KEY_PASS, password);
-                    // Shared Pref untuk trigger session login
-                    sharedPrefManager.saveSPBoolean(SharedPrefManager.KEY_LOGIN, true);
-                    startActivity(new Intent(HalamanLogin.this, MainActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                    finish();
+                *//**//*startActivity(new Intent(HalamanLogin.this, HalamanData.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();*//**//*
                 }else {
                     hidepDialog();
-                    Toast.makeText(HalamanLogin.this, "" + response.body().getMsg(), Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(HalamanLogin.this,response.body().getMsg(),Toast.LENGTH_SHORT);
+                }*//*
             }
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
                 hidepDialog();
-                Log.d("onFailure", t.toString());
+                Toast.makeText(HalamanLogin.this,"Failure",Toast.LENGTH_SHORT);
+
             }
         });
-    }
 
+
+    }
     private void hidepDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
+        if (loading.isShowing())
+            loading.dismiss();
     }
 
     private void showpDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
+        if (!loading.isShowing())
+            loading.show();
+    }*/
 
-    private boolean adaInternet(){
-        ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return koneksi.getActiveNetworkInfo() != null;
-    }
-    private void koneksi(){
-        if(adaInternet()){
-//            Toast.makeText(SignIn.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(HalamanLogin.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
-        }
-    }
 }

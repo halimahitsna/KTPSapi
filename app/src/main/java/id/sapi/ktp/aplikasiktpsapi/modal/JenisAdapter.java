@@ -33,16 +33,17 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
 
     @Override
     public JenisAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.sapi_row, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.kategori_grid, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(JenisAdapter.ViewHolder viewHolder, int i){
-        viewHolder.id_kategori.setText(jenis.get(i).getId_kategori() + "");
-        viewHolder.nama_kategori.setText(jenis.get(i).getNama_kategori());
+        viewHolder.id_user.setText(jenis.get(i).getId_user() + "");
+        viewHolder.name.setText(jenis.get(i).getName());
+
         Picasso.with(context)
-                .load(jenis.get(i).getGambar1()).resize(100, 100)
+                .load(jenis.get(i).getFoto()).resize(100, 100)
 
                 .into(viewHolder.gambar);
     }
@@ -53,14 +54,14 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView id_kategori, nama_kategori;
+        private TextView id_user, name;
         ImageView gambar;
 
         public ViewHolder(View view){
             super(view);
 
-            id_kategori = (TextView)view.findViewById(R.id.idSapi);
-            nama_kategori = (TextView)view.findViewById(R.id.jenis);
+            id_user = (TextView)view.findViewById(R.id.idSapi);
+            name = (TextView)view.findViewById(R.id.jenis);
             gambar = (ImageView)view.findViewById(R.id.gbr);
 
             // on item click
@@ -73,12 +74,12 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
                     if(pos != RecyclerView.NO_POSITION){
                         Jenis clickedDataItem = jenis.get(pos);
                         Intent intent = new Intent(context,HalamanData.class);
-                        intent.putExtra("id_kategori", jenis.get(pos).getId_kategori());
-                        intent.putExtra("nama_kategori", jenis.get(pos).getNama_kategori());
-                        intent.putExtra("gambar1", jenis.get(pos).getGambar1());
+                        intent.putExtra("id_user", jenis.get(pos).getId_user());
+                        intent.putExtra("name", jenis.get(pos).getName());
+                        intent.putExtra("foto", jenis.get(pos).getFoto());
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
-                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getNama_kategori(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

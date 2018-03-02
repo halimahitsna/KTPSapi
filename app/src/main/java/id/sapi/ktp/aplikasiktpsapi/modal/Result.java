@@ -16,6 +16,9 @@ public class Result {
     @SerializedName("user")
     private User user;
 
+    @SerializedName("sapi")
+    private User sapi;
+
     public Result(Boolean error, String message, User user) {
         this.error = error;
         this.message = message;
@@ -33,4 +36,6 @@ public class Result {
     public User getUser() {
         return user;
     }
+
+    public User getSapi(){return sapi;}
 }

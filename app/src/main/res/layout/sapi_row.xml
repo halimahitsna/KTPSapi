@@ -35,10 +35,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/jenis"
         android:textColor="#000000"
-        android:gravity="center_vertical"
         android:padding="5dp"
         android:layout_toRightOf="@+id/gbr"
-        android:layout_marginLeft="5dp"
         android:text="Medium Text"
         android:textSize="16sp"/>
     <TextView
@@ -46,7 +44,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/indukan"
         android:textColor="#000000"
-        android:visibility="invisible"
+        android:padding="5dp"
         android:text="Medium Text"
         android:textSize="16sp"/>
 </LinearLayout>

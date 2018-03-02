@@ -12,35 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UtilsApi {
 
 
-    public static final String BASE_URL = "http://192.168.1.10:8080/ktpsapi/";
-    private static Retrofit retrofit = null;
-    // variable to hold context
-    private static Context context;
+    public static final String BASE_URL = "http://192.168.1.15:8080/ktpsapi/";
 
-
-    public static Retrofit getClient() {
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(new Connectivity(context))
-//                .build();
-        if (retrofit==null) {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
+        public static ApiService getAPIService(){
+            return RetrofitClient.getClient(BASE_URL).create(ApiService.class);
         }
-        return retrofit;
 
     }
 
-//    // 10.0.2.2 ini adalah localhost.
-//    public static final String BASE_URL_API = "http://www.ktpsapi.id/UjianOnline/api/";
-//
-//    // Mendeklarasikan Interface BaseApiService
-//    public static BaseApiService getAPIService(){
-//        return RetrofitClient.getClient(BASE_URL_API).create(BaseApiService.class);
-//    }
-}

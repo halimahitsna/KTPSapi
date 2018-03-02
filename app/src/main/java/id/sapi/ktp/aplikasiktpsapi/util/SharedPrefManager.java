@@ -73,7 +73,9 @@ public class SharedPrefManager {
         spEditor.putBoolean(key7SP, value);
         spEditor.commit();
     }
-
+    public Boolean getSPSudahLogin(){
+        return sp.getBoolean(KEY_LOGIN, false);
+    }
     public Boolean getLogin(){
         return sp.getBoolean(KEY_LOGIN, false);
     }

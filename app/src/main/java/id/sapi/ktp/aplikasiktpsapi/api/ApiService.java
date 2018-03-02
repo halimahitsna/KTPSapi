@@ -32,24 +32,20 @@ public interface ApiService {
     @GET
     Call<ProfilList> getJSONProfil(@Url String url);
 
-    /*@Multipart
-    @POST("retrofit_example/upload_image.php")
-    Call<UpdateResponse> uploadFile(@Part MultipartBody.Part file,
-                                    @Part("file") RequestBody name);
-
     @FormUrlEncoded
-    @POST("update")
-    Call<UpdateResponse> updateRequest(@Field("id_user") String id_user,
-                                       @Field("fullname") String fullname,
-                                       @Field("nama") String nama,
-                                       @Field("email") String email,
-                                       @Field("password") String password,
-                                       @Field("foto") String foto);*/
-    //Halaman Utama
+    @POST("insert_data.php")
+    Call<Result> insertSapi(@Field("id_sapi") String id_sapi,
+                              @Field("id_jenis") String id_jenis,
+                              @Field("umur") String umur);
+
+
     @GET("get_data.php")
     Call<JSONResponse> getJSONSapi();
 
     @GET("getkategori")
+    Call<JSONResponse> getJSONKategori();
+
+    @GET("get_user.php")
     Call<JSONResponse> getJSONJenis();
 
 

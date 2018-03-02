@@ -10,44 +10,45 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import id.sapi.ktp.aplikasiktpsapi.MainActivity;
-import id.sapi.ktp.aplikasiktpsapi.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import id.sapi.ktp.aplikasiktpsapi.MainActivity;
+import id.sapi.ktp.aplikasiktpsapi.R;
 
 /**
  * Created by hali on 25/08/2017.
  */
 
-public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    private ArrayList<Sapi> sapi;
+    private ArrayList<Kategori> kategori;
     private Context context;
 
-    public SapiAdapter(Context context, ArrayList<Sapi> sapi){
-        this.sapi = sapi;
+    public UserAdapter(Context context, ArrayList<Kategori> kategori){
+        this.kategori = kategori;
         this.context = context;
     }
 
     @Override
-    public SapiAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
+    public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.kategori_grid, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SapiAdapter.ViewHolder viewHolder, int i){
-        viewHolder.id_kategori.setText(sapi.get(i).getId_sapi());
-        viewHolder.nama_kategori.setText(sapi.get(i).getId_jenis());
+    public void onBindViewHolder(UserAdapter.ViewHolder viewHolder, int i){
+        viewHolder.id_kategori.setText(kategori.get(i).getId_kategori() + "");
+        viewHolder.nama_kategori.setText(kategori.get(i).getNama_kategori());
         Picasso.with(context)
-                .load(sapi.get(i).getFoto()).resize(100, 100)
+                .load(kategori.get(i).getGambar1()).resize(100, 100)
                 .into(viewHolder.gambar);
     }
 
     @Override
     public int getItemCount(){
-        return sapi.size();
+        return kategori.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,14 +70,14 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
                     int pos = getAdapterPosition();
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
-                        Sapi clickedDataItem = sapi.get(pos);
+                        Kategori clickedDataItem = kategori.get(pos);
                         Intent intent = new Intent(context,MainActivity.class);
-                        intent.putExtra("id_sapi", sapi.get(pos).getId_sapi());
-                        intent.putExtra("id_jenis", sapi.get(pos).getId_jenis());
-                        intent.putExtra("foto", sapi.get(pos).getFoto());
+                        intent.putExtra("id_kategori", kategori.get(pos).getId_kategori());
+                        intent.putExtra("nama_kategori", kategori.get(pos).getNama_kategori());
+                        intent.putExtra("gambar1", kategori.get(pos).getGambar1());
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
-                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getId_sapi(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getNama_kategori(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

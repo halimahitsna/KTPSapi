@@ -41,6 +41,8 @@ import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
+import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
+import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Profil;
 import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
 import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
@@ -69,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Sapi> data;
     private SapiAdapter adapter;
+    private ArrayList<Kategori> data1;
+    private KategoriAdapter adapter1;
+    private ArrayList<Jenis> data2;
+    private JenisAdapter adapter2;
     SharedPrefManager sharedPrefManager;
     public TextView nama;
     public ImageView image;
@@ -84,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         sharedPrefManager = new SharedPrefManager(this);
 
-        if (!sharedPrefManager.getLogin()) {
+       /* if (!sharedPrefManager.getLogin()) {
             startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
-        }
+        }*/
 
         initViews();
 
@@ -196,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 //
         // get user data from session
         HashMap<String, String> user = sharedPrefManager.getUserDetails();
-        ApiService service = UtilsApi.getClient().create(ApiService.class);
+        ApiService service = UtilsApi.getAPIService();
         String name = user.get(SharedPrefManager.KEY_USER_NAME);
         Call<ProfilList> userCall = service.getJSONProfil("http://uol.techarea.co.id/api/getuser?user=" + name);
         /*userCall.enqueue(new Callback<ProfilList>(){
@@ -228,24 +234,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(layoutManager);
 
-        loadJSON();
+        //loadJSON();
     }
 
-    private void loadJSON() {
+    /*private void loadJSON() {
         koneksi();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONSapi();
+        Call<JSONResponse> call = request.getJSONKategori();
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getSapi()));
                 adapter = new SapiAdapter(getApplicationContext(), data);
+                data1 = new ArrayList<>(Arrays.asList(jsonResponse.getKategori()));
+                adapter1 = new KategoriAdapter(getApplicationContext(), data1);
+                data2 = new ArrayList<>(Arrays.asList(jsonResponse.getJenis()));
+                adapter2 = new JenisAdapter(getApplicationContext(), data2);
                 recyclerView.setAdapter(adapter);
+                txtMessage.setText(data1.get(0).getId_kategori());
             }
 
             @Override
@@ -253,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Error", t.getMessage());
             }
         });
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
