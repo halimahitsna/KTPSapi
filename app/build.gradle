@@ -8,8 +8,8 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [manifestApplicationId: "${applicationId}",
-                                onesignal_app_id: "833d5f6d-a658-4778-b387-6e160c8fa2b3",
+        manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
+                                onesignal_app_id               : "833d5f6d-a658-4778-b387-6e160c8fa2b3",
                                 onesignal_google_project_number: "270199661426"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

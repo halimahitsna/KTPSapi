@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             setupNavigationDrawerContent(navigationView);
         }
         setupNavigationDrawerContent(navigationView);
-
+        //Notification
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
-
+    //end notif
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

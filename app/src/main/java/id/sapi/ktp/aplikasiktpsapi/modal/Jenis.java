@@ -7,9 +7,6 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
 public class Jenis {
     private String id_jenis;
     private String jenis;
-    public Jenis() {
-    }
-
 
     public Jenis(String id_jenis, String jenis) {
         this.id_jenis = id_jenis;

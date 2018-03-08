@@ -48,6 +48,9 @@ public interface ApiService {
     @GET("get_Jenis.php")
     Call<JSONResponse> getJSONJenis();
 
+    @GET("get_kandang.php")
+    Call<JSONResponse> getJSONKandang();
+
 
 
 

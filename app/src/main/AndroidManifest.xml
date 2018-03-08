@@ -25,13 +25,9 @@
         <activity android:name=".tab.tab1" />
         <activity android:name=".tab.tab2" />
         <activity android:name=".Beranda" />
-        <activity android:name=".HalamanData">
-
-        </activity>
-        <activity android:name=".HalamanLogin">
-
-        </activity>
-        <activity android:name=".HalamanDaftar"></activity>
+        <activity android:name=".HalamanData" />
+        <activity android:name=".HalamanLogin" />
+        <activity android:name=".HalamanDaftar" />
 
         <!-- Firebase Notifications -->
         <service android:name=".MyFirebaseMessagingService">
@@ -45,12 +41,11 @@
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
-        <activity android:name=".EditData">
-
-        </activity>
-        <activity android:name=".Manajemen">
-
-        </activity>
+        <activity android:name=".EditData" />
+        <activity android:name=".Manajemen" />
+        <activity android:name=".EditJenis" />
+        <activity android:name=".DataJenis" />
+        <activity android:name=".Profile"></activity>
     </application>
 
 </manifest>

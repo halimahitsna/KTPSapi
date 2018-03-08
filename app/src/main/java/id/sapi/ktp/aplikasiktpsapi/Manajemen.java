@@ -221,8 +221,8 @@ public class Manajemen extends AppCompatActivity {
                             case R.id.menu_jadwal:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                /*Intent c = new Intent(HalamanUtama.this, Setting.class);
-                                startActivity(c);*/
+                                Intent c = new Intent(Manajemen.this, DataJenis.class);
+                                startActivity(c);
                                 return true;
                             case R.id.menu_laporan:
                                 menuItem.setChecked(true);

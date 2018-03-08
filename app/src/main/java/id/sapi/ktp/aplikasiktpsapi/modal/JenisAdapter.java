@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import id.sapi.ktp.aplikasiktpsapi.EditJenis;
 import id.sapi.ktp.aplikasiktpsapi.HalamanData;
 import id.sapi.ktp.aplikasiktpsapi.R;
 
@@ -33,14 +34,14 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
 
     @Override
     public JenisAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.kategori_grid, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.jenis_row, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(JenisAdapter.ViewHolder viewHolder, int i){
-        viewHolder.id_user.setText(jenis.get(i).getId_jenis());
-        viewHolder.name.setText(jenis.get(i).getJenis());
+        viewHolder.id_jenis.setText(jenis.get(i).getId_jenis());
+        viewHolder.nmjenis.setText(jenis.get(i).getJenis());
 
 
     }
@@ -51,14 +52,13 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView id_user, name;
-        ImageView gambar;
+        private TextView id_jenis, nmjenis;
 
         public ViewHolder(View view){
             super(view);
 
-            id_user = (TextView)view.findViewById(R.id.idPaket);
-            name = (TextView)view.findViewById(R.id.nmPaket);
+            id_jenis = (TextView)view.findViewById(R.id.idJenis);
+            nmjenis = (TextView)view.findViewById(R.id.jenis);
 
             // on item click
             itemView.setOnClickListener(new View.OnClickListener(){
@@ -69,9 +69,9 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
                         Jenis clickedDataItem = jenis.get(pos);
-                        Intent intent = new Intent(context,HalamanData.class);
-                        intent.putExtra("id_user", jenis.get(pos).getId_jenis());
-                        intent.putExtra("name", jenis.get(pos).getJenis());
+                        Intent intent = new Intent(context,EditJenis.class);
+                        intent.putExtra("id_jenis", jenis.get(pos).getId_jenis());
+                        intent.putExtra("jenis", jenis.get(pos).getJenis());
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getJenis(), Toast.LENGTH_SHORT).show();
