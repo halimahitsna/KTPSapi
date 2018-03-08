@@ -48,6 +48,9 @@
         <activity android:name=".EditData">
 
         </activity>
+        <activity android:name=".Manajemen">
+
+        </activity>
     </application>
 
 </manifest>

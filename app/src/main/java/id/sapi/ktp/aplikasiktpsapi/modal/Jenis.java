@@ -5,40 +5,29 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
  */
 
 public class Jenis {
-    private int id_user;
-    private String name;
-    private String user;
-    private String foto;
-
-    public String getFoto() {
-        return foto;
+    private String id_jenis;
+    private String jenis;
+    public Jenis() {
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+
+    public Jenis(String id_jenis, String jenis) {
+        this.id_jenis = id_jenis;
+        this.jenis = jenis;
+    }
+    public String getId_jenis() {
+        return id_jenis;
     }
 
-    public int getId_user() {
-        return id_user;
+    public void setId_jenis(String id_jenis) {
+        this.id_jenis = id_jenis;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public String getJenis() {
+        return jenis;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
+    public void setJenis(String jenis) {
+        this.jenis = jenis;
     }
 }

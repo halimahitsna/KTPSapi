@@ -79,38 +79,38 @@ public class Beranda extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
-                            case R.id.item_navigation_drawer_home:
+                            case R.id.menu_utama:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 //Intent a = new Intent(HalamanUtama.this, HalamanUtama.class);
                                 //startActivity(a);
                                 return true;
-                            case R.id.item_navigation_drawer_ujian:
+                            case R.id.menu_manajemen:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 /*Intent b = new Intent(HalamanUtama.this, RiwayatUjian.class);
                                 startActivity(b);*/
                                 return true;
-                            case R.id.item_navigation_drawer_exit:
+                            case R.id.menu_monitoring:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 /*sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
                                 startActivity(new Intent(HalamanUtama.this, SignIn.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                                 finish();*/
                                 return true;
-                            case R.id.item_navigation_drawer_settings:
+                            case R.id.menu_jadwal:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 /*Intent c = new Intent(HalamanUtama.this, Setting.class);
                                 startActivity(c);*/
                                 return true;
-                            case R.id.item_navigation_drawer_help:
+                            case R.id.menu_laporan:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 /*Intent d = new Intent(HalamanUtama.this, Bantuan.class);
                                 startActivity(d);*/
                                 return true;
-                            case R.id.item_navigation_drawer_about:
+                            case R.id.menu_keluar:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 /*Intent e = new Intent(HalamanUtama.this, TentangKami.class);

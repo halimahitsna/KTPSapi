@@ -8,6 +8,9 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [manifestApplicationId: "${applicationId}",
+                                onesignal_app_id: "833d5f6d-a658-4778-b387-6e160c8fa2b3",
+                                onesignal_google_project_number: "270199661426"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -45,6 +48,14 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.jjoe64:graphview:4.2.1'
     compile 'im.dacer:AndroidCharts:1.0.4'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    compile 'com.google.android.gms:play-services:11.8.0'
+    compile 'com.google.android.gms:play-services-ads:11.8.0'
+    compile 'com.google.android.gms:play-services-identity:11.8.0'
+    compile 'com.google.android.gms:play-services-gcm:11.8.0'
+    compile 'com.onesignal:OneSignal:2.+@aar'
+    compile 'com.google.android.gms:play-services-analytics:11.8.0'
+    compile 'com.google.android.gms:play-services-location:11.8.0'
 
 
 }

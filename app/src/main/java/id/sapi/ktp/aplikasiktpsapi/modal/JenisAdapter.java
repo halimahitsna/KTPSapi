@@ -39,13 +39,10 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(JenisAdapter.ViewHolder viewHolder, int i){
-        viewHolder.id_user.setText(jenis.get(i).getId_user() + "");
-        viewHolder.name.setText(jenis.get(i).getName());
+        viewHolder.id_user.setText(jenis.get(i).getId_jenis());
+        viewHolder.name.setText(jenis.get(i).getJenis());
 
-        Picasso.with(context)
-                .load(jenis.get(i).getFoto()).resize(100, 100)
 
-                .into(viewHolder.gambar);
     }
 
     @Override
@@ -60,9 +57,8 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
         public ViewHolder(View view){
             super(view);
 
-            id_user = (TextView)view.findViewById(R.id.idSapi);
-            name = (TextView)view.findViewById(R.id.jenis);
-            gambar = (ImageView)view.findViewById(R.id.gbr);
+            id_user = (TextView)view.findViewById(R.id.idPaket);
+            name = (TextView)view.findViewById(R.id.nmPaket);
 
             // on item click
             itemView.setOnClickListener(new View.OnClickListener(){
@@ -74,12 +70,11 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder> 
                     if(pos != RecyclerView.NO_POSITION){
                         Jenis clickedDataItem = jenis.get(pos);
                         Intent intent = new Intent(context,HalamanData.class);
-                        intent.putExtra("id_user", jenis.get(pos).getId_user());
-                        intent.putExtra("name", jenis.get(pos).getName());
-                        intent.putExtra("foto", jenis.get(pos).getFoto());
+                        intent.putExtra("id_user", jenis.get(pos).getId_jenis());
+                        intent.putExtra("name", jenis.get(pos).getJenis());
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
-                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getJenis(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

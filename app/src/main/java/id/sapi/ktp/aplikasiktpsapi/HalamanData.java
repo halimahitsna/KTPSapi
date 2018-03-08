@@ -22,6 +22,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.onesignal.OneSignal;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,7 +49,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HalamanData extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtRegId, txtMessage;
     DrawerLayout drawerLayout;
@@ -61,11 +64,16 @@ public class HalamanData extends AppCompatActivity {
     public TextView nama;
     public ImageView image;
     ArrayList<Profil> profilList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halaman_data);
-toolbartext = (TextView)findViewById(R.id.toolbar_title);
+
+        OneSignal.startInit(this)
+                .setNotificationOpenedHandler(new ExampleNotificationOpenedHandler())
+                .init();
+        toolbartext = (TextView) findViewById(R.id.toolbar_title);
         initViews();
         sharedPrefManager = new SharedPrefManager(this);
 
@@ -88,7 +96,7 @@ toolbartext = (TextView)findViewById(R.id.toolbar_title);
         drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header=navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
         nama = (TextView) header.findViewById(R.id.tvnama);
         image = (ImageView) header.findViewById(R.id.imageView);
         loadHeader();
@@ -97,13 +105,14 @@ toolbartext = (TextView)findViewById(R.id.toolbar_title);
         }
         setupNavigationDrawerContent(navigationView);
     }
+
     //tampilan
     private void loadHeader() {
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
 //
         // get user data from session
         HashMap<String, String> user = sharedPrefManager.getUserDetails();
-        ApiService service = UtilsApi.getAPIService();
+        ApiService service = UtilsApi.getClient().create(ApiService.class);
         String name = user.get(SharedPrefManager.KEY_USER_NAME);
         Call<ProfilList> userCall = service.getJSONProfil("http://uol.techarea.co.id/api/getuser?user=" + name);
         /*userCall.enqueue(new Callback<ProfilList>(){
@@ -129,6 +138,7 @@ toolbartext = (TextView)findViewById(R.id.toolbar_title);
             }
         });*/
     }
+
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.card_recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -142,8 +152,8 @@ toolbartext = (TextView)findViewById(R.id.toolbar_title);
     private void loadJSON() {
         koneksi();
         Retrofit retrofit = new Retrofit.Builder()
-                //.baseUrl("http://uol.techarea.co.id/api/")
-                .baseUrl("http://192.168.1.15:8080/ktpsapi/")
+                //.baseUrl(UtilsApi.BASE_URL)
+                .baseUrl("http://ktpsapi.id/android/ktpsapi/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
@@ -191,7 +201,7 @@ toolbartext = (TextView)findViewById(R.id.toolbar_title);
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
-                            case R.id.item_navigation_drawer_home:
+                            case R.id.menu_utama:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 Intent a = new Intent(HalamanData.this, MainActivity.class);
@@ -205,15 +215,33 @@ toolbartext = (TextView)findViewById(R.id.toolbar_title);
     }
 
 
-    private boolean adaInternet(){
+    private boolean adaInternet() {
         ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return koneksi.getActiveNetworkInfo() != null;
     }
-    private void koneksi(){
-        if(adaInternet()){
+
+    private void koneksi() {
+        if (adaInternet()) {
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
-        }else{
+        } else {
             Toast.makeText(HalamanData.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
+        @Override
+        public void notificationOpened(String message, JSONObject additionalData, boolean isActive) {
+            try{
+                if(additionalData != null){
+                    if(additionalData.has("actionSelected"))
+                        Log.d("OneSignalExample","OneSignal Notification button with id "+ additionalData.getString("actionSelected")+"pressed");
+                    Log.d("OneSignalExample", "Full additionalData:\n" +additionalData.toString());
+                }
+            }catch (Throwable t){
+                t.printStackTrace();
+            }
+        }
+
+
     }
 }

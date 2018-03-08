@@ -32,7 +32,6 @@
             android:layout_width="match_parent"
             android:scrollbars="vertical"
             android:tooltipText="@string/app_name"
-            android:background="@drawable/rounded_button"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="80dp"
