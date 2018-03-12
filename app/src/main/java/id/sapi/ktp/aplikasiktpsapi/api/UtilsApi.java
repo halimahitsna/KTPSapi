@@ -16,7 +16,9 @@ public class UtilsApi {
     private static Retrofit retrofit = null;
     // variable to hold context
     private static Context context;
-
+    public static ApiService getAPIService(){
+        return RetrofitClient.getClient(BASE_URL).create(ApiService.class);
+    }
 
     public static Retrofit getClient() {
 //        OkHttpClient client = new OkHttpClient.Builder()

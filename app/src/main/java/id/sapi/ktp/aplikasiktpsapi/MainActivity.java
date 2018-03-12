@@ -1,6 +1,5 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -16,9 +15,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -31,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,14 +36,13 @@ import java.util.HashMap;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
-import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
 import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Profil;
 import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
 import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
 import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
+import id.sapi.ktp.aplikasiktpsapi.modal.User;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,14 +65,12 @@ public class MainActivity extends AppCompatActivity {
     ActionBar actionBar;
     private TextView textView;
     private RecyclerView recyclerView;
-    private ArrayList<Sapi> data;
+    private ArrayList<User> data;
     private SapiAdapter adapter;
     private ArrayList<Kategori> data1;
     private KategoriAdapter adapter1;
-    private ArrayList<Jenis> data2;
-    private JenisAdapter adapter2;
     SharedPrefManager sharedPrefManager;
-    public TextView nama;
+    public TextView nama, id_user;
     public ImageView image;
     ArrayList<Profil> profilList;
 
@@ -89,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
         txtMessage = (TextView) findViewById(R.id.txt_push_message);
 
         sharedPrefManager = new SharedPrefManager(this);
-
+        if (!sharedPrefManager.getSPSudahLogin()) {
+            startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
+        }
 
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -104,9 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View header=navigationView.getHeaderView(0);
+        id_user = (TextView)header.findViewById(R.id.tvid);
         nama = (TextView) header.findViewById(R.id.tvnama);
         image = (ImageView) header.findViewById(R.id.imageView);
-
+        id_user.setText(sharedPrefManager.getSPId());
+        nama.setText(sharedPrefManager.getSPNama());
         if (navigationView != null) {
             setupNavigationDrawerContent(navigationView);
         }
@@ -191,6 +190,34 @@ public class MainActivity extends AppCompatActivity {
     }
     //end notif
 
+    private void loadHeader() {
+        sharedPrefManager = new SharedPrefManager(getApplicationContext());
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        // get user data from session
+        HashMap<String, String> user = sharedPrefManager.getUserDetails();
+        ApiService request = retrofit.create(ApiService.class);
+        String id_user = user.get(SharedPrefManager.KEY_USER_ID);
+        Call<JSONResponse> call = request.getUser(id_user);
+        call.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+                JSONResponse jsonResponse = response.body();
+                data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
+                nama.setText(data.get(0).getUser());
+                image.setImageResource(Integer.parseInt(data.get(0).getFoto()));
+
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -248,8 +275,10 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.menu_keluar:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                /*Intent e = new Intent(HalamanUtama.this, TentangKami.class);
-                                startActivity(e);*/
+                                sharedPrefManager.saveSPBoolean(SharedPrefManager.KEY_LOGIN, false);
+                                startActivity(new Intent(MainActivity.this, HalamanLogin.class)
+                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                                finish();
                                 return true;
                         }
                         return true;

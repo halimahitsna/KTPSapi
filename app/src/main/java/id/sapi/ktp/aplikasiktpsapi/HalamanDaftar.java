@@ -49,7 +49,7 @@ public class HalamanDaftar extends AppCompatActivity {
         btndaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                daftar();
+                //daftar();
             }
         });
     }
@@ -61,7 +61,7 @@ public class HalamanDaftar extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void daftar() {
+    /*private void daftar() {
 
         //defining a progress dialog to show while signing up
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -88,11 +88,11 @@ public class HalamanDaftar extends AppCompatActivity {
         User user = new User(nm, users, password);
 
         //defining the call
-        Call<Result> call = service.createUser(
+        *//*Call<Result> call = service.createUser(
                 user.getName(),
                 user.getUser(),
                 user.getPassword()
-        );
+        );*//*
 
         //calling the api
         call.enqueue(new Callback<Result>() {
@@ -125,6 +125,6 @@ public class HalamanDaftar extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
 }

@@ -5,13 +5,14 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
  */
 
 public class Profil {
-    String id_user, name, user, password, foto, jk;
 
-    public Profil(String id_user, String name, String user, String jk, String password, String foto) {
+    String id_user, name, user, password, foto, jenis_kelamin, input_date, update_date;
+
+    public Profil(String id_user, String name, String user, String jenis_kelamin, String password, String foto) {
         this.id_user = id_user;
         this.name = name;
         this.user = user;
-        this.jk = jk;
+        this.jenis_kelamin = jenis_kelamin;
         this.password = password;
         this.foto = foto;
     }
@@ -56,11 +57,27 @@ public class Profil {
         this.foto = foto;
     }
 
-    public String getJk() {
-        return jk;
+    public String getJenis_kelamin() {
+        return jenis_kelamin;
     }
 
-    public void setJk(String jk) {
-        this.jk = jk;
+    public void setJenis_kelamin(String jenis_kelamin) {
+        this.jenis_kelamin = jenis_kelamin;
+    }
+
+    public String getInput_date() {
+        return input_date;
+    }
+
+    public void setInput_date(String input_date) {
+        this.input_date = input_date;
+    }
+
+    public String getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(String update_date) {
+        this.update_date = update_date;
     }
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class ProfilList {
-    @SerializedName("user") //nama JSON
+    @SerializedName("users") //nama JSON
     @Expose
     private ArrayList<Profil> profList = new ArrayList<>();
 

@@ -37,7 +37,7 @@ public class SharedPrefManager {
     public boolean userLogin(User user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(KEY_USER_ID, user.getId());
+        editor.putString(KEY_USER_ID, user.getId_user());
         editor.putString(KEY_USER_NAME, user.getName());
         editor.putString(KEY_USER_USER, user.getUser());
         editor.apply();
@@ -54,7 +54,7 @@ public class SharedPrefManager {
     public User getUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new User(
-                sharedPreferences.getInt(KEY_USER_ID, 0),
+                sharedPreferences.getString(KEY_USER_ID, null),
                 sharedPreferences.getString(KEY_USER_NAME, null),
                 sharedPreferences.getString(KEY_USER_USER, null)
         );
@@ -78,6 +78,12 @@ public class SharedPrefManager {
     }
     public Boolean getLogin(){
         return sp.getBoolean(KEY_LOGIN, false);
+    }
+    public String getSPNama(){
+        return sp.getString(KEY_USER_USER, "");
+    }
+    public String getSPId(){
+        return sp.getString(KEY_USER_ID, "");
     }
 
     public HashMap<String, String> getUserDetails(){

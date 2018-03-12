@@ -14,19 +14,19 @@
         android:roundIcon="@drawable/sapi2"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNo">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SplashScreen" />
+        <activity android:name=".tab.tab1" />
+        <activity android:name=".tab.tab2" />
+        <activity android:name=".Beranda" />
+        <activity android:name=".HalamanData" />
+        <activity android:name=".HalamanLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashScreen" />
-        <activity android:name=".tab.tab1" />
-        <activity android:name=".tab.tab2" />
-        <activity android:name=".Beranda" />
-        <activity android:name=".HalamanData" />
-        <activity android:name=".HalamanLogin" />
         <activity android:name=".HalamanDaftar" />
 
         <!-- Firebase Notifications -->
@@ -45,7 +45,9 @@
         <activity android:name=".Manajemen" />
         <activity android:name=".EditJenis" />
         <activity android:name=".DataJenis" />
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".MenuManajemen" />
+        <activity android:name=".Pengaturan"></activity>
     </application>
 
 </manifest>

@@ -1,17 +1,10 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -20,7 +13,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,8 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,8 +28,6 @@ import java.util.HashMap;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
-import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
 import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Profil;
@@ -68,8 +56,6 @@ public class Manajemen extends AppCompatActivity {
     private SapiAdapter adapter;
     private ArrayList<Kategori> data1;
     private KategoriAdapter adapter1;
-    private ArrayList<Jenis> data2;
-    private JenisAdapter adapter2;
     SharedPrefManager sharedPrefManager;
     public TextView nama;
     public ImageView image;

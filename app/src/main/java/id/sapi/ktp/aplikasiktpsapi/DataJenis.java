@@ -2,7 +2,6 @@ package id.sapi.ktp.aplikasiktpsapi;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +27,6 @@ import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangAdapter;
-import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
-import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
-import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
-import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
-import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +41,8 @@ public class DataJenis extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Kandang> data;
     private KandangAdapter adapter;
+    private ArrayList<Jenis> data1;
+    private JenisAdapter adapter1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,14 +78,14 @@ public class DataJenis extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONKandang();
+        Call<JSONResponse> call = request.getJSONJenis();
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 JSONResponse jsonResponse = response.body();
-                data = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
-                adapter = new KandangAdapter(getApplicationContext(), data);
-                recyclerView.setAdapter(adapter);
+                data1 = new ArrayList<>(Arrays.asList(jsonResponse.getJenis()));
+                adapter1 = new JenisAdapter(getApplicationContext(), data1);
+                recyclerView.setAdapter(adapter1);
             }
 
             @Override
@@ -108,18 +102,10 @@ public class DataJenis extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private boolean adaInternet(){
-        ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return koneksi.getActiveNetworkInfo() != null;
+        ConnectivityManager koneks = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return koneks.getActiveNetworkInfo() != null;
     }
     private void koneksi(){
         if(adaInternet()){

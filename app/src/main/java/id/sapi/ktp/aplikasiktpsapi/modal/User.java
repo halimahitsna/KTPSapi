@@ -2,44 +2,24 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
 
 import id.sapi.ktp.aplikasiktpsapi.api.BaseResponse;
 
-public class User extends BaseResponse {
+public class User {
+    String id_user, name, user, password, foto, jenis_kelamin, input_date, update_date;
 
-    private int id;
-    private String name;
-    private String user;
-    private String password;
-    private String jk;
-    private String peternakan;
-    private String alamat;
-
-    public User(String name, String user, String password) {
+    public User(String id_user, String name, String user) {
+        this.id_user = id_user;
         this.name = name;
         this.user = user;
+        this.jenis_kelamin = jenis_kelamin;
         this.password = password;
+        this.foto = foto;
     }
 
-    public User(int id, String name, String user){
-        this.id =id;
-        this.name = name;
-        this.user = user;
+    public String getId_user() {
+        return id_user;
     }
 
-    public User(int id, String name, String user, String password, String jk, String peternakan, String alamat) {
-        this.id =id;
-        this.name = name;
-        this.user = user;
-        this.jk = jk;
-        this.peternakan = peternakan;
-        this.alamat =alamat;
-        this.password=password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setId_user(String id_user) {
+        this.id_user = id_user;
     }
 
     public String getName() {
@@ -66,27 +46,35 @@ public class User extends BaseResponse {
         this.password = password;
     }
 
-    public String getJk() {
-        return jk;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setJk(String jk) {
-        this.jk = jk;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
-    public String getPeternakan() {
-        return peternakan;
+    public String getJenis_kelamin() {
+        return jenis_kelamin;
     }
 
-    public void setPeternakan(String peternakan) {
-        this.peternakan = peternakan;
+    public void setJenis_kelamin(String jenis_kelamin) {
+        this.jenis_kelamin = jenis_kelamin;
     }
 
-    public String getAlamat() {
-        return alamat;
+    public String getInput_date() {
+        return input_date;
     }
 
-    public void setAlamat(String alamat) {
-        this.alamat = alamat;
+    public void setInput_date(String input_date) {
+        this.input_date = input_date;
+    }
+
+    public String getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(String update_date) {
+        this.update_date = update_date;
     }
 }

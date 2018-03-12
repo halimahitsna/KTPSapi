@@ -17,16 +17,16 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("daftar.php")
-    Call<Result> createUser(
+    Call<ResponseBody> createUser(
             @Field("name") String name,
             @Field("user") String user,
             @Field("password") String password);
 
 
     @FormUrlEncoded
-    @POST("login.php")
-    Call<UserData> loginRequest(@Field("name") String name,
-                                @Field("password") String password);
+    @POST("masuk.php")
+    Call<ResponseBody> loginRequest(@Field("user") String user,
+                                    @Field("password") String password);
 
     //User
     @GET
@@ -45,11 +45,14 @@ public interface ApiService {
     @GET("getkategori")
     Call<JSONResponse> getJSONKategori();
 
-    @GET("get_Jenis.php")
+    @GET("get_jenis.php")
     Call<JSONResponse> getJSONJenis();
 
     @GET("get_kandang.php")
     Call<JSONResponse> getJSONKandang();
+
+    @GET("get_user.php?id={id_user}")
+    Call<JSONResponse>getUser(@Path("id_user") String id_user);
 
 
 

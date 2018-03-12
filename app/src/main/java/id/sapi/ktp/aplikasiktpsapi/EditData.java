@@ -1,8 +1,6 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,19 +20,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
-import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
-import id.sapi.ktp.aplikasiktpsapi.modal.Result;
-import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
-import id.sapi.ktp.aplikasiktpsapi.modal.User;
-import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EditData extends AppCompatActivity {
     Toolbar toolbar;
