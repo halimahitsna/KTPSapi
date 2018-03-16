@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView nama, id_user;
     public ImageView image;
     ArrayList<Profil> profilList;
+    public static Integer id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
         }
-
+loadHeader();
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,17 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header=navigationView.getHeaderView(0);
-        id_user = (TextView)header.findViewById(R.id.tvid);
-        nama = (TextView) header.findViewById(R.id.tvnama);
-        image = (ImageView) header.findViewById(R.id.imageView);
-        id_user.setText(sharedPrefManager.getSPId());
-        nama.setText(sharedPrefManager.getSPNama());
-        if (navigationView != null) {
-            setupNavigationDrawerContent(navigationView);
-        }
-        setupNavigationDrawerContent(navigationView);
+
         //Notification
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -191,6 +182,18 @@ public class MainActivity extends AppCompatActivity {
     //end notif
 
     private void loadHeader() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View header=navigationView.getHeaderView(0);
+        id_user = (TextView)header.findViewById(R.id.tvid);
+        nama = (TextView) header.findViewById(R.id.tvnama);
+        image = (ImageView) header.findViewById(R.id.imageView);
+        id_user.setText(sharedPrefManager.getSPId());
+        //nama.setText(sharedPrefManager.getSPId());
+        if (navigationView != null) {
+            setupNavigationDrawerContent(navigationView);
+        }
+        setupNavigationDrawerContent(navigationView);
+
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
@@ -199,15 +202,18 @@ public class MainActivity extends AppCompatActivity {
         // get user data from session
         HashMap<String, String> user = sharedPrefManager.getUserDetails();
         ApiService request = retrofit.create(ApiService.class);
-        String id_user = user.get(SharedPrefManager.KEY_USER_ID);
-        Call<JSONResponse> call = request.getUser(id_user);
+        String id_user = user.get(sharedPrefManager.getSPId());
+        id = Integer.valueOf(sharedPrefManager.getSPId());
+        Call<JSONResponse> call = request.getUser(id);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
                 nama.setText(data.get(0).getUser());
-                image.setImageResource(Integer.parseInt(data.get(0).getFoto()));
+                //image.setImageResource(0);
+                Picasso.with(MainActivity.this).load(data.get(0).getFoto()).resize(100, 100)
+                        .into(image);
 
             }
 

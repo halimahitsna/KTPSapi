@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface ApiService {
@@ -46,13 +47,13 @@ public interface ApiService {
     Call<JSONResponse> getJSONKategori();
 
     @GET("get_jenis.php")
-    Call<JSONResponse> getJSONJenis();
+    Call<JSONResponse> getJSONJenis(@Query("id_user") Integer id_user);
 
     @GET("get_kandang.php")
     Call<JSONResponse> getJSONKandang();
 
-    @GET("get_user.php?id={id_user}")
-    Call<JSONResponse>getUser(@Path("id_user") String id_user);
+    @GET("get_user.php")
+    Call<JSONResponse>getUser(@Query("id_user") Integer id_user);
 
 
 

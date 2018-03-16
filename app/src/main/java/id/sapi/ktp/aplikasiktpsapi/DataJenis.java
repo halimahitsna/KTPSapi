@@ -27,6 +27,7 @@ import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangAdapter;
+import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +44,7 @@ public class DataJenis extends AppCompatActivity {
     private KandangAdapter adapter;
     private ArrayList<Jenis> data1;
     private JenisAdapter adapter1;
+    SharedPrefManager sharedPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +80,8 @@ public class DataJenis extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONJenis();
+        Integer id = Integer.valueOf(sharedPrefManager.getSPId());
+        Call<JSONResponse> call = request.getJSONJenis(id);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
