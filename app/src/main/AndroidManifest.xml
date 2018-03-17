@@ -14,7 +14,7 @@
         android:roundIcon="@drawable/sapi2"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNo">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".SplashScreen" />
         <activity android:name=".tab.tab1" />
         <activity android:name=".tab.tab2" />
@@ -47,7 +47,10 @@
         <activity android:name=".DataJenis" />
         <activity android:name=".Profile" />
         <activity android:name=".MenuManajemen" />
-        <activity android:name=".Pengaturan"></activity>
+        <activity android:name=".Pengaturan" />
+        <activity android:name=".JadwalMakan" />
+        <activity android:name=".Laporan" />
+        <activity android:name=".MonitoringKandang"></activity>
     </application>
 
 </manifest>

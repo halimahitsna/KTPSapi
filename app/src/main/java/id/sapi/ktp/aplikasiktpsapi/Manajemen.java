@@ -46,7 +46,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Manajemen extends AppCompatActivity {
 
-
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
@@ -69,64 +68,16 @@ public class Manajemen extends AppCompatActivity {
         initViews();
         sharedPrefManager = new SharedPrefManager(this);
 
-       /* if (!sharedPrefManager.getLogin()) {
-            startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-            finish();
-        }*/
-
-        //initViews();
-
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header = navigationView.getHeaderView(0);
-        nama = (TextView) header.findViewById(R.id.tvnama);
-        image = (ImageView) header.findViewById(R.id.imageView);
-        loadHeader();
-        if (navigationView != null) {
-            setupNavigationDrawerContent(navigationView);
-        }
-        setupNavigationDrawerContent(navigationView);
-    }
-        //tampilan
-        private void loadHeader() {
-        sharedPrefManager = new SharedPrefManager(getApplicationContext());
-
-        // get user data from session
-        HashMap<String, String> user = sharedPrefManager.getUserDetails();
-        ApiService service = UtilsApi.getClient().create(ApiService.class);
-        String name = user.get(SharedPrefManager.KEY_USER_NAME);
-        Call<ProfilList> userCall = service.getJSONProfil("http://uol.techarea.co.id/api/getuser?user=" + name);
-        /*userCall.enqueue(new Callback<ProfilList>(){
-
-            @Override
-            public void onResponse(Call<ProfilList> call, Response<ProfilList> response) {
-                if (response.isSuccessful()) {
-                    profilList = response.body().getProfList();
-                    Profil profil = profilList.get(0);
-                    nama.setText(profil.getName());
-                    //image .setImageResource();
-                } else {
-                    Toast.makeText(MainActivity.this, "Error while retrieving data from server, Please try again", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProfilList> call, Throwable t) {
-
-                Toast.makeText(MainActivity.this, "Error while retrieving data from server, Please try again", Toast.LENGTH_SHORT).show();
-                Log.d("onFailure", t.toString());
-            }
-        });*/
     }
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.card_recycle_view);
@@ -178,56 +129,6 @@ public class Manajemen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void setupNavigationDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.menu_utama:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent a = new Intent(Manajemen.this, MainActivity.class);
-                                startActivity(a);
-                                return true;
-                            case R.id.menu_manajemen:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent b = new Intent(Manajemen.this, Manajemen.class);
-                                startActivity(b);
-                                return true;
-                            case R.id.menu_monitoring:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                /*sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
-                                startActivity(new Intent(HalamanUtama.this, SignIn.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                                finish();*/
-                                return true;
-                            case R.id.menu_jadwal:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent c = new Intent(Manajemen.this, DataJenis.class);
-                                startActivity(c);
-                                return true;
-                            case R.id.menu_laporan:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                /*Intent d = new Intent(HalamanUtama.this, Bantuan.class);
-                                startActivity(d);*/
-                                return true;
-                            case R.id.menu_keluar:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                /*Intent e = new Intent(HalamanUtama.this, TentangKami.class);
-                                startActivity(e);*/
-                                return true;
-                        }
-                        return true;
-                    }
-                });
-    }
-
 
     private boolean adaInternet(){
         ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

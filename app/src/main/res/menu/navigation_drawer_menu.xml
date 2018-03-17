@@ -24,9 +24,17 @@
                 android:icon="@drawable/ic_assessment_black_24dp"
                 android:title="Laporan" />
             <item
+                android:id="@+id/menu_profil"
+                android:icon="@drawable/ic_account_circle_black_24dp"
+                android:title="Profil" />
+            <item
                 android:id="@+id/menu_pengaturan"
                 android:icon="@drawable/ic_assessment_black_24dp"
                 android:title="Pengaturan" />
+            <item
+                android:id="@+id/menu_tentang"
+                android:icon="@drawable/ic_assessment_black_24dp"
+                android:title="Tentang" />
 
         </menu>
     </item>

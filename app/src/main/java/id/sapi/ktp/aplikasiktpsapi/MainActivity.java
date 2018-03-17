@@ -256,27 +256,44 @@ loadHeader();
                             case R.id.menu_manajemen:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent b = new Intent(MainActivity.this, Manajemen.class);
+                                Intent b = new Intent(MainActivity.this, MenuManajemen.class);
+                                b.putExtra("id_user", sharedPrefManager.getSPId());
                                 startActivity(b);
                                 return true;
                             case R.id.menu_monitoring:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                /*sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
-                                startActivity(new Intent(HalamanUtama.this, SignIn.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                                finish();*/
+                                Intent c = new Intent(MainActivity.this, MonitoringKandang.class);
+                                c.putExtra("id_user", sharedPrefManager.getSPId());
+                                startActivity(c);
                                 return true;
                             case R.id.menu_jadwal:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                /*Intent c = new Intent(HalamanUtama.this, Setting.class);
-                                startActivity(c);*/
+                                Intent d = new Intent(MainActivity.this, JadwalMakan.class);
+                                d.putExtra("id_user", sharedPrefManager.getSPId());
+                                startActivity(d);
                                 return true;
                             case R.id.menu_laporan:
                                 menuItem.setChecked(true);
                                 drawerLayout.closeDrawer(GravityCompat.START);
-                                /*Intent d = new Intent(HalamanUtama.this, Bantuan.class);
-                                startActivity(d);*/
+                                Intent e = new Intent(MainActivity.this, Laporan.class);
+                                e.putExtra("id_user", sharedPrefManager.getSPId());
+                                startActivity(e);
+                                return true;
+                            case R.id.menu_profil:
+                                menuItem.setChecked(true);
+                                drawerLayout.closeDrawer(GravityCompat.START);
+                                Intent f = new Intent(MainActivity.this, Profil.class);
+                                f.putExtra("id_user", sharedPrefManager.getSPId());
+                                startActivity(f);
+                                return true;
+                            case R.id.menu_pengaturan:
+                                menuItem.setChecked(true);
+                                drawerLayout.closeDrawer(GravityCompat.START);
+                                Intent g = new Intent(MainActivity.this, Pengaturan.class);
+                                g.putExtra("id_user", sharedPrefManager.getSPId());
+                                startActivity(g);
                                 return true;
                             case R.id.menu_keluar:
                                 menuItem.setChecked(true);
