@@ -22,8 +22,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.onesignal.OneSignal;
-
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -64,9 +62,9 @@ public class HalamanData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halaman_data);
 
-        OneSignal.startInit(this)
+        /*OneSignal.startInit(this)
                 .setNotificationOpenedHandler(new ExampleNotificationOpenedHandler())
-                .init();
+                .init();*/
         toolbartext = (TextView) findViewById(R.id.toolbar_title);
         initViews();
         sharedPrefManager = new SharedPrefManager(this);
@@ -222,20 +220,4 @@ public class HalamanData extends AppCompatActivity {
         }
     }
 
-    private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
-        @Override
-        public void notificationOpened(String message, JSONObject additionalData, boolean isActive) {
-            try{
-                if(additionalData != null){
-                    if(additionalData.has("actionSelected"))
-                        Log.d("OneSignalExample","OneSignal Notification button with id "+ additionalData.getString("actionSelected")+"pressed");
-                    Log.d("OneSignalExample", "Full additionalData:\n" +additionalData.toString());
-                }
-            }catch (Throwable t){
-                t.printStackTrace();
-            }
-        }
-
-
-    }
 }

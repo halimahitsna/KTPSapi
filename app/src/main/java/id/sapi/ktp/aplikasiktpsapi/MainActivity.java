@@ -9,11 +9,15 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -55,7 +59,7 @@ import android.support.v7.app.ActionBar;
 /**
  * Created by NgocTri on 4/9/2016.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -63,12 +67,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
-    private TextView textView;
-    private RecyclerView recyclerView;
     private ArrayList<User> data;
-    private SapiAdapter adapter;
-    private ArrayList<Kategori> data1;
-    private KategoriAdapter adapter1;
     SharedPrefManager sharedPrefManager;
     public TextView nama, id_user;
     public ImageView image;
@@ -79,6 +78,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //add this line to display menu1 when the activity is loaded
+        displaySelectedScreen(R.id.menu_utama);
 
         txtRegId = (TextView) findViewById(R.id.txt_reg_id);
         txtMessage = (TextView) findViewById(R.id.txt_push_message);
@@ -88,17 +101,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
         }
-loadHeader();
+        loadHeader();
         //Drawerbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+       /* toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
 
-        actionBar = getSupportActionBar();
+        /*actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);*/
 
 
         //Notification
@@ -189,10 +202,10 @@ loadHeader();
         image = (ImageView) header.findViewById(R.id.imageView);
         id_user.setText(sharedPrefManager.getSPId());
         //nama.setText(sharedPrefManager.getSPId());
-        if (navigationView != null) {
+        /*if (navigationView != null) {
             setupNavigationDrawerContent(navigationView);
         }
-        setupNavigationDrawerContent(navigationView);
+        setupNavigationDrawerContent(navigationView);*/
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         Retrofit retrofit = new Retrofit.Builder()
@@ -225,6 +238,16 @@ loadHeader();
     }
 
     @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -233,82 +256,60 @@ loadHeader();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        /*if (id == R.id.action_settings) {
+            return true;
+        }*/
+
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupNavigationDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.menu_utama:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent a = new Intent(MainActivity.this, MainActivity.class);
-                                startActivity(a);
-                                return true;
-                            case R.id.menu_manajemen:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent b = new Intent(MainActivity.this, MenuManajemen.class);
-                                b.putExtra("id_user", sharedPrefManager.getSPId());
-                                startActivity(b);
-                                return true;
-                            case R.id.menu_monitoring:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent c = new Intent(MainActivity.this, MonitoringKandang.class);
-                                c.putExtra("id_user", sharedPrefManager.getSPId());
-                                startActivity(c);
-                                return true;
-                            case R.id.menu_jadwal:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent d = new Intent(MainActivity.this, JadwalMakan.class);
-                                d.putExtra("id_user", sharedPrefManager.getSPId());
-                                startActivity(d);
-                                return true;
-                            case R.id.menu_laporan:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent e = new Intent(MainActivity.this, Laporan.class);
-                                e.putExtra("id_user", sharedPrefManager.getSPId());
-                                startActivity(e);
-                                return true;
-                            case R.id.menu_profil:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent f = new Intent(MainActivity.this, Profil.class);
-                                f.putExtra("id_user", sharedPrefManager.getSPId());
-                                startActivity(f);
-                                return true;
-                            case R.id.menu_pengaturan:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                Intent g = new Intent(MainActivity.this, Pengaturan.class);
-                                g.putExtra("id_user", sharedPrefManager.getSPId());
-                                startActivity(g);
-                                return true;
-                            case R.id.menu_keluar:
-                                menuItem.setChecked(true);
-                                drawerLayout.closeDrawer(GravityCompat.START);
-                                sharedPrefManager.saveSPBoolean(SharedPrefManager.KEY_LOGIN, false);
-                                startActivity(new Intent(MainActivity.this, HalamanLogin.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                                finish();
-                                return true;
-                        }
-                        return true;
-                    }
-                });
-    }
+    private void displaySelectedScreen(int itemId) {
 
+        //creating fragment object
+        Fragment fragment = null;
+
+        //initializing the fragment object which is selected
+        switch (itemId) {
+            case R.id.menu_utama:
+                fragment = new Beranda();
+                break;
+            case R.id.menu_jadwal:
+                fragment = new JadwalMakan();
+                break;
+            case R.id.menu_laporan:
+                fragment = new Beranda();
+                break;
+            case R.id.menu_manajemen:
+                fragment = new MenuManajemen();
+                break;
+            case R.id.menu_monitoring:
+                fragment = new JadwalMakan();
+                break;
+            case R.id.menu_keluar:
+//                drawerLayout.closeDrawer(GravityCompat.START);
+                sharedPrefManager.saveSPBoolean(SharedPrefManager.KEY_LOGIN, false);
+                startActivity(new Intent(MainActivity.this, HalamanLogin.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();
+                break;
+        }
+
+        //replacing the fragment
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
 
     private boolean adaInternet(){
         ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -320,5 +321,13 @@ loadHeader();
         }else{
             Toast.makeText(MainActivity.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        //calling the method displayselectedscreen and passing the id of selected menu
+        displaySelectedScreen(item.getItemId());
+        //make this method blank
+        return true;
     }
 }

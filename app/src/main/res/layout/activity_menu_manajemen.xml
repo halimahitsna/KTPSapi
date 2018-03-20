@@ -1,127 +1,95 @@
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2"
-    android:id="@+id/navigation_drawer_layout"
-    tools:context="id.sapi.ktp.aplikasiktpsapi.MenuManajemen">
-    <FrameLayout
-        android:id="@+id/parentLayout"
+    android:background="@color/background">
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="#f2f2f2"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Manajemen Pendataan Sapi"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_gravity="center"
-                android:id="@+id/toolbar_title" />
-        </android.support.v7.widget.Toolbar>
-        <LinearLayout
-            android:layout_marginTop="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/sapi"
+            android:background="@drawable/rounded_view"
+            android:padding="40dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:textColor="@color/alltext"
+            android:textSize="16sp"
+            android:text="Data Sapi"
+            android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
-                android:id="@+id/sapi"
+                android:id="@+id/jenis"
                 android:background="@drawable/rounded_view"
-                android:padding="40dp"
-                android:layout_margin="10dp"
+                android:padding="50dp"
                 android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:text="Jenis"
                 android:textColor="@color/alltext"
                 android:textSize="16sp"
-                android:text="Data Sapi"
                 android:gravity="center"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/jenis"
-                    android:background="@drawable/rounded_view"
-                    android:padding="50dp"
-                    android:layout_width="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Jenis"
-                    android:textColor="@color/alltext"
-                    android:textSize="16sp"
-                    android:gravity="center"/>
-                <Button
-                    android:id="@+id/indukan"
-                    android:background="@drawable/rounded_view"
-                    android:padding="50dp"
-                    android:layout_width="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Indukan"
-                    android:textColor="@color/alltext"
-                    android:textSize="16sp"
-                    android:gravity="center"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/kandang"
-                    android:background="@drawable/rounded_view"
-                    android:padding="45dp"
-                    android:layout_width="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Kandang"
-                    android:textColor="@color/alltext"
-                    android:textSize="16sp"
-                    android:gravity="center"/>
-                <Button
-                    android:id="@+id/penyakit"
-                    android:background="@drawable/rounded_view"
-                    android:padding="45dp"
-                    android:layout_width="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Penyakit"
-                    android:textColor="@color/alltext"
-                    android:textSize="16sp"
-                    android:gravity="center"/>
-            </LinearLayout>
             <Button
-                android:id="@+id/pakan"
+                android:id="@+id/indukan"
                 android:background="@drawable/rounded_view"
-                android:padding="40dp"
-                android:layout_margin="10dp"
+                android:padding="50dp"
                 android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Pakan"
+                android:text="Indukan"
                 android:textColor="@color/alltext"
                 android:textSize="16sp"
                 android:gravity="center"/>
         </LinearLayout>
-    </FrameLayout>
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/navigation_drawer_header"
-        app:menu="@menu/navigation_drawer_menu"
-        app:theme="@style/NavigationViewTheme" />
-</android.support.v4.widget.DrawerLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/kandang"
+                android:background="@drawable/rounded_view"
+                android:padding="45dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Kandang"
+                android:textColor="@color/alltext"
+                android:textSize="16sp"
+                android:gravity="center"/>
+            <Button
+                android:id="@+id/penyakit"
+                android:background="@drawable/rounded_view"
+                android:padding="45dp"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Penyakit"
+                android:textColor="@color/alltext"
+                android:textSize="16sp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/pakan"
+            android:background="@drawable/rounded_view"
+            android:padding="40dp"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pakan"
+            android:textColor="@color/alltext"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </LinearLayout>
+</RelativeLayout>

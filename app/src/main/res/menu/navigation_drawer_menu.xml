@@ -1,47 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:title="Utama">
-        <menu>
-            <item
-                android:id="@+id/menu_utama"
-                android:icon="@drawable/ic_folder_black_24dp"
-                android:title="Halaman Utama" />
-            <item
-                android:id="@+id/menu_manajemen"
-                android:icon="@drawable/ic_assessment_black_24dp"
-                android:title="Manajemen Data Sapi" />
-            <item
-                android:id="@+id/menu_monitoring"
-                android:icon="@drawable/ic_assessment_black_24dp"
-                android:title="Monitoring Lingkungan" />
-            <item
-                android:id="@+id/menu_jadwal"
-                android:icon="@drawable/ic_assessment_black_24dp"
-                android:title="Jadwal Pakan Sapi" />
-            <item
-                android:id="@+id/menu_laporan"
-                android:icon="@drawable/ic_assessment_black_24dp"
-                android:title="Laporan" />
-            <item
-                android:id="@+id/menu_profil"
-                android:icon="@drawable/ic_account_circle_black_24dp"
-                android:title="Profil" />
-            <item
-                android:id="@+id/menu_pengaturan"
-                android:icon="@drawable/ic_assessment_black_24dp"
-                android:title="Pengaturan" />
-            <item
-                android:id="@+id/menu_tentang"
-                android:icon="@drawable/ic_assessment_black_24dp"
-                android:title="Tentang" />
-
-        </menu>
-    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_utama"
+            android:icon="@drawable/ic_folder_black_24dp"
+            android:title="Halaman Utama" />
+        <item
+            android:id="@+id/menu_manajemen"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Manajemen Data Sapi" />
+        <item
+            android:id="@+id/menu_monitoring"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Monitoring Lingkungan" />
+        <item
+            android:id="@+id/menu_jadwal"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Jadwal Pakan Sapi" />
+        <item
+            android:id="@+id/menu_laporan"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Laporan" />
+        <item
+            android:id="@+id/menu_profil"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="Profil" />
+        <item
+            android:id="@+id/menu_pengaturan"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Pengaturan" />
+        <item
+            android:id="@+id/menu_tentang"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Tentang" />
+    </group>
     <item
         android:checked="true"
         android:id="@+id/menu_keluar"
         android:icon="@drawable/ic_exit_to_app_black_24dp"
         android:title="Keluar"/>
-
 </menu>

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -69,6 +70,7 @@ public class HalamanLogin extends AppCompatActivity {
             public void onClick(View view) {
                if(validate()){
                    loading = ProgressDialog.show(mContext,null,"tunggu", true, false);
+                   validate();
                    login();
                 }
             }
@@ -106,6 +108,7 @@ public class HalamanLogin extends AppCompatActivity {
     }
 
     private void login(){
+        koneksi();
         mApiService.loginRequest(Euser.getText().toString(), Epass.getText().toString())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -135,6 +138,7 @@ public class HalamanLogin extends AppCompatActivity {
                             }
                         }else {
                             loading.dismiss();
+
                         }
                     }
 
@@ -144,6 +148,17 @@ public class HalamanLogin extends AppCompatActivity {
                         loading.dismiss();
                     }
                 });
+    }
+    private boolean adaInternet(){
+        ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return koneksi.getActiveNetworkInfo() != null;
+    }
+    private void koneksi(){
+        if(adaInternet()){
+//            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(HalamanLogin.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+        }
     }
 
 
