@@ -64,9 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtRegId, txtMessage;
-    DrawerLayout drawerLayout;
     Toolbar toolbar;
-    ActionBar actionBar;
     private ArrayList<User> data;
     SharedPrefManager sharedPrefManager;
     public TextView nama, id_user;
@@ -102,17 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
         loadHeader();
-        //Drawerbar
-       /* toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
-
-        /*actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);*/
-
 
         //Notification
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -270,10 +257,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void displaySelectedScreen(int itemId) {
-
         //creating fragment object
         Fragment fragment = null;
-
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.menu_utama:
@@ -292,7 +277,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new JadwalMakan();
                 break;
             case R.id.menu_keluar:
-//                drawerLayout.closeDrawer(GravityCompat.START);
                 sharedPrefManager.saveSPBoolean(SharedPrefManager.KEY_LOGIN, false);
                 startActivity(new Intent(MainActivity.this, HalamanLogin.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));

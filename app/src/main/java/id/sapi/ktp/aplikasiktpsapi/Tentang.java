@@ -21,13 +21,13 @@ import android.view.ViewGroup;
 import az.plainpie.PieView;
 import az.plainpie.animation.PieAngleAnimation;
 
-public class Laporan extends Fragment {
+public class Tentang extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
         //change R.layout.yourlayoutfilename for each of your fragments
-        return inflater.inflate(R.layout.activity_laporan, container, false);
+        return inflater.inflate(R.layout.activity_beranda, container, false);
     }
 
 
@@ -35,6 +35,6 @@ public class Laporan extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("Laporan");
+        getActivity().setTitle("KTP Sapi");
     }
 }
