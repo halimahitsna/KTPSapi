@@ -6,6 +6,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,8 +21,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import az.plainpie.PieView;
 import az.plainpie.animation.PieAngleAnimation;
+import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
+import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
+import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
+import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
+import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
+import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Beranda extends Fragment {
     @Nullable
@@ -35,6 +52,7 @@ public class Beranda extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("KTP Sapi");
+        getActivity().setTitle("Monitoring Kandang");
     }
+
 }

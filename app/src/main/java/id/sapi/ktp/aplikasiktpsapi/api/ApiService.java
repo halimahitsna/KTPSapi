@@ -50,7 +50,7 @@ public interface ApiService {
     Call<JSONResponse> getJSONJenis(@Query("id_user") Integer id_user);
 
     @GET("get_kandang.php")
-    Call<JSONResponse> getJSONKandang();
+    Call<JSONResponse> getJSONKandang(@Query("id_user") Integer id_user);
 
     @GET("get_user.php")
     Call<JSONResponse>getUser(@Query("id_user") Integer id_user);
