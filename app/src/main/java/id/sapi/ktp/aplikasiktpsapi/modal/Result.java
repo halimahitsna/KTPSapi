@@ -13,13 +13,17 @@ public class Result {
     @SerializedName("message")
     private String message;
 
+    @SerializedName("value")
+    private String value;
+
     @SerializedName("user")
     private User user;
 
     @SerializedName("sapi")
     private User sapi;
 
-    public Result(Boolean error, String message, User user) {
+    public Result(Boolean error, String value, String message, User user) {
+        this.value = value;
         this.error = error;
         this.message = message;
         this.user = user;
@@ -32,6 +36,8 @@ public class Result {
     public String getMessage() {
         return message;
     }
+
+    public String getValue(){return value;}
 
     public User getUser() {
         return user;

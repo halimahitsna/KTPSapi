@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HalamanData extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtRegId, txtMessage;
+    ImageView add;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
@@ -62,10 +64,15 @@ public class HalamanData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halaman_data);
 
-        /*OneSignal.startInit(this)
-                .setNotificationOpenedHandler(new ExampleNotificationOpenedHandler())
-                .init();*/
         toolbartext = (TextView) findViewById(R.id.toolbar_title);
+        add = (ImageView)findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(HalamanData.this, EditData.class);
+                startActivity(a);
+            }
+        });
         initViews();
         sharedPrefManager = new SharedPrefManager(this);
 
@@ -149,7 +156,7 @@ public class HalamanData extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONSapi();
+        Call<JSONResponse> call = request.getJSONSapi(3);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {

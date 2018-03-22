@@ -259,22 +259,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void displaySelectedScreen(int itemId) {
         //creating fragment object
         Fragment fragment = null;
+
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.menu_utama:
                 fragment = new Beranda();
                 break;
+            case R.id.menu_manajemen:
+                fragment = new MenuManajemen();
+                Bundle bundle=new Bundle();
+                //bundle.putString("id_user", id_user.getText().toString());
+                fragment.setArguments(bundle);
+                break;
+            case R.id.menu_monitoring:
+                fragment = new MonitoringKandang();
+                break;
             case R.id.menu_jadwal:
                 fragment = new JadwalMakan();
                 break;
             case R.id.menu_laporan:
-                fragment = new Beranda();
+                fragment = new Laporan();
                 break;
-            case R.id.menu_manajemen:
-                fragment = new MenuManajemen();
+            case R.id.menu_pengaturan:
+                fragment = new Pengaturan();
                 break;
-            case R.id.menu_monitoring:
-                fragment = new JadwalMakan();
+            case R.id.menu_profil:
+                fragment = new Profile();
+                break;
+            case R.id.menu_tentang:
+                fragment = new Tentang();
                 break;
             case R.id.menu_keluar:
                 sharedPrefManager.saveSPBoolean(SharedPrefManager.KEY_LOGIN, false);

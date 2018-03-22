@@ -67,6 +67,7 @@ public class MenuManajemen extends Fragment {
         //change R.layout.yourlayoutfilename for each of your fragments
 
         return inflater.inflate(R.layout.activity_menu_manajemen, container, false);
+
     }
 
     @Override
@@ -74,7 +75,8 @@ public class MenuManajemen extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Manajemen Data");
-//        String id = context.getIntent().getStringExtra("id_user");
+        //Bundle bundle=getArguments();
+        //datasapi.setText(String.valueOf(bundle.getString("id_user")));
         datasapi = (Button)view.findViewById(R.id.sapi);
         jenis = (Button)view.findViewById(R.id.jenis);
         kandang = (Button)view.findViewById(R.id.kandang);
@@ -85,7 +87,7 @@ public class MenuManajemen extends Fragment {
         jenis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sapi = new Intent(context, Manajemen.class);
+                Intent sapi = new Intent(context, DataJenis.class);
                 //  sapi.putExtra("id_user",context.getIntent().getStringExtra("id_user"));
                 startActivity(sapi);
             }

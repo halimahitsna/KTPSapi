@@ -41,7 +41,7 @@ public interface ApiService {
 
 
     @GET("get_data.php")
-    Call<JSONResponse> getJSONSapi();
+    Call<JSONResponse> getJSONSapi(@Query("id_user") Integer id_user);
 
     @GET("getkategori")
     Call<JSONResponse> getJSONKategori();
@@ -54,6 +54,9 @@ public interface ApiService {
 
     @GET("get_user.php")
     Call<JSONResponse>getUser(@Query("id_user") Integer id_user);
+
+    @GET("hapus_data.php")
+    Call<Result> hapus(@Query("id_sapi") String id_sapi);
 
 
 

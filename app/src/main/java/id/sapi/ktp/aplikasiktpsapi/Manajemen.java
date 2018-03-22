@@ -2,6 +2,7 @@ package id.sapi.ktp.aplikasiktpsapi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -70,6 +71,14 @@ public class Manajemen extends AppCompatActivity {
 
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ImageView add = (ImageView)findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(Manajemen.this, EditData.class);
+                startActivity(a);
+            }
+        });
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -96,7 +105,7 @@ public class Manajemen extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONSapi();
+        Call<JSONResponse> call = request.getJSONSapi(3);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
@@ -122,11 +131,9 @@ public class Manajemen extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
+        if (item.getItemId()==android.R.id.home)
+            finish();
+
         return super.onOptionsItemSelected(item);
     }
 
