@@ -7,6 +7,12 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
 public class Jenis {
     private String id_jenis;
     private String jenis;
+    private String id_user;
+
+    public Jenis(String id_jenis, String jenis){
+        this.id_jenis = id_jenis;
+        this.jenis = jenis;
+    }
 
     public String getId_jenis() {
         return id_jenis;
@@ -22,5 +28,13 @@ public class Jenis {
 
     public void setJenis(String jenis) {
         this.jenis = jenis;
+    }
+
+    public String getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(String id_user) {
+        this.id_user = id_user;
     }
 }

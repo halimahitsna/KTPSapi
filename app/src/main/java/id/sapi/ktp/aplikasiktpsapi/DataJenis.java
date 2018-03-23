@@ -57,7 +57,7 @@ public class DataJenis extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
@@ -80,8 +80,8 @@ public class DataJenis extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Integer id = Integer.valueOf(sharedPrefManager.getSPId());
-        Call<JSONResponse> call = request.getJSONJenis(id);
+       // Integer id = Integer.valueOf(sharedPrefManager.getSPId());
+        Call<JSONResponse> call = request.getJSONJenis(3);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
@@ -105,7 +105,13 @@ public class DataJenis extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home)
+            finish();
 
+        return super.onOptionsItemSelected(item);
+    }
     private boolean adaInternet(){
         ConnectivityManager koneks = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return koneks.getActiveNetworkInfo() != null;

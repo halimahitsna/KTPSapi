@@ -2,15 +2,14 @@ package id.sapi.ktp.aplikasiktpsapi.api;
 
 
 import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
+import id.sapi.ktp.aplikasiktpsapi.modal.ResponseData;
 import id.sapi.ktp.aplikasiktpsapi.modal.Result;
-import id.sapi.ktp.aplikasiktpsapi.modal.UserData;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -48,6 +47,12 @@ public interface ApiService {
 
     @GET("get_jenis.php")
     Call<JSONResponse> getJSONJenis(@Query("id_user") Integer id_user);
+
+    @GET("get_jenis.php")
+    Call<ResponseData> getJen(@Query("id_user") Integer id_user);
+
+    @GET("get_kandang.php")
+    Call<ResponseData> getKan(@Query("id_user") Integer id_user);
 
     @GET("get_kandang.php")
     Call<JSONResponse> getJSONKandang(@Query("id_user") Integer id_user);

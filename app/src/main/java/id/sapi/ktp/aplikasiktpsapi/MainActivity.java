@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +35,10 @@ import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -188,11 +194,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nama = (TextView) header.findViewById(R.id.tvnama);
         image = (ImageView) header.findViewById(R.id.imageView);
         id_user.setText(sharedPrefManager.getSPId());
-        //nama.setText(sharedPrefManager.getSPId());
-        /*if (navigationView != null) {
-            setupNavigationDrawerContent(navigationView);
-        }
-        setupNavigationDrawerContent(navigationView);*/
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         Retrofit retrofit = new Retrofit.Builder()
@@ -211,10 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
                 nama.setText(data.get(0).getUser());
-                //image.setImageResource(0);
-                Picasso.with(MainActivity.this).load(data.get(0).getFoto()).resize(100, 100)
-                        .into(image);
-
+                Picasso.with(MainActivity.this).load( data.get(0).getFoto()).into(image);
             }
 
             @Override
@@ -223,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
 
     @Override
     public void onBackPressed() {

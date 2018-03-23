@@ -10,6 +10,7 @@ public class Kandang {
     private String suhu;
     private String kelembapan;
     private String gas_amonia;
+    private String id_user;
 
     public String getId_kandang() {
         return id_kandang;
@@ -49,5 +50,13 @@ public class Kandang {
 
     public void setGas_amonia(String gas_amonia) {
         this.gas_amonia = gas_amonia;
+    }
+
+    public String getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(String id_user) {
+        this.id_user = id_user;
     }
 }

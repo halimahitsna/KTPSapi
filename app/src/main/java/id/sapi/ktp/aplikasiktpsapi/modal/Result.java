@@ -2,6 +2,8 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by ASUS on 2/23/2018.
  */
@@ -44,4 +46,15 @@ public class Result {
     }
 
     public User getSapi(){return sapi;}
+
+    @SerializedName("jenis")
+    private List<Jenis> jenis;
+
+    public void setJenis(List<Jenis> jenis){
+        this.jenis = jenis;
+    }
+
+    public List<Jenis> getJenis(){
+        return jenis;
+    }
 }

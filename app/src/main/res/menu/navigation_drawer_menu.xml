@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/menu_utama"
-            android:icon="@drawable/ic_folder_black_24dp"
-            android:title="Halaman Utama" />
-        <item
-            android:id="@+id/menu_manajemen"
-            android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="Manajemen Data Sapi" />
-        <item
-            android:id="@+id/menu_monitoring"
-            android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="Monitoring Lingkungan" />
-        <item
-            android:id="@+id/menu_jadwal"
-            android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="Jadwal Pakan Sapi" />
-        <item
-            android:id="@+id/menu_laporan"
-            android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="Laporan" />
+        <item android:title="Menu Utama">
+            <menu>
+                <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_utama"
+                    android:icon="@drawable/ic_folder_black_24dp"
+                    android:title="Halaman Utama" />
+                <item
+                    android:id="@+id/menu_manajemen"
+                    android:icon="@drawable/ic_assessment_black_24dp"
+                    android:title="Manajemen Data Sapi" />
+                <item
+                    android:id="@+id/menu_monitoring"
+                    android:icon="@drawable/ic_assessment_black_24dp"
+                    android:title="Monitoring Lingkungan" />
+                <item
+                    android:id="@+id/menu_jadwal"
+                    android:icon="@drawable/ic_assessment_black_24dp"
+                    android:title="Jadwal Pakan Sapi" />
+                <item
+                    android:id="@+id/menu_laporan"
+                    android:icon="@drawable/ic_assessment_black_24dp"
+                    android:title="Laporan" />
+                </group>
+            </menu>
+        </item>
+        <item android:title="Pengaturan">
+        <menu>
+            <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_profil"
             android:icon="@drawable/ic_account_circle_black_24dp"
@@ -29,11 +37,20 @@
             android:id="@+id/menu_pengaturan"
             android:icon="@drawable/ic_assessment_black_24dp"
             android:title="Pengaturan" />
-        <item
-            android:id="@+id/menu_tentang"
-            android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="Tentang" />
-    </group>
+            </group>
+        </menu>
+        </item>
+    <item android:title="Tentang">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_tentang"
+                    android:icon="@drawable/ic_assessment_black_24dp"
+                    android:title="Tentang" />
+            </group>
+        </menu>
+    </item>
+
     <item
         android:checked="true"
         android:id="@+id/menu_keluar"

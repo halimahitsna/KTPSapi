@@ -87,41 +87,41 @@ public class MenuManajemen extends Fragment {
         jenis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sapi = new Intent(context, DataJenis.class);
+                Intent j = new Intent(getActivity(), DataJenis.class);
                 //  sapi.putExtra("id_user",context.getIntent().getStringExtra("id_user"));
-                startActivity(sapi);
+                startActivity(j);
             }
         });
         kandang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sapi = new Intent(context, Manajemen.class);
+                Intent k = new Intent(getActivity(), DataKandang.class);
                 //    sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
-                startActivity(sapi);
+                startActivity(k);
             }
         });
         indukan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sapi = new Intent(context, Manajemen.class);
+                Intent i = new Intent(getActivity(), DataIndukan.class);
                 //    sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
-                startActivity(sapi);
+                startActivity(i);
             }
         });
         penyakit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sapi = new Intent(context, Manajemen.class);
+                Intent p = new Intent(getActivity(), DataPenyakit.class);
                 //   sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
-                startActivity(sapi);
+                startActivity(p);
             }
         });
         pakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sapi = new Intent(context, Manajemen.class);
+                Intent p = new Intent(getActivity(), DataPakan.class);
                 //     sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
-                startActivity(sapi);
+                startActivity(p);
             }
         });
 
@@ -129,9 +129,9 @@ public class MenuManajemen extends Fragment {
         datasapi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sapi = new Intent(getActivity(), Manajemen.class);
+                Intent s = new Intent(getActivity(), Manajemen.class);
                 //   sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
-                startActivity(sapi);
+                startActivity(s);
             }
         });
     }

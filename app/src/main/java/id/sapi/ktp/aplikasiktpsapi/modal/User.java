@@ -1,6 +1,6 @@
 package id.sapi.ktp.aplikasiktpsapi.modal;
 
-import id.sapi.ktp.aplikasiktpsapi.api.BaseResponse;
+import java.io.InputStream;
 
 public class User {
     String id_user, name, user, password, foto, jenis_kelamin, input_date, update_date;
@@ -77,4 +77,5 @@ public class User {
     public void setUpdate_date(String update_date) {
         this.update_date = update_date;
     }
+
 }

@@ -1,5 +1,9 @@
 package id.sapi.ktp.aplikasiktpsapi.api;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;

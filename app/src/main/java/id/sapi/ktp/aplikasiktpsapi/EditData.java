@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -13,16 +14,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
+import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
+import id.sapi.ktp.aplikasiktpsapi.modal.ResponseData;
+import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EditData extends AppCompatActivity {
     Toolbar toolbar;
@@ -31,7 +42,7 @@ public class EditData extends AppCompatActivity {
     ImageView foto;
     Spinner jenis, kandang, indukan,pakan, tgl_lahir;
     Adapter adapter;
-    List<Jenis> listJenis = new ArrayList<Jenis>();
+    ArrayList<Jenis> data;
     Context mcontext;
     Retrofit apiService;
     @Override
@@ -73,21 +84,12 @@ public class EditData extends AppCompatActivity {
         pakan = (Spinner)findViewById(R.id.pakan);
         tgl_lahir = (Spinner)findViewById(R.id.tgl_lahir);
         //initSpinnerJenis();
-        String[] pilihan_menu=getResources().getStringArray(R.array.pilihan_menu); // ambil menu dari string.xml
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.isi_spinner,R.id.txItemSpin, pilihan_menu);
-        jenis.setAdapter(adapter);
-        kandang.setAdapter(adapter);
-        pakan.setAdapter(adapter);
-        indukan.setAdapter(adapter);
-
+        initSpinnerJenis();
         jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-
-                Toast.makeText(EditData.this, jenis.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
-
+                String selectedName = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -104,16 +106,86 @@ public class EditData extends AppCompatActivity {
             }
         });
     }
+
     private void simpan() {
 
-
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
-            finish();
-
-        return super.onOptionsItemSelected(item);
     }
 
-}
+    private void initSpinnerJenis() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService request = retrofit.create(ApiService.class);
+        Call<ResponseData> call = request.getJen(3);
+            call.enqueue(new Callback<ResponseData>() {
+                @Override
+                public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                    if (response.isSuccessful()) {
+                        List<Jenis> semuadosenItems = response.body().getJenis();
+                        List<String> listSpinner = new ArrayList<String>();
+                        for (int i = 0; i < semuadosenItems.size(); i++) {
+                            listSpinner.add(semuadosenItems.get(i).getJenis());
+                        }
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                                android.R.layout.simple_spinner_item, listSpinner);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        jenis.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(EditData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseData> call, Throwable t) {
+
+                    Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    private void initSpinnerKandang() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService request = retrofit.create(ApiService.class);
+        Call<ResponseData> call = request.getJen(3);
+        call.enqueue(new Callback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                if (response.isSuccessful()) {
+                    List<Jenis> semuadosenItems = response.body().getJenis();
+                    List<String> listSpinner = new ArrayList<String>();
+                    for (int i = 0; i < semuadosenItems.size(); i++) {
+                        listSpinner.add(semuadosenItems.get(i).getJenis());
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                            android.R.layout.simple_spinner_item, listSpinner);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    jenis.setAdapter(adapter);
+                } else {
+                    Toast.makeText(EditData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+
+                Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+            @Override
+            public boolean onOptionsItemSelected (MenuItem item){
+            if (item.getItemId() == android.R.id.home)
+                finish();
+
+            return super.onOptionsItemSelected(item);
+        }
+
+        }
+
+
