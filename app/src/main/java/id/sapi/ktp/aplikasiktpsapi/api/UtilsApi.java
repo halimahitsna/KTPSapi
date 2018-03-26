@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UtilsApi {
 
 
-    public static final String BASE_URL = "http://ktpsapi.id/android/ktpsapi/";
+    public static final String BASE_URL = "http://ktpsapi.com/android/ktpsapi/";
     private static Retrofit retrofit = null;
     // variable to hold context
     private static Context context;

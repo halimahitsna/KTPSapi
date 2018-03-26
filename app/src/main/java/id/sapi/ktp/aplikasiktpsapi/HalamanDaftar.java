@@ -1,7 +1,9 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -24,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HalamanDaftar extends AppCompatActivity {
     Toolbar toolbar;
+    ProgressDialog loading;
     Button btndaftar;
     EditText txtnama, txtuser, txtpass, txtpassulang;
     @Override
@@ -34,6 +39,13 @@ public class HalamanDaftar extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        loading = new ProgressDialog(this, R.style.AppTheme);
+        DoubleBounce doubleBounce = new DoubleBounce();
+        loading.setIndeterminate(true);
+        loading.setIndeterminateDrawable(doubleBounce);
+        loading.setMessage("Please wait...");
+        loading.setCancelable(false);
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,7 +61,7 @@ public class HalamanDaftar extends AppCompatActivity {
         btndaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //daftar();
+                daftar();
             }
         });
     }
@@ -61,70 +73,85 @@ public class HalamanDaftar extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void daftar() {
+    private boolean validate(){
+        boolean valid = true;
+        String nm = txtnama.getText().toString();
+        String us = txtuser.getText().toString();
+        String ps = txtpass.getText().toString();
+        String psu =txtpassulang.getText().toString();
 
-        //defining a progress dialog to show while signing up
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Signing Up...");
-        progressDialog.show();
+        if(us.isEmpty()){
+            txtuser.setError("Username masih kosong!");
+            valid = false;
+        }else {
+            txtuser.setError(null);
+        }
+        if(nm.isEmpty()){
+            txtnama.setError("Nama masih kosong!");
+            valid = false;
+        }else {
+            txtuser.setError(null);
+        }
+        if(ps.isEmpty()){
+            txtpass.setError("Password masih kosong!");
+            valid = false;
+        }
+        if(psu.isEmpty()){
+            txtpassulang.setError("Ulangi password!");
+            valid = false;
+        }
+        if(!psu.contentEquals(ps)){
+            txtpassulang.setError("Password tidak sama, ulangi !");
+        }
+        return valid;
+    }
 
-        //getting the user values
-
+    private void daftar() {
+        koneksi();
         String nm = txtnama.getText().toString().trim();
-        String users = txtuser.getText().toString().trim();
-        String password = txtpass.getText().toString().trim();
+        String us = txtuser.getText().toString().trim();
+        String ps = txtpass.getText().toString().trim();
 
-
-        //building retrofit object
+        validate();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        //Defining retrofit api service
-        ApiService service = retrofit.create(ApiService.class);
-
-        //Defining the user object as we need to pass it with the call
-        User user = new User(nm, users, password);
-
-        //defining the call
-        *//*Call<Result> call = service.createUser(
-                user.getName(),
-                user.getUser(),
-                user.getPassword()
-        );*//*
-
-        //calling the api
+        ApiService api = retrofit.create(ApiService.class);
+        Call<Result> call = api.createUser(nm, us, ps);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                //hiding progress dialog
-                progressDialog.dismiss();
-
-                //displaying the message from the response as toast
-                Toast.makeText(getApplicationContext(), "Pendaftaran Berhasil! \nSilahkan Masuk", Toast.LENGTH_LONG).show();
-                txtnama.setText("");
-                txtuser.setText("");
-                txtpass.setText("");
-                txtpassulang.setText("");
-                Intent masuk = new Intent(HalamanDaftar.this, HalamanLogin.class);
-                startActivity(masuk);
-
-                //if there is no error
-                if (!response.body().getError()) {
-                    //starting profile activity
+                String value = response.body().getValue();
+                String message = response.body().getMessage();
+                loading.dismiss();
+                if (value.equals("1")) {
+                    Toast.makeText(HalamanDaftar.this, message, Toast.LENGTH_SHORT).show();
+                    Intent login = new Intent(HalamanDaftar.this, HalamanLogin.class);
+                    startActivity(login);
                     finish();
-                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
-                    startActivity(new Intent(getApplicationContext(), HalamanLogin.class));
+                } else {
+                    Toast.makeText(HalamanDaftar.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+               // progress.dismiss();
+                Toast.makeText(HalamanDaftar.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
-    }*/
 
+    }
+    private boolean adaInternet(){
+        ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return koneksi.getActiveNetworkInfo() != null;
+    }
+    private void koneksi(){
+        if(adaInternet()){
+//            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(HalamanDaftar.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+        }
+    }
 }

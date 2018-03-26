@@ -1,30 +1,30 @@
 package id.sapi.ktp.aplikasiktpsapi.modal;
 
 /**
- * Created by ASUS on 3/23/2018.
+ * Created by ASUS on 3/25/2018.
  */
 
-public class Indukan {
-    private String id_indukan;
-    private String indukan;
+public class Peternakan {
+    private String id_peternakan;
+    private String peternakan;
     private String input_date;
     private String update_date;
     private String id_user;
 
-    public String getId_indukan() {
-        return id_indukan;
+    public String getId_peternakan() {
+        return id_peternakan;
     }
 
-    public void setId_indukan(String id_indukan) {
-        this.id_indukan = id_indukan;
+    public void setId_peternakan(String id_peternakan) {
+        this.id_peternakan = id_peternakan;
     }
 
-    public String getIndukan() {
-        return indukan;
+    public String getPeternakan() {
+        return peternakan;
     }
 
-    public void setIndukan(String indukan) {
-        this.indukan = indukan;
+    public void setPeternakan(String peternakan) {
+        this.peternakan = peternakan;
     }
 
     public String getInput_date() {

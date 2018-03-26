@@ -1,0 +1,60 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:id="@+id/navigation_drawer_layout"
+    tools:context="id.sapi.ktp.aplikasiktpsapi.EditKandang">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/background"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kandang Sapi"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title" />
+        </android.support.v7.widget.Toolbar>
+        <EditText
+            android:id="@+id/idKandang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="id Jenis"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:enabled="false"
+            android:background="@drawable/rounded_view"
+            android:textColor="@color/alltext"/>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kandang"
+            android:textSize="16sp"
+            android:background="@drawable/rounded_view"
+            android:id="@+id/jenis" />
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Simpan"
+            android:textColor="@color/alltext"
+            android:background="@drawable/rounded_button"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+</RelativeLayout>

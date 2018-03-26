@@ -47,15 +47,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Manajemen extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
     private TextView textView;
     private RecyclerView recyclerView;
     private ArrayList<Sapi> data;
     private SapiAdapter adapter;
-    private ArrayList<Kategori> data1;
-    private KategoriAdapter adapter1;
     SharedPrefManager sharedPrefManager;
     public TextView nama;
     public ImageView image;
@@ -131,10 +128,11 @@ public class Manajemen extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
-            finish();
-
-        return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     private boolean adaInternet(){

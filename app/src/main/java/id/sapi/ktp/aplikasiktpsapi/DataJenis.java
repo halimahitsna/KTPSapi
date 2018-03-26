@@ -1,6 +1,7 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +42,9 @@ public class DataJenis extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
+    ImageView btnadd;
     private TextView textView;
     private RecyclerView recyclerView;
-    private ArrayList<Kandang> data;
-    private KandangAdapter adapter;
     private ArrayList<Jenis> data1;
     private JenisAdapter adapter1;
     SharedPrefManager sharedPrefManager;
@@ -60,7 +63,16 @@ public class DataJenis extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+//        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+
+        btnadd = (ImageView) findViewById(R.id.add);
+        btnadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(DataJenis.this, EditData.class);
+                startActivity(a);
+            }
+        });
 
     }
     private void initViews() {

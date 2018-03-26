@@ -42,6 +42,30 @@ public class ResponseData {
         return kandang;
     }
 
+    public void setIndukan(List<Indukan> indukan){
+        this.indukan = indukan;
+    }
+
+    public List<Indukan> getIndukan(){
+        return indukan;
+    }
+
+    public void setPakan(List<Pakan> indukan){
+        this.pakan = pakan;
+    }
+
+    public List<Pakan> getPakan(){
+        return pakan;
+    }
+
+    public void setPenyakit(List<Penyakit> penyakit){
+        this.penyakit = penyakit;
+    }
+
+    public List<Penyakit> getPenyakit(){
+        return penyakit;
+    }
+
     public void setError(boolean error){
         this.error = error;
     }

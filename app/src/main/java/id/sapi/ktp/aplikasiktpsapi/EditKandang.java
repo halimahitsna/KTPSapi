@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
-public class EditJenis extends AppCompatActivity {
+public class EditKandang extends AppCompatActivity {
 
     EditText txtid, txtjenis;
     Button btnsimpan;
@@ -20,7 +20,7 @@ public class EditJenis extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_jenis);
+        setContentView(R.layout.activity_edit_kandang);
 
         txtid = (EditText) findViewById(R.id.idJenis);
         txtjenis = (EditText)findViewById(R.id.jenis);
@@ -35,8 +35,8 @@ public class EditJenis extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        txtid.setText(getIntent().getStringExtra("id_jenis"));
-        txtjenis.setText(getIntent().getStringExtra("jenis"));
+        txtid.setText(getIntent().getStringExtra("id_kandang"));
+        txtjenis.setText(getIntent().getStringExtra("kandang"));
 
     }
 

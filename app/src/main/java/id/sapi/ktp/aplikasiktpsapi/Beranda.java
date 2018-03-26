@@ -1,5 +1,7 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,8 +33,11 @@ import az.plainpie.animation.PieAngleAnimation;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
+import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
+import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
+import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +46,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Beranda extends Fragment {
+    TextView nmpeternakan;
+    private ArrayList<Peternakan> data;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,12 +56,49 @@ public class Beranda extends Fragment {
         return inflater.inflate(R.layout.activity_beranda, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("Monitoring Kandang");
+        getActivity().setTitle("KTP Sapi");
+        nmpeternakan = view.findViewById(R.id.namaPeternakan);
+        loadJSON();
+    }
+
+    private void loadJSON() {
+        koneksi();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService request = retrofit.create(ApiService.class);
+        // Integer id = Integer.valueOf(sharedPrefManager.getSPId());
+        Call<JSONResponse> call = request.getPeternakan(3);
+        call.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+                JSONResponse jsonResponse = response.body();
+                data = new ArrayList<>(Arrays.asList(jsonResponse.getPeternakan()));
+                nmpeternakan.setText(data.get(0).getPeternakan());
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+    }
+
+    private boolean adaInternet(){
+        ConnectivityManager koneks = (ConnectivityManager) getActivity().getSystemService(getContext().CONNECTIVITY_SERVICE);
+        return koneks.getActiveNetworkInfo() != null;
+    }
+    private void koneksi(){
+        if(adaInternet()){
+//            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

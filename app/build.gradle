@@ -48,6 +48,7 @@ dependencies {
     compile 'com.jjoe64:graphview:4.2.1'
     compile 'im.dacer:AndroidCharts:1.0.4'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    compile 'me.ithebk:barchart:0.9'
     compile 'com.google.android.gms:play-services:11.8.0'
     compile 'com.google.android.gms:play-services-ads:11.8.0'
     compile 'com.google.android.gms:play-services-identity:11.8.0'

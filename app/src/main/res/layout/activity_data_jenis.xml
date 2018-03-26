@@ -1,13 +1,13 @@
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2"
+    android:background="@color/background"
     android:id="@+id/navigation_drawer_layout"
     tools:context="id.sapi.ktp.aplikasiktpsapi.DataJenia">
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,7 +16,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="#f2f2f2"
+            android:background="@color/background"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <TextView
                 android:layout_width="wrap_content"
@@ -36,5 +36,13 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="80dp"
             android:layout_height="wrap_content"/>
-    </FrameLayout>
-</android.support.v4.widget.DrawerLayout>
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_add_circle_black_24dp"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</RelativeLayout>

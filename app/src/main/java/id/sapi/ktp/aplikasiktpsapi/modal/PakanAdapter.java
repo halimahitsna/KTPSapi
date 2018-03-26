@@ -15,7 +15,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import id.sapi.ktp.aplikasiktpsapi.EditJenis;
-import id.sapi.ktp.aplikasiktpsapi.EditKandang;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -26,42 +25,42 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by ASUS on 3/8/2018.
+ * Created by ASUS on 3/26/2018.
  */
 
-public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHolder> {
-    private ArrayList<Kandang> kandang;
-    private Context context;
+public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
+    private ArrayList<Pakan> pakan;
+    Context context;
 
-    public KandangAdapter(Context context, ArrayList<Kandang> kandang){
-        this.kandang = kandang;
+    public PakanAdapter(Context context, ArrayList<Pakan> pakan){
         this.context = context;
+        this.pakan = pakan;
     }
-
     @Override
-    public KandangAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.jenis_row, viewGroup, false);
+    public PakanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.jenis_row, parent, false);
         return  new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(KandangAdapter.ViewHolder viewHolder, int i){
-        viewHolder.id_kandang.setText(kandang.get(i).getId_kandang());
-        viewHolder.txtkandang.setText(kandang.get(i).getKandang());
+    public void onBindViewHolder(PakanAdapter.ViewHolder holder, int position) {
+        holder.id_jenis.setText(pakan.get(position).getId_pakan());
+        holder.nmjenis.setText(pakan.get(position).getPakan());
     }
 
     @Override
     public int getItemCount() {
-        return kandang.size();
+        return pakan.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView id_kandang, txtkandang;
+        TextView id_jenis, nmjenis;
         ImageView edit, hapus;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            id_kandang = (TextView)itemView.findViewById(R.id.idJenis);
-            txtkandang = (TextView)itemView.findViewById(R.id.jenis);
+            id_jenis = (TextView)itemView.findViewById(R.id.idJenis);
+            nmjenis = (TextView)itemView.findViewById(R.id.jenis);
             edit = (ImageView) itemView.findViewById(R.id.edit);
             hapus = (ImageView) itemView.findViewById(R.id.hapus);
 
@@ -94,12 +93,12 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
 
             if (view.getId() == edit.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
-                    Kandang clickedDataItem = kandang.get(posisi);
-                    Intent intent = new Intent(context, EditKandang.class);
-                    intent.putExtra("id_kandang", kandang.get(posisi).getId_kandang());
-                    intent.putExtra("kandang", kandang.get(posisi).getKandang());
+                    Pakan clickedDataItem = pakan.get(posisi);
+                    Intent intent = new Intent(context, EditJenis.class);
+                    intent.putExtra("id_pakan", pakan.get(posisi).getId_pakan());
+                    intent.putExtra("pakan", pakan.get(posisi).getPakan());
                     context.startActivity(intent);
-                    Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getKandang(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getPakan(), Toast.LENGTH_SHORT).show();
                 }
             } else if (view.getId() == hapus.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
@@ -116,7 +115,7 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
                             ApiService api = retrofit.create(ApiService.class);
-                            Call<Result> call = api.hapusJenis(kandang.get(posisi).getId_kandang());
+                            Call<Result> call = api.hapusJenis(pakan.get(posisi).getId_pakan());
                             call.enqueue(new Callback<Result>() {
                                 @Override
                                 public void onResponse(Call<Result> call, Response<Result> response) {
@@ -149,3 +148,4 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
         }
     }
 }
+

@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 import id.sapi.ktp.aplikasiktpsapi.EditData;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -22,77 +26,56 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-
 /**
- * Created by hali on 25/08/2017.
+ * Created by ASUS on 3/26/2018.
  */
 
-public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
-    private ArrayList<Sapi> sapi;
+public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder> {
+    private ArrayList<Jadwal> jadwal;
     private Context context;
 
-    public SapiAdapter(Context context, ArrayList<Sapi> sapi) {
-        this.sapi = sapi;
+    public JadwalAdapter(Context context, ArrayList<Jadwal> jadwal) {
+        this.jadwal = jadwal;
         this.context = context;
     }
 
     @Override
-    public SapiAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.sapi_row, viewGroup, false);
-        return new ViewHolder(view);
+    public JadwalAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_jadwal, viewGroup, false);
+        return new JadwalAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SapiAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.id_sapi.setText(sapi.get(i).getId_sapi());
-        viewHolder.id_jenis.setText(sapi.get(i).getId_jenis());
-        Picasso.with(context).load(sapi.get(i).getFoto()).resize(100, 100)
-                .into(viewHolder.foto);
-       /* viewHolder.hapus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder alertbox = new AlertDialog.Builder(view.getRootView().getContext());
-                alertbox.setMessage("No Internet Connection");
-                alertbox.setTitle("Warning");
-                alertbox.setIcon(R.drawable.ic_warning_black_24dp);
+    public void onBindViewHolder(JadwalAdapter.ViewHolder viewHolder, int i) {
+        viewHolder.id_jadwal.setText(jadwal.get(i).getId_jadwal());
+        viewHolder.pakan.setText(jadwal.get(i).getId_pakan());
+        viewHolder.txtstatus.setText(jadwal.get(i).getStatus());
 
-                alertbox.setNeutralButton("OK",
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface arg0,
-                                                int arg1) {
-
-                            }
-                        });
-                alertbox.show();
-            }
-        });*/
     }
 
     @Override
     public int getItemCount() {
-        return sapi.size();
+        return jadwal.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView id_jenis, id_sapi;
-        ImageView foto, edit, hapus;
+        private TextView id_jadwal, pakan, txtstatus;
+        ImageView check, edit, hapus;
 
         public ViewHolder(View view) {
             super(view);
 
-            id_jenis = (TextView) view.findViewById(R.id.idSapi);
-            id_sapi = (TextView) view.findViewById(R.id.jenis);
-            foto = (ImageView) view.findViewById(R.id.gbr);
+            id_jadwal = (TextView) view.findViewById(R.id.idJadwal);
+            pakan = (TextView) view.findViewById(R.id.pakan);
+            txtstatus = (TextView) view.findViewById(R.id.status);
             edit = (ImageView) view.findViewById(R.id.edit);
             hapus = (ImageView) view.findViewById(R.id.hapus);
+            check = (ImageView)view.findViewById(R.id.done);
 
             //edit.setTag(R.integer.cast_libraries_material_featurehighlight_pulse_base_alpha, view);
             edit.setOnClickListener(this);
             hapus.setOnClickListener(this);
+            check.setOnClickListener(this);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,19 +109,19 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
 
             if (view.getId() == edit.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
-                    Sapi clickedDataItem = sapi.get(posisi);
+                    Jadwal clickedDataItem = jadwal.get(posisi);
                     Intent intent = new Intent(context, EditData.class);
-                    intent.putExtra("id_sapi", sapi.get(posisi).getId_sapi());
-                    intent.putExtra("id_jenis", sapi.get(posisi).getId_jenis());
-                    intent.putExtra("id_indukan", sapi.get(posisi).getId_indukan());
-                    intent.putExtra("id_kandang", sapi.get(posisi).getId_kandang());
+                    intent.putExtra("id_jadwal", jadwal.get(posisi).getId_jadwal());
+                    intent.putExtra("pakan", jadwal.get(posisi).getId_pakan());
+                    intent.putExtra("status", jadwal.get(posisi).getStatus());
+                   /* intent.putExtra("id_kandang", sapi.get(posisi).getId_kandang());
                     intent.putExtra("id_pakan", sapi.get(posisi).getId_pakan());
                     intent.putExtra("bobot_lahir", sapi.get(posisi).getBobot_lahir());
                     intent.putExtra("bobot_hidup", sapi.get(posisi).getBobot_hidup());
                     intent.putExtra("warna", sapi.get(posisi).getWarna());
                     intent.putExtra("umur", sapi.get(posisi).getUmur());
                     intent.putExtra("foto", sapi.get(posisi).getFoto());
-                    intent.putExtra("tgl_lahir", sapi.get(posisi).getTgl_lahir());
+                    intent.putExtra("tgl_lahir", sapi.get(posisi).getTgl_lahir());*/
                     context.startActivity(intent);
                     Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getId_sapi(), Toast.LENGTH_SHORT).show();
                 }
@@ -157,7 +140,7 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
                             ApiService api = retrofit.create(ApiService.class);
-                            Call<Result> call = api.hapusData(sapi.get(posisi).getId_sapi());
+                            Call<Result> call = api.hapusData(jadwal.get(posisi).getId_sapi());
                             call.enqueue(new Callback<Result>() {
                                 @Override
                                 public void onResponse(Call<Result> call, Response<Result> response) {
@@ -186,6 +169,8 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
                             });
                     alertbox.show();
                 }
+            }else if (view.getId() == check.getId()) {
+
             }
         }
     }

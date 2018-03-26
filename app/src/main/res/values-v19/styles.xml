@@ -3,5 +3,6 @@
 
     <style name="AppThemeNo" parent="Base.AppTheme">
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:footerDividersEnabled">true</item>
     </style>
 </resources>

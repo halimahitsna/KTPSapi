@@ -56,7 +56,8 @@
         <activity android:name=".DataIndukan" />
         <activity android:name=".DataPenyakit" />
         <activity android:name=".DataPakan" />
-        <activity android:name=".DetailMonitoringKandang"></activity>
+        <activity android:name=".DetailMonitoringKandang" />
+        <activity android:name=".EditKandang"></activity>
     </application>
 
 </manifest>

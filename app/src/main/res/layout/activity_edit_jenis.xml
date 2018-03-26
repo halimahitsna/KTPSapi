@@ -1,37 +1,36 @@
-<ScrollView
+<RelativeLayout
    xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto"
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
    android:layout_height="wrap_content"
-   android:background="#f2f2f2"
+   android:background="@color/background"
    android:id="@+id/navigation_drawer_layout"
-   tools:context="id.sapi.ktp.aplikasiktpsapi.EditData">
+   tools:context="id.sapi.ktp.aplikasiktpsapi.EditJenis">
    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:layout_marginLeft="20dp"
-      android:layout_marginRight="20dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
       android:orientation="vertical">
        <android.support.v7.widget.Toolbar
            android:id="@+id/toolbar"
            android:layout_marginTop="20dp"
            android:layout_width="match_parent"
            android:layout_height="?actionBarSize"
-           android:background="#f2f2f2"
+           android:background="@color/background"
            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="Edit Data Sapi"
+               android:text="Jenis Sapi"
                android:textColor="#000000"
-               android:textSize="20sp"
+               android:textSize="16sp"
                android:layout_gravity="center"
                android:id="@+id/toolbar_title" />
        </android.support.v7.widget.Toolbar>
        <EditText
-           android:id="@+id/idSapi"
+           android:id="@+id/idJenis"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:hint="id Jenis"
@@ -40,10 +39,11 @@
            android:enabled="false"
            android:background="@drawable/rounded_view"
            android:textColor="@color/alltext"/>
-       <Spinner
+       <EditText
            android:layout_marginTop="10dp"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
+           android:text="jenis"
            android:background="@drawable/rounded_view"
            android:layout_alignParentTop="true"
            android:layout_alignParentLeft="true"
@@ -59,4 +59,4 @@
            android:background="@drawable/rounded_button"
            android:textAllCaps="false"/>
     </LinearLayout>
-</ScrollView>
+</RelativeLayout>
