@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/idspin"
         android:textSize="16sp"
+        android:visibility="gone"
         android:textColor="@color/alltext"
         android:layout_weight="1" />
     <TextView

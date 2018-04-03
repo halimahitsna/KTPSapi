@@ -8,12 +8,12 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@drawable/sapi2"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/sapi2"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeNo">
+        android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashScreen" />
         <activity android:name=".tab.tab1" />
@@ -57,7 +57,23 @@
         <activity android:name=".DataPenyakit" />
         <activity android:name=".DataPakan" />
         <activity android:name=".DetailMonitoringKandang" />
-        <activity android:name=".EditKandang"></activity>
+        <activity android:name=".EditKandang" />
+        <activity android:name=".TambahJadwal" />
+
+        <meta-data
+            android:name="DATABASE"
+            android:value="ktpsapi.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="2" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="id.sapi.ktp.aplikasiktpsapi" />
+
+        <activity android:name=".EditMonitoring"></activity>
     </application>
 
 </manifest>

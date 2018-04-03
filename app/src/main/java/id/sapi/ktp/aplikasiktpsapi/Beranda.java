@@ -39,6 +39,7 @@ import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
 import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
+import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,6 +49,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Beranda extends Fragment {
     TextView nmpeternakan;
     private ArrayList<Peternakan> data;
+    SharedPrefManager sharedPrefManager;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,31 +65,8 @@ public class Beranda extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("KTP Sapi");
         nmpeternakan = view.findViewById(R.id.namaPeternakan);
-        loadJSON();
-    }
-
-    private void loadJSON() {
-        koneksi();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UtilsApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ApiService request = retrofit.create(ApiService.class);
-        // Integer id = Integer.valueOf(sharedPrefManager.getSPId());
-        Call<JSONResponse> call = request.getPeternakan(3);
-        call.enqueue(new Callback<JSONResponse>() {
-            @Override
-            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-                JSONResponse jsonResponse = response.body();
-                data = new ArrayList<>(Arrays.asList(jsonResponse.getPeternakan()));
-                nmpeternakan.setText(data.get(0).getPeternakan());
-            }
-
-            @Override
-            public void onFailure(Call<JSONResponse> call, Throwable t) {
-                Log.d("Error", t.getMessage());
-            }
-        });
+        sharedPrefManager = new SharedPrefManager(getActivity());
+        nmpeternakan.setText(sharedPrefManager.getSPId());
     }
 
     private boolean adaInternet(){

@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background"
-            app:popupTheme="@style/AppThemeNo" />
+            app:titleTextColor="@color/alltext"
+            android:theme="@style/ToolbarTheme"/>
 
     <!--</android.support.design.widget.AppBarLayout>-->
 

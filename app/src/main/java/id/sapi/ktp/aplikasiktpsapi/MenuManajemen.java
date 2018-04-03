@@ -56,9 +56,9 @@ public class MenuManajemen extends Fragment {
     private TextView textView;
     Button datasapi, jenis, indukan, kandang, pakan, penyakit;
     SharedPrefManager sharedPrefManager;
-    public TextView nama;
+    public TextView nama, iduser;
     public ImageView image;
-    ArrayList<Profil> profilList;
+
     Activity context;
     @Nullable
     @Override
@@ -77,18 +77,21 @@ public class MenuManajemen extends Fragment {
         getActivity().setTitle("Manajemen Data");
         //Bundle bundle=getArguments();
         //datasapi.setText(String.valueOf(bundle.getString("id_user")));
+        iduser = (TextView)view.findViewById(R.id.idu);
         datasapi = (Button)view.findViewById(R.id.sapi);
         jenis = (Button)view.findViewById(R.id.jenis);
         kandang = (Button)view.findViewById(R.id.kandang);
         indukan = (Button)view.findViewById(R.id.indukan);
         pakan = (Button)view.findViewById(R.id.pakan);
         penyakit = (Button)view.findViewById(R.id.penyakit);
+        sharedPrefManager = new SharedPrefManager(getActivity());
+        iduser.setText(sharedPrefManager.getSPId());
 
         jenis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent j = new Intent(getActivity(), DataJenis.class);
-                //  sapi.putExtra("id_user",context.getIntent().getStringExtra("id_user"));
+                j.putExtra("id_user",iduser.getText().toString());
                 startActivity(j);
             }
         });
@@ -96,7 +99,7 @@ public class MenuManajemen extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent k = new Intent(getActivity(), DataKandang.class);
-                //    sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
+                k.putExtra("id_user",iduser.getText().toString());
                 startActivity(k);
             }
         });
@@ -104,24 +107,24 @@ public class MenuManajemen extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), DataIndukan.class);
-                //    sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
+                i.putExtra("id_user",iduser.getText().toString());
                 startActivity(i);
             }
         });
         penyakit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent p = new Intent(getActivity(), DataPenyakit.class);
-                //   sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
-                startActivity(p);
+                Intent pe = new Intent(getActivity(), DataPenyakit.class);
+                pe.putExtra("id_user",iduser.getText().toString());
+                startActivity(pe);
             }
         });
         pakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent p = new Intent(getActivity(), DataPakan.class);
-                //     sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
-                startActivity(p);
+                Intent pa = new Intent(getActivity(), DataPakan.class);
+                pa.putExtra("id_user",iduser.getText().toString());
+                startActivity(pa);
             }
         });
 
@@ -130,7 +133,7 @@ public class MenuManajemen extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent s = new Intent(getActivity(), Manajemen.class);
-                //   sapi.putExtra("id_user", context.getIntent().getStringExtra("id_user"));
+                s.putExtra("id_user",iduser.getText().toString());
                 startActivity(s);
             }
         });

@@ -22,7 +22,7 @@ public class EditKandang extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_kandang);
 
-        txtid = (EditText) findViewById(R.id.idJenis);
+        txtid = (EditText) findViewById(R.id.idKandang);
         txtjenis = (EditText)findViewById(R.id.jenis);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
 

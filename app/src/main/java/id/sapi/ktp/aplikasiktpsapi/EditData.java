@@ -16,7 +16,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -26,9 +26,11 @@ import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.squareup.picasso.Picasso;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -48,23 +50,37 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EditData extends AppCompatActivity {
+public class EditData extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ActionBar actionBar;
     Toolbar toolbar;
     ProgressDialog loading;
     Button btnsimpan;
-    EditText txtidSapi, txtbobotlahir, txtbobothidup, txtumur, txtharga, txtwarna, tgllahir;
-    ImageView foto;
+    EditText txtidSapi, txtbobotlahir, txtbobothidup, txtumur, txtharga, txtwarna, tgllahir, txdate;
+    ImageView foto, imdate;
     Spinner jenis, kandang, indukan, pakan, penyakit;
-    DatePicker tgl_lahir;
+    //DatePicker tgl_lahir;
     ArrayList<Jenis> data;
     Context mcontext;
     Retrofit apiService;
+    String iduser;
+    private Calendar mCalendar;
+    private int mYear, mMonth, mHour, mMinute, mDay;
+    private String mDate;
+
+    // Constant values in milliseconds
+    private static final long milMinute = 60000L;
+    private static final long milHour = 3600000L;
+    private static final long milDay = 86400000L;
+    private static final long milWeek = 604800000L;
+    private static final long milMonth = 2592000000L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_data);
+
+        Intent i = getIntent();
+        iduser = i.getStringExtra("id_user");
 
         mcontext = this;
         apiService = UtilsApi.getClient();
@@ -86,6 +102,7 @@ public class EditData extends AppCompatActivity {
         txtbobotlahir = (EditText) findViewById(R.id.bobot_lhr);
         txtumur = (EditText) findViewById(R.id.umur);
         txtwarna = (EditText)findViewById(R.id.warna);
+        txdate = (EditText)findViewById(R.id.date);
         //EditTextGet
         txtidSapi.setText(getIntent().getStringExtra("id_sapi"));
         txtharga.setText(getIntent().getStringExtra("umur"));
@@ -100,13 +117,14 @@ public class EditData extends AppCompatActivity {
         kandang = (Spinner) findViewById(R.id.kandang);
         pakan = (Spinner) findViewById(R.id.pakan);
         penyakit = (Spinner) findViewById(R.id.penyakit);
-        tgllahir = (EditText) findViewById(R.id.tgl);
+        imdate = (ImageView) findViewById(R.id.set_date);
         //initSpinnerJenis();
         initSpinnerJenis();
         initSpinnerKandang();
         initSpinnerIndukan();
-        initSpinnerPakan();
-        initSpinnerPenyakit();
+        //initSpinnerPakan();
+        //initSpinnerPenyakit();
+
         jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -164,6 +182,16 @@ public class EditData extends AppCompatActivity {
                 simpan();
             }
         });
+
+        mCalendar = Calendar.getInstance();
+        mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+        mMinute = mCalendar.get(Calendar.MINUTE);
+        mYear = mCalendar.get(Calendar.YEAR);
+        mMonth = mCalendar.get(Calendar.MONTH) + 1;
+        mDay = mCalendar.get(Calendar.DATE);
+
+        mDate = mDay + "/" + mMonth + "/" + mYear;
+        txdate.setText(mDate);
     }
 
     private void simpan() {
@@ -215,7 +243,7 @@ public class EditData extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<ResponseData> call = request.getJen(3);
+        Call<ResponseData> call = request.getJen("3");
         call.enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
@@ -233,7 +261,7 @@ public class EditData extends AppCompatActivity {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     jenis.setAdapter(adapter);
                 } else {
-                    Toast.makeText(EditData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditData.this, "Gagal mengambil data jenis", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -251,7 +279,7 @@ public class EditData extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<ResponseData> call = request.getKan(3);
+        Call<ResponseData> call = request.getKan("3");
         call.enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
@@ -285,7 +313,7 @@ public class EditData extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<ResponseData> call = request.getInduk(3);
+        Call<ResponseData> call = request.getInduk("3");
         call.enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
@@ -293,8 +321,8 @@ public class EditData extends AppCompatActivity {
                     List<Indukan> semuadosenItems = response.body().getIndukan();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < semuadosenItems.size(); i++) {
+                      //  listSpinner.add(semuadosenItems.get(i).getIndukan());
                         listSpinner.add(semuadosenItems.get(i).getIndukan());
-                        listSpinner.add(semuadosenItems.get(i).getId_indukan());
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
@@ -314,13 +342,13 @@ public class EditData extends AppCompatActivity {
         });
     }
 
-    private void initSpinnerPakan() {
+    /*private void initSpinnerPakan() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<ResponseData> call = request.getPa(3);
+        Call<ResponseData> call = request.getPa("3");
         call.enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
@@ -328,7 +356,7 @@ public class EditData extends AppCompatActivity {
                     List<Pakan> semuadosenItems = response.body().getPakan();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < semuadosenItems.size(); i++) {
-                        listSpinner.add(semuadosenItems.get(i).getPakan());
+                        listSpinner.add(semuadosenItems.get(i).getId_pakan());
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
@@ -354,7 +382,7 @@ public class EditData extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<ResponseData> call = request.getPen(3);
+        Call<ResponseData> call = request.getPen("3");
         call.enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
@@ -362,7 +390,7 @@ public class EditData extends AppCompatActivity {
                     List<Penyakit> semuadosenItems = response.body().getPenyakit();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < semuadosenItems.size(); i++) {
-                        listSpinner.add(semuadosenItems.get(i).getPenyakit());
+                        listSpinner.add(semuadosenItems.get(i).getId_penyakit());
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
@@ -380,7 +408,7 @@ public class EditData extends AppCompatActivity {
                 Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -398,6 +426,31 @@ public class EditData extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        monthOfYear ++;
+        mDay = dayOfMonth;
+        mMonth = monthOfYear;
+        mYear = year;
+        mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
+        txdate.setText(mDate);
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    public void setDate(View view) {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
 }
 
 

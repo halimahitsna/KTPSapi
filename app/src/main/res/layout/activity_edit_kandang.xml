@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/background"
     android:id="@+id/navigation_drawer_layout"
     tools:context="id.sapi.ktp.aplikasiktpsapi.EditKandang">
@@ -15,7 +15,6 @@
         android:orientation="vertical">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@color/background"

@@ -46,8 +46,10 @@ import java.util.HashMap;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
+import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
 import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
+import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Profil;
 import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
 import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
@@ -72,9 +74,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView txtRegId, txtMessage;
     Toolbar toolbar;
     private ArrayList<User> data;
+    public ArrayList<Peternakan> data1;
     SharedPrefManager sharedPrefManager;
-    public TextView nama, id_user;
-    public ImageView image;
+    TextView nama, id_user, nmpeternakan;
+    ImageView image;
     ArrayList<Profil> profilList;
     public static Integer id;
 
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //UserDB.deleteAll();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -193,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         id_user = (TextView)header.findViewById(R.id.tvid);
         nama = (TextView) header.findViewById(R.id.tvnama);
         image = (ImageView) header.findViewById(R.id.imageView);
+        nmpeternakan = (TextView)header.findViewById(R.id.txpeternakan);
         id_user.setText(sharedPrefManager.getSPId());
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
@@ -203,9 +208,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // get user data from session
         HashMap<String, String> user = sharedPrefManager.getUserDetails();
         ApiService request = retrofit.create(ApiService.class);
-        String id_user = user.get(sharedPrefManager.getSPId());
+
         id = Integer.valueOf(sharedPrefManager.getSPId());
-        Call<JSONResponse> call = request.getUser(id);
+        Call<JSONResponse> call = request.getUser(sharedPrefManager.getSPId());
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
@@ -213,6 +218,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
                 nama.setText(data.get(0).getUser());
                 Picasso.with(MainActivity.this).load( data.get(0).getFoto()).into(image);
+                loadPeternakan();
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+
+    }
+
+    private void loadPeternakan() {
+        koneksi();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService request1 = retrofit.create(ApiService.class);
+        //String id = sharedPrefManager.getSPId());
+        Call<JSONResponse> call1 = request1.getPeternakan(sharedPrefManager.getSPId());
+        call1.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call1, Response<JSONResponse> response) {
+                JSONResponse jsonResponse1 = response.body();
+                data1 = new ArrayList<>(Arrays.asList(jsonResponse1.getPeternakan()));
+                nmpeternakan.setText(data1.get(0).getPeternakan());
             }
 
             @Override
@@ -258,17 +289,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void displaySelectedScreen(int itemId) {
         //creating fragment object
         Fragment fragment = null;
-
-        //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.menu_utama:
                 fragment = new Beranda();
                 break;
             case R.id.menu_manajemen:
                 fragment = new MenuManajemen();
-                Bundle bundle=new Bundle();
-                //bundle.putString("id_user", id_user.getText().toString());
-                fragment.setArguments(bundle);
+/*
+                bundle.putSerializable("id_user", iduser);
+                bundle.putSerializable("name", namauser);
+                fragment.setArguments(bundle);*/
                 break;
             case R.id.menu_monitoring:
                 fragment = new MonitoringKandang();

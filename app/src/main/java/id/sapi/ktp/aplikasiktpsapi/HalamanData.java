@@ -156,7 +156,7 @@ public class HalamanData extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONSapi(3);
+        Call<JSONResponse> call = request.getJSONSapi("3");
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {

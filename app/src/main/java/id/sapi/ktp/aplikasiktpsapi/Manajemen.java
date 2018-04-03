@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,30 +51,32 @@ public class Manajemen extends AppCompatActivity {
 
     Toolbar toolbar;
     ActionBar actionBar;
-    private TextView textView;
     private RecyclerView recyclerView;
     private ArrayList<Sapi> data;
     private SapiAdapter adapter;
     SharedPrefManager sharedPrefManager;
     public TextView nama;
     public ImageView image;
-    ArrayList<Profil> profilList;
+    String iduser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halaman_data);
 
+        Intent i = getIntent();
+        iduser = i.getStringExtra("id_user");
         initViews();
         sharedPrefManager = new SharedPrefManager(this);
 
-        //Drawerbar
+        //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        ImageView add = (ImageView)findViewById(R.id.add);
+        AddFloatingActionButton add = (AddFloatingActionButton) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent a = new Intent(Manajemen.this, EditData.class);
+                a.putExtra("id_user", iduser);
                 startActivity(a);
             }
         });
@@ -102,7 +106,7 @@ public class Manajemen extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONSapi(3);
+        Call<JSONResponse> call = request.getJSONSapi(iduser);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {

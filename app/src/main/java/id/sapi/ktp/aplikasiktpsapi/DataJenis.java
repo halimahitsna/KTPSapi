@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -42,18 +44,20 @@ public class DataJenis extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
-    ImageView btnadd;
+    AddFloatingActionButton btnadd;
     private TextView textView;
     private RecyclerView recyclerView;
     private ArrayList<Jenis> data1;
     private JenisAdapter adapter1;
     SharedPrefManager sharedPrefManager;
+    String iduser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_jenis);
         initViews();
-
+        Intent i = getIntent();
+        iduser = i.getStringExtra("id_user");
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,11 +69,12 @@ public class DataJenis extends AppCompatActivity {
 
 //        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
 
-        btnadd = (ImageView) findViewById(R.id.add);
+        btnadd = (AddFloatingActionButton) findViewById(R.id.add);
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a = new Intent(DataJenis.this, EditData.class);
+                Intent a = new Intent(DataJenis.this, EditJenis.class);
+                a.putExtra("id_user", iduser);
                 startActivity(a);
             }
         });
@@ -93,7 +98,7 @@ public class DataJenis extends AppCompatActivity {
                 .build();
         ApiService request = retrofit.create(ApiService.class);
        // Integer id = Integer.valueOf(sharedPrefManager.getSPId());
-        Call<JSONResponse> call = request.getJSONJenis(3);
+        Call<JSONResponse> call = request.getJSONJenis("3");
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {

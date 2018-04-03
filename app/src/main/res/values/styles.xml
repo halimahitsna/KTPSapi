@@ -1,40 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppTheme.Base"/>
 
-    <style name="AppTheme" parent="Base.AppTheme">
-
+    <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/alltext</item>
+        <item name="colorPrimaryDark">@color/alltext</item>
+        <item name="colorAccent">@color/alltext</item>
+        <item name="actionModeBackground">@color/background</item>
+        <item name="actionBarPopupTheme">@style/Theme.AppCompat.Light</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:textColorHint">@color/background</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:textColor">@color/alltext</item>
     </style>
-
-    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#000000</item>
-        <item name="colorPrimaryDark">#000000</item>
-        <item name="colorAccent">@color/md_pink_500</item>
-        <item name="colorControlHighlight">@color/md_indigo_500_25</item>
-        <item name="android:windowBackground">@color/md_white_1000</item>
-    </style>
-
     <style name="ToolbarTheme" parent="AppTheme">
-        <item name="android:textColorPrimary">@android:color/black</item>
-        <item name="android:textColorSecondary">@android:color/black</item>
+        <item name="android:textColorPrimary">@color/textPutih</item>
+        <item name="android:textColorSecondary">@color/alltext</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="NavigationViewTheme" parent="AppTheme">
-        <item name="textAppearanceListItem">@style/TextAppearance.AppCompat.Body2</item>
+    <style name="NavigationViewTheme" parent="Theme.AppCompat.Light">
+        <!--<item name="textAppearanceListItem">@style/TextAppearance.AppCompat.Body2</item>-->
+        <item name="textAppearanceListItem">@color/alltext</item>
+        <item name="colorPrimary">@color/alltext</item>
     </style>
 
-    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
-        <item name="colorAccent">#FFFFFF</item>
-        <item name="android:textColorPrimary">#CCCCCC</item>
-        <item name="android:background">@color/colorPrimary</item>
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/textPutih</item>
+        <item name="android:textColorPrimary">@color/textPutih</item>
+        <item name="android:background">@color/background</item>
     </style>
 
-   <!--<style name="AppThemeNo" parent="Base.AppTheme">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>-->
-
-    <style name="AppThemeNo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppThemeNo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

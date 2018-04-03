@@ -9,7 +9,6 @@
     tools:context="id.sapi.ktp.aplikasiktpsapi.HalamanLogin">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -37,6 +36,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:hint="Username"
+            android:textColor="@color/alltext"
             android:background="@drawable/rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -48,6 +48,7 @@
             android:background="@drawable/rounded"
             android:layout_width="match_parent"
             android:hint="Password"
+            android:textColor="@color/alltext"
             android:inputType="textPassword"
             android:layout_height="wrap_content" />
         <Button
@@ -56,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masuk"
-            android:textColor="#000000"
+            android:textColor="@color/alltext"
             android:textSize="16sp"
             android:textAllCaps="false"
             android:background="@drawable/rounded_button"
@@ -73,7 +74,6 @@
         android:textAllCaps="false"
         android:textSize="16sp"
         android:textColor="#000000"
-        android:background="#3ab54b"
-        android:layout_marginBottom="30dp"
+        android:background="@drawable/rounded_button"
         android:layout_alignParentBottom="true" />
 </RelativeLayout>
