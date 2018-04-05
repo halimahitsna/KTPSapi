@@ -2,12 +2,9 @@ package id.sapi.ktp.aplikasiktpsapi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,23 +23,22 @@ import com.getbase.floatingactionbutton.AddFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
-import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
-import id.sapi.ktp.aplikasiktpsapi.modal.Profil;
-import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
 import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
 import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
+import id.sapi.ktp.aplikasiktpsapi.util.Reminder;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.view.View.getDefaultSize;
+import static com.github.mikephil.charting.charts.Chart.LOG_TAG;
 
 /**
  * Created by NgocTri on 4/9/2016.
@@ -58,6 +54,7 @@ public class Manajemen extends AppCompatActivity {
     public TextView nama;
     public ImageView image;
     String iduser;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +63,7 @@ public class Manajemen extends AppCompatActivity {
 
         Intent i = getIntent();
         iduser = i.getStringExtra("id_user");
-        initViews();
+
         sharedPrefManager = new SharedPrefManager(this);
 
         //toolbar
@@ -75,7 +72,7 @@ public class Manajemen extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a = new Intent(Manajemen.this, EditData.class);
+                Intent a = new Intent(Manajemen.this, TambahData.class);
                 a.putExtra("id_user", iduser);
                 startActivity(a);
             }
@@ -86,8 +83,20 @@ public class Manajemen extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        initViews();
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Log.i(LOG_TAG, "onRefresh called from SwipeRefreshLayout");
 
-
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        initViews();
+                    }
+                }
+        );
     }
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.card_recycle_view);
@@ -121,6 +130,17 @@ public class Manajemen extends AppCompatActivity {
                 Log.d("Error", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loadJSON();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadJSON();
     }
 
     @Override

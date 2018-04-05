@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +19,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,10 +32,6 @@ import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,13 +40,8 @@ import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
-import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
-import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Profil;
-import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
-import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
-import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.User;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
@@ -61,8 +49,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import android.support.v7.app.ActionBar;
 
 /**
  * Created by NgocTri on 4/9/2016.
@@ -80,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView image;
     ArrayList<Profil> profilList;
     public static Integer id;
+    String regId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // and displays on the screen
     private void displayFirebaseRegId() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
+        regId = pref.getString("regId", null);
 
         Log.e(TAG, "Firebase reg id: " + regId);
 
@@ -192,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //end notif
 
     private void loadHeader() {
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View header=navigationView.getHeaderView(0);
         id_user = (TextView)header.findViewById(R.id.tvid);
@@ -199,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         image = (ImageView) header.findViewById(R.id.imageView);
         nmpeternakan = (TextView)header.findViewById(R.id.txpeternakan);
         id_user.setText(sharedPrefManager.getSPId());
+        UserDB userDB = new UserDB(id_user.getText().toString(), nama.getText().toString());
+        userDB.save();
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
         Retrofit retrofit = new Retrofit.Builder()

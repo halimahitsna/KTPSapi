@@ -24,23 +24,22 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EditKandang extends AppCompatActivity {
+public class EditPenyakit extends AppCompatActivity {
 
-    EditText txtid, txtkandang, txbsuhu, tbkelembapan, tbgas;
+    EditText txtid, txtjenis;
     Button btnsimpan;
     Toolbar toolbars;
     ActionBar actionBar;
+    String iduser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_kandang);
-
-        txtid = (EditText) findViewById(R.id.idKandang);
-        txtkandang = (EditText)findViewById(R.id.kandang);
-        txbsuhu = (EditText)findViewById(R.id.bsuhu);
-        tbkelembapan = (EditText)findViewById(R.id.bkelembapan);
-        tbgas=(EditText)findViewById(R.id.bgas);
+        setContentView(R.layout.activity_edit_jenis);
+        Intent i = getIntent();
+        iduser = i.getStringExtra("id_user");
+        txtid = (EditText) findViewById(R.id.idJenis);
+        txtjenis = (EditText)findViewById(R.id.jenis);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
 
         //Drawerbar
@@ -52,34 +51,27 @@ public class EditKandang extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        txtid.setText(getIntent().getStringExtra("id_kandang"));
-        txtkandang.setText(getIntent().getStringExtra("kandang"));
-        txbsuhu.setText(getIntent().getStringExtra("bsuhu"));
-        tbkelembapan.setText(getIntent().getStringExtra("bkelembapan"));
-        tbgas.setText(getIntent().getStringExtra("bgas"));
-
+        txtid.setText(getIntent().getStringExtra("id_jenis"));
+        txtjenis.setText(getIntent().getStringExtra("jenis"));
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 simpan();
             }
         });
-    }
 
+    }
     private void simpan() {
         koneksi();
         String id = txtid.getText().toString().trim();
-        String kd = txtkandang.getText().toString().trim();
-        String sh = txbsuhu.getText().toString().trim();
-        String kl = tbkelembapan.getText().toString().trim();
-        String gs = tbgas.getText().toString().trim();
+        String jns = txtjenis.getText().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertKandang(id, kd, sh, kl, gs);
+        Call<Result> call = api.insertJenis(id, jns);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -87,18 +79,18 @@ public class EditKandang extends AppCompatActivity {
                 String message = response.body().getMessage();
                 //loading.dismiss();
                 if (value.equals("1")) {
-                    Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(EditKandang.this, DataKandang.class);
+                    Toast.makeText(EditPenyakit.this, message, Toast.LENGTH_SHORT).show();
+                    Intent ok = new Intent(EditPenyakit.this, DataPenyakit.class);
                     startActivity(ok);
                 } else {
-                    Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditPenyakit.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 // progress.dismiss();
-                Toast.makeText(EditKandang.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditPenyakit.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
         onBackPressed();
@@ -117,7 +109,7 @@ public class EditKandang extends AppCompatActivity {
         if(adaInternet()){
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(EditKandang.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(EditPenyakit.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
     }
 

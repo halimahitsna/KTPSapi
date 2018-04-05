@@ -73,7 +73,18 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="id.sapi.ktp.aplikasiktpsapi" />
 
-        <activity android:name=".EditMonitoring"></activity>
+        <activity android:name=".EditMonitoring" />
+        <activity android:name=".EditPakan" />
+        <activity android:name=".EditPenyakit" />
+        <activity android:name=".EditJadwal" />
+        <activity android:name=".EditIndukan" />
+        <activity android:name=".TambahData" />
+        <activity android:name=".TambahKandang" />
+        <activity android:name=".TambahPakan" />
+        <activity android:name=".TambahJenis" />
+        <activity android:name=".TambahPenyakit" />
+        <activity android:name=".TambahIndukan" />
+        <activity android:name=".DetailData"></activity>
     </application>
 
 </manifest>

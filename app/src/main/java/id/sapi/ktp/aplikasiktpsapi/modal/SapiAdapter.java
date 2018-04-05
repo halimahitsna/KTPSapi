@@ -168,6 +168,9 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    sapi.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, sapi.size());
                                 }
 
                                 @Override
@@ -185,6 +188,7 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
                                 }
                             });
                     alertbox.show();
+
                 }
             }
         }

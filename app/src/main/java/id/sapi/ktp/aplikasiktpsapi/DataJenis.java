@@ -25,10 +25,12 @@ import com.getbase.floatingactionbutton.AddFloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
+import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
@@ -45,19 +47,26 @@ public class DataJenis extends AppCompatActivity {
     Toolbar toolbar;
     ActionBar actionBar;
     AddFloatingActionButton btnadd;
-    private TextView textView;
+    private TextView id;
     private RecyclerView recyclerView;
     private ArrayList<Jenis> data1;
     private JenisAdapter adapter1;
     SharedPrefManager sharedPrefManager;
     String iduser;
+    List<UserDB> userDBList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_jenis);
-        initViews();
+
         Intent i = getIntent();
+        id = (TextView)findViewById(R.id.idu);
+        id.setText(i.getStringExtra("id_user"));
         iduser = i.getStringExtra("id_user");
+
+        initViews();
+
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,7 +82,7 @@ public class DataJenis extends AppCompatActivity {
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a = new Intent(DataJenis.this, EditJenis.class);
+                Intent a = new Intent(DataJenis.this, TambahJenis.class);
                 a.putExtra("id_user", iduser);
                 startActivity(a);
             }
@@ -96,9 +105,10 @@ public class DataJenis extends AppCompatActivity {
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         ApiService request = retrofit.create(ApiService.class);
        // Integer id = Integer.valueOf(sharedPrefManager.getSPId());
-        Call<JSONResponse> call = request.getJSONJenis("3");
+        Call<JSONResponse> call = request.getJSONJenis(iduser);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
@@ -113,6 +123,17 @@ public class DataJenis extends AppCompatActivity {
                 Log.d("Error", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loadJSON();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadJSON();
     }
 
     @Override

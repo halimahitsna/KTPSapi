@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import id.sapi.ktp.aplikasiktpsapi.DetailMonitoringKandang;
 import id.sapi.ktp.aplikasiktpsapi.EditJenis;
+import id.sapi.ktp.aplikasiktpsapi.EditPakan;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -38,14 +40,16 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
     }
     @Override
     public PakanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.jenis_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pakan_row, parent, false);
         return  new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(PakanAdapter.ViewHolder holder, int position) {
-        holder.id_jenis.setText(pakan.get(position).getId_pakan());
-        holder.nmjenis.setText(pakan.get(position).getPakan());
+        holder.id_pakan.setText(pakan.get(position).getId_pakan());
+        holder.nmpakan.setText(pakan.get(position).getPakan());
+        holder.txstat.setText(pakan.get(position).getStatus());
+        holder.txjml.setText(pakan.get(position).getJumlah());
     }
 
     @Override
@@ -54,13 +58,15 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView id_jenis, nmjenis;
+        TextView id_pakan, nmpakan, txjml, txstat;
         ImageView edit, hapus;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            id_jenis = (TextView)itemView.findViewById(R.id.idJenis);
-            nmjenis = (TextView)itemView.findViewById(R.id.jenis);
+            id_pakan = (TextView)itemView.findViewById(R.id.idPakan);
+            nmpakan = (TextView)itemView.findViewById(R.id.pakan);
+            txjml = (TextView)itemView.findViewById(R.id.jml);
+            txstat = (TextView)itemView.findViewById(R.id.stat);
             edit = (ImageView) itemView.findViewById(R.id.edit);
             hapus = (ImageView) itemView.findViewById(R.id.hapus);
 
@@ -75,13 +81,15 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
                     int pos = getAdapterPosition();
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
-//                        Jenis clickedDataItem = jenis.get(pos);
-//                        Intent intent = new Intent(context,EditJenis.class);
-//                        intent.putExtra("id_jenis", jenis.get(pos).getId_jenis());
-//                        intent.putExtra("jenis", jenis.get(pos).getJenis());
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        context.startActivity(intent);
-//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getJenis(), Toast.LENGTH_SHORT).show();
+                        Pakan clickedDataItem = pakan.get(pos);
+                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
+                        intent.putExtra("id_pakan", pakan.get(pos).getId_pakan());
+                        intent.putExtra("pakan", pakan.get(pos).getPakan());
+                        intent.putExtra("jumlah", pakan.get(pos).getJumlah());
+                        intent.putExtra("status", pakan.get(pos).getStatus());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getPakan(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -94,7 +102,7 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
             if (view.getId() == edit.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
                     Pakan clickedDataItem = pakan.get(posisi);
-                    Intent intent = new Intent(context, EditJenis.class);
+                    Intent intent = new Intent(context, EditPakan.class);
                     intent.putExtra("id_pakan", pakan.get(posisi).getId_pakan());
                     intent.putExtra("pakan", pakan.get(posisi).getPakan());
                     context.startActivity(intent);
@@ -115,7 +123,7 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
                             ApiService api = retrofit.create(ApiService.class);
-                            Call<Result> call = api.hapusJenis(pakan.get(posisi).getId_pakan());
+                            Call<Result> call = api.hapusPakan(pakan.get(posisi).getId_pakan());
                             call.enqueue(new Callback<Result>() {
                                 @Override
                                 public void onResponse(Call<Result> call, Response<Result> response) {

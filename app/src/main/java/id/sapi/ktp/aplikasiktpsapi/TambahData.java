@@ -51,7 +51,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EditData extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class TambahData extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ActionBar actionBar;
     Toolbar toolbar;
     ProgressDialog loading;
@@ -94,7 +94,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
-       // actionBar.setDisplayShowHomeEnabled(true);
+        // actionBar.setDisplayShowHomeEnabled(true);
 
         btnsimpan = (Button) findViewById(R.id.btnSimpan);
         foto = (ImageView) findViewById(R.id.foto);
@@ -123,21 +123,16 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         penyakit = (Spinner) findViewById(R.id.penyakit);
         imdate = (ImageView) findViewById(R.id.set_date);
 
-//        jenis.setSelection(Integer.parseInt(getIntent().getStringExtra("jenis")));
-//        indukan.setSelection(Integer.parseInt(getIntent().getStringExtra("indukan")));
-//        pakan.setSelection(Integer.parseInt(getIntent().getStringExtra("pakan")));
-//        kandang.setSelection(Integer.parseInt(getIntent().getStringExtra("kandang")));
-//        penyakit.setSelection(Integer.parseInt(getIntent().getStringExtra("penyakit")));
-//        initSpinnerJenis();
-//        initSpinnerKandang();
-//        initSpinnerIndukan();
-//        initSpinnerPakan();
-//        initSpinnerPeny();
+        initSpinnerJenis();
+        initSpinnerKandang();
+        initSpinnerIndukan();
+        initSpinnerPakan();
+        initSpinnerPeny();
 
         jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedjenis = getIntent().getStringExtra("jenis");
+                String selectedjenis = parent.getItemAtPosition(position).toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -211,12 +206,12 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         String hr = txtharga.getText().toString().trim();
         String umur = txtumur.getText().toString().trim();
         String wr = txtwarna.getText().toString().trim();
-        String jn = String.valueOf(jenis.getSelectedItemId());
-        String kd = String.valueOf(kandang.getSelectedItemId());
-        String in = String.valueOf(indukan.getSelectedItemId());
-        String pkn = String.valueOf(pakan.getSelectedItemId());
-        String pny = String.valueOf(penyakit.getSelectedItemId());
-        String tg = tgllahir.getText().toString().trim();
+        String jn = jenis.getSelectedItem().toString().trim();
+        String kd = kandang.getSelectedItem().toString().trim();
+        String in = indukan.getSelectedItem().toString().trim();
+        String pkn = pakan.getSelectedItem().toString().trim();
+        String pny = penyakit.getSelectedItem().toString().trim();
+        String tg = txdate.getText().toString().trim();
         String user = iduser.toString().trim();
 
         //validate();
@@ -231,20 +226,21 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
             public void onResponse(Call<Result> call, Response<Result> response) {
                 String value = response.body().getValue();
                 String message = response.body().getMessage();
-                loading.dismiss();
+//                loading.dismiss();
                 if (value.equals("1")) {
-                    Toast.makeText(EditData.this, message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahData.this, message, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(EditData.this, message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahData.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 // progress.dismiss();
-                Toast.makeText(EditData.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahData.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
+        onBackPressed();
     }
 
     private void initSpinnerJenis() {
@@ -262,23 +258,23 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                     List<String> listSpinner = new ArrayList<String>();
                     listSpinner.add("- Pilih Jenis Sapi -");
                     for (int i = 0; i < semuadosenItems.size(); i++) {
-                        listSpinner.add(semuadosenItems.get(i).getJenis());
+                        listSpinner.add(semuadosenItems.get(i).getId_jenis());
 
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(TambahData.this,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     jenis.setAdapter(adapter);
                 } else {
-                    Toast.makeText(EditData.this, "Gagal mengambil data jenis", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahData.this, "Gagal mengambil data jenis", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
 
-                Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -297,22 +293,22 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                     List<Kandang> semuadosenItems = response.body().getKandang();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < semuadosenItems.size(); i++) {
-                        listSpinner.add(semuadosenItems.get(i).getKandang());
+                        listSpinner.add(semuadosenItems.get(i).getId_kandang());
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(TambahData.this,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     kandang.setAdapter(adapter);
                 } else {
-                    Toast.makeText(EditData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
 
-                Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -331,23 +327,23 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                     List<Indukan> semuadosenItems = response.body().getIndukan();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < semuadosenItems.size(); i++) {
-                      //  listSpinner.add(semuadosenItems.get(i).getIndukan());
-                        listSpinner.add(semuadosenItems.get(i).getIndukan());
+                        //  listSpinner.add(semuadosenItems.get(i).getIndukan());
+                        listSpinner.add(semuadosenItems.get(i).getId_indukan());
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(TambahData.this,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     indukan.setAdapter(adapter);
                 } else {
-                    Toast.makeText(EditData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
 
-                Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -369,19 +365,19 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         listSpinner.add(semuadosenItems.get(i).getId_pakan());
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(TambahData.this,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     pakan.setAdapter(adapter);
                 } else {
-                    Toast.makeText(EditData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
 
-                Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -402,19 +398,19 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         listSpinner.add(semuadosenItems.get(i).getId_pakan());
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(TambahData.this,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     penyakit.setAdapter(adapter);
                 } else {
-                    Toast.makeText(EditData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahData.this, "Gagal mengambil data dosen", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
 
-                Toast.makeText(EditData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahData.this, "Koneksi internet bermasalah", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -426,6 +422,11 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

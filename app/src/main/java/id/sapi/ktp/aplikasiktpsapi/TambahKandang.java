@@ -24,7 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EditKandang extends AppCompatActivity {
+public class TambahKandang extends AppCompatActivity {
 
     EditText txtid, txtkandang, txbsuhu, tbkelembapan, tbgas;
     Button btnsimpan;
@@ -87,18 +87,18 @@ public class EditKandang extends AppCompatActivity {
                 String message = response.body().getMessage();
                 //loading.dismiss();
                 if (value.equals("1")) {
-                    Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(EditKandang.this, DataKandang.class);
+                    Toast.makeText(TambahKandang.this, message, Toast.LENGTH_SHORT).show();
+                    Intent ok = new Intent(TambahKandang.this, DataKandang.class);
                     startActivity(ok);
                 } else {
-                    Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahKandang.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 // progress.dismiss();
-                Toast.makeText(EditKandang.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahKandang.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
         onBackPressed();
@@ -117,7 +117,7 @@ public class EditKandang extends AppCompatActivity {
         if(adaInternet()){
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(EditKandang.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(TambahKandang.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
     }
 

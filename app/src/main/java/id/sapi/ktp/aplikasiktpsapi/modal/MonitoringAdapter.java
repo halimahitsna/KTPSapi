@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import id.sapi.ktp.aplikasiktpsapi.DetailMonitoringKandang;
 import id.sapi.ktp.aplikasiktpsapi.EditJenis;
 import id.sapi.ktp.aplikasiktpsapi.EditKandang;
 import id.sapi.ktp.aplikasiktpsapi.R;
@@ -82,13 +83,16 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Vi
                     int pos = getAdapterPosition();
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
-//                        Jenis clickedDataItem = jenis.get(pos);
-//                        Intent intent = new Intent(context,EditJenis.class);
-//                        intent.putExtra("id_jenis", jenis.get(pos).getId_jenis());
-//                        intent.putExtra("jenis", jenis.get(pos).getJenis());
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        context.startActivity(intent);
-//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getJenis(), Toast.LENGTH_SHORT).show();
+                        Kandang clickedDataItem = kandang.get(pos);
+                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
+                        intent.putExtra("id_kandang", kandang.get(pos).getId_kandang());
+                        intent.putExtra("kandang", kandang.get(pos).getKandang());
+                        intent.putExtra("suhu", kandang.get(pos).getSuhu());
+                        intent.putExtra("kelembapan", kandang.get(pos).getKelembapan());
+                        intent.putExtra("gas", kandang.get(pos).getGas_amonia());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getKandang(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

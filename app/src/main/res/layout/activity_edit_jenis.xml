@@ -7,11 +7,9 @@
    android:background="@color/background"
    android:id="@+id/navigation_drawer_layout"
    tools:context="id.sapi.ktp.aplikasiktpsapi.EditJenis">
-   <LinearLayout
+   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-       android:layout_marginLeft="10dp"
-       android:layout_marginRight="10dp"
       android:orientation="vertical">
        <android.support.v7.widget.Toolbar
            android:id="@+id/toolbar"
@@ -28,34 +26,45 @@
                android:layout_gravity="center"
                android:id="@+id/toolbar_title" />
        </android.support.v7.widget.Toolbar>
-       <EditText
-           android:id="@+id/idJenis"
+       <LinearLayout
+           android:layout_below="@id/toolbar"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:hint="id Jenis"
-           android:textSize="16sp"
-           android:layout_marginTop="20dp"
-           android:enabled="false"
-           android:background="@drawable/rounded_view"
-           android:textColor="@color/alltext"/>
-       <EditText
-           android:layout_marginTop="10dp"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="jenis"
-           android:background="@drawable/rounded_view"
-           android:layout_alignParentTop="true"
-           android:layout_alignParentLeft="true"
-           android:layout_alignParentStart="true"
-           android:id="@+id/jenis" />
-       <Button
-           android:layout_marginTop="10dp"
-           android:id="@+id/btnSimpan"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="Simpan"
-           android:textColor="@color/alltext"
-           android:background="@drawable/rounded_button"
-           android:textAllCaps="false"/>
-    </LinearLayout>
+           android:layout_marginLeft="16dp"
+           android:layout_marginRight="16dp"
+           android:orientation="vertical">
+           <EditText
+               android:id="@+id/idJenis"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:hint="id Jenis"
+               android:textSize="16sp"
+               android:layout_marginTop="20dp"
+               android:enabled="false"
+               android:visibility="gone"
+               android:background="@drawable/rounded_view"
+               android:textColor="@color/alltext"/>
+           <EditText
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textColor="@color/alltext"
+               android:textSize="16sp"
+               android:background="@drawable/rounded_view"
+               android:layout_alignParentTop="true"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentStart="true"
+               android:id="@+id/jenis" />
+       </LinearLayout>
+    </RelativeLayout>
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:textColor="@color/alltext"
+        android:background="@color/button"
+        android:textAllCaps="false"/>
 </RelativeLayout>

@@ -3,16 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background"
     android:id="@+id/navigation_drawer_layout"
     tools:context="id.sapi.ktp.aplikasiktpsapi.EditKandang">
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -28,32 +26,69 @@
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
         </android.support.v7.widget.Toolbar>
-        <EditText
-            android:id="@+id/idKandang"
+        <LinearLayout
+            android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="id Jenis"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"
-            android:enabled="false"
-            android:background="@drawable/rounded_view"
-            android:textColor="@color/alltext"/>
-        <EditText
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kandang"
-            android:textSize="16sp"
-            android:background="@drawable/rounded_view"
-            android:id="@+id/jenis" />
-        <Button
-            android:layout_marginTop="10dp"
-            android:id="@+id/btnSimpan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Simpan"
-            android:textColor="@color/alltext"
-            android:background="@drawable/rounded_button"
-            android:textAllCaps="false"/>
-    </LinearLayout>
+            android:layout_marginLeft="16sp"
+            android:layout_marginRight="16sp"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/idKandang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="id Jenis"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:enabled="false"
+                android:visibility="gone"
+                android:background="@drawable/rounded_view"
+                android:textColor="@color/alltext"/>
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Kandang"
+                android:textColor="@color/alltext"
+                android:textSize="16sp"
+                android:background="@drawable/rounded_view"
+                android:id="@+id/kandang" />
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Batas Suhu"
+                android:textColor="@color/alltext"
+                android:textSize="16sp"
+                android:background="@drawable/rounded_view"
+                android:id="@+id/bsuhu" />
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Batas kelembapan"
+                android:textSize="16sp"
+                android:textColor="@color/alltext"
+                android:background="@drawable/rounded_view"
+                android:id="@+id/bkelembapan" />
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Batas Maksimal Kadar Gas Amonia"
+                android:textSize="16sp"
+                android:textColor="@color/alltext"
+                android:background="@drawable/rounded_view"
+                android:id="@+id/bgas" />
+        </LinearLayout>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btnSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:textColor="@color/alltext"
+        android:background="#27AC5E"
+        android:layout_alignParentBottom="true"
+        android:textAllCaps="false"/>
 </RelativeLayout>

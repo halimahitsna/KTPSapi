@@ -54,10 +54,10 @@ public class DataPenyakit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_penyakit);
-        initViews();
 
         Intent i = getIntent();
         iduser = i.getStringExtra("id_user");
+        initViews();
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,7 +73,7 @@ public class DataPenyakit extends AppCompatActivity {
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a = new Intent(DataPenyakit.this, EditData.class);
+                Intent a = new Intent(DataPenyakit.this, TambahPenyakit.class);
                 startActivity(a);
             }
         });
@@ -112,6 +112,17 @@ public class DataPenyakit extends AppCompatActivity {
                 Log.d("Error", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loadJSON();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadJSON();
     }
 
     @Override

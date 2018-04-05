@@ -1,26 +1,14 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,25 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 
-import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
-import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
-import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import id.sapi.ktp.aplikasiktpsapi.modal.Kategori;
-import id.sapi.ktp.aplikasiktpsapi.modal.KategoriAdapter;
-import id.sapi.ktp.aplikasiktpsapi.modal.Profil;
-import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
-import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
-import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
+import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MenuManajemen extends Fragment {
 
@@ -58,6 +31,7 @@ public class MenuManajemen extends Fragment {
     SharedPrefManager sharedPrefManager;
     public TextView nama, iduser;
     public ImageView image;
+    List<UserDB> userDBList;
 
     Activity context;
     @Nullable
@@ -85,7 +59,17 @@ public class MenuManajemen extends Fragment {
         pakan = (Button)view.findViewById(R.id.pakan);
         penyakit = (Button)view.findViewById(R.id.penyakit);
         sharedPrefManager = new SharedPrefManager(getActivity());
-        iduser.setText(sharedPrefManager.getSPId());
+        long count = UserDB.count(UserDB.class);
+
+        if(count>0) {
+            userDBList = UserDB.listAll(UserDB.class);
+            if (userDBList != null) {
+                iduser.setText(userDBList.get(0).id_user);
+            } else {
+                Toast.makeText(getActivity(), "Data User Kosong", Toast.LENGTH_SHORT).show();
+            }
+        }
+        //iduser.setText(sharedPrefManager.getSPId());
 
         jenis.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,13 +6,13 @@ import android.net.ConnectivityManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -24,24 +24,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EditKandang extends AppCompatActivity {
-
-    EditText txtid, txtkandang, txbsuhu, tbkelembapan, tbgas;
+public class TambahPakan extends AppCompatActivity {
+    EditText txtpakan, txtjml;
+    Spinner stat;
     Button btnsimpan;
     Toolbar toolbars;
     ActionBar actionBar;
+    String iduser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_kandang);
-
-        txtid = (EditText) findViewById(R.id.idKandang);
-        txtkandang = (EditText)findViewById(R.id.kandang);
-        txbsuhu = (EditText)findViewById(R.id.bsuhu);
-        tbkelembapan = (EditText)findViewById(R.id.bkelembapan);
-        tbgas=(EditText)findViewById(R.id.bgas);
-        btnsimpan = (Button)findViewById(R.id.btnSimpan);
+        setContentView(R.layout.activity_edit_pakan);
+        Intent i = getIntent();
+        iduser = i.getStringExtra("id_user");
 
         //Drawerbar
         toolbars = (Toolbar) findViewById(R.id.toolbar);
@@ -52,11 +48,10 @@ public class EditKandang extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        txtid.setText(getIntent().getStringExtra("id_kandang"));
-        txtkandang.setText(getIntent().getStringExtra("kandang"));
-        txbsuhu.setText(getIntent().getStringExtra("bsuhu"));
-        tbkelembapan.setText(getIntent().getStringExtra("bkelembapan"));
-        tbgas.setText(getIntent().getStringExtra("bgas"));
+        txtpakan = (EditText)findViewById(R.id.pakan);
+        txtjml = (EditText)findViewById(R.id.jml);
+        stat = (Spinner)findViewById(R.id.status);
+        btnsimpan = (Button)findViewById(R.id.btnSimpan);
 
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,18 +63,17 @@ public class EditKandang extends AppCompatActivity {
 
     private void simpan() {
         koneksi();
-        String id = txtid.getText().toString().trim();
-        String kd = txtkandang.getText().toString().trim();
-        String sh = txbsuhu.getText().toString().trim();
-        String kl = tbkelembapan.getText().toString().trim();
-        String gs = tbgas.getText().toString().trim();
+        String id = iduser.toString().trim();
+        String pkn = txtpakan.getText().toString().trim();
+        String jml = txtpakan.getText().toString().trim();
+        String st = stat.getSelectedItem().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertKandang(id, kd, sh, kl, gs);
+        Call<Result> call = api.insertPakan(id, pkn, jml, st);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -87,18 +81,18 @@ public class EditKandang extends AppCompatActivity {
                 String message = response.body().getMessage();
                 //loading.dismiss();
                 if (value.equals("1")) {
-                    Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(EditKandang.this, DataKandang.class);
+                    Toast.makeText(TambahPakan.this, message, Toast.LENGTH_SHORT).show();
+                    Intent ok = new Intent(TambahPakan.this, DataPakan.class);
                     startActivity(ok);
                 } else {
-                    Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TambahPakan.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 // progress.dismiss();
-                Toast.makeText(EditKandang.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahPakan.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
         onBackPressed();
@@ -107,18 +101,6 @@ public class EditKandang extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    private boolean adaInternet(){
-        ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return koneksi.getActiveNetworkInfo() != null;
-    }
-    private void koneksi(){
-        if(adaInternet()){
-//            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(EditKandang.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -135,5 +117,17 @@ public class EditKandang extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private boolean adaInternet(){
+        ConnectivityManager koneks = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return koneks.getActiveNetworkInfo() != null;
+    }
+    private void koneksi(){
+        if(adaInternet()){
+//            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(TambahPakan.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+        }
     }
 }

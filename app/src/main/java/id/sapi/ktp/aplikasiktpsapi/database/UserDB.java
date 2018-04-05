@@ -7,12 +7,9 @@ public class UserDB extends SugarRecord {
 
     public UserDB(){}
 
-    public UserDB( String id_user, String username, String name, String password, String foto){
+    public UserDB( String id_user,  String name){
         this.id_user = id_user;
-        this.username = username;
         this.name = name;
-        this.password = password;
-        this.foto = foto;
     }
 
 }

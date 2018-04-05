@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import id.sapi.ktp.aplikasiktpsapi.EditJenis;
+import id.sapi.ktp.aplikasiktpsapi.EditPenyakit;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -94,7 +95,7 @@ public class PenyakitAdapter extends RecyclerView.Adapter<PenyakitAdapter.ViewHo
             if (view.getId() == edit.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
                     Penyakit clickedDataItem = penyakit.get(posisi);
-                    Intent intent = new Intent(context, EditJenis.class);
+                    Intent intent = new Intent(context, EditPenyakit.class);
                     intent.putExtra("id_penyakit", penyakit.get(posisi).getId_penyakit());
                     intent.putExtra("penyakit", penyakit.get(posisi).getPenyakit());
                     context.startActivity(intent);
@@ -115,7 +116,7 @@ public class PenyakitAdapter extends RecyclerView.Adapter<PenyakitAdapter.ViewHo
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
                             ApiService api = retrofit.create(ApiService.class);
-                            Call<Result> call = api.hapusJenis(penyakit.get(posisi).getId_penyakit());
+                            Call<Result> call = api.hapusPenyakit(penyakit.get(posisi).getId_penyakit());
                             call.enqueue(new Callback<Result>() {
                                 @Override
                                 public void onResponse(Call<Result> call, Response<Result> response) {

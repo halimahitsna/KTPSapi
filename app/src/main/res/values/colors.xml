@@ -13,6 +13,7 @@
     <color name="text1">#ffffff</color>
     <color name="red">#e72222</color>
     <color name="brown">#f4dfc7</color>
+    <color name="button">#27AC5E</color>
 
     <array name="reds">
         <item>@color/md_red_500</item>

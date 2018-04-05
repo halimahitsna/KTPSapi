@@ -50,10 +50,10 @@ public class DataKandang extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_kandang);
-        initViews();
 
         Intent i = getIntent();
         iduser = i.getStringExtra("id_user");
+
         //Drawerbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,10 +67,12 @@ public class DataKandang extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a = new Intent(DataKandang.this, EditKandang.class);
+                Intent a = new Intent(DataKandang.this, TambahKandang.class);
+                a.putExtra("id_user", iduser);
                 startActivity(a);
             }
         });
+        initViews();
 
     }
     private void initViews() {
@@ -106,6 +108,17 @@ public class DataKandang extends AppCompatActivity {
                 Log.d("Error", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loadJSON();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadJSON();
     }
 
     @Override

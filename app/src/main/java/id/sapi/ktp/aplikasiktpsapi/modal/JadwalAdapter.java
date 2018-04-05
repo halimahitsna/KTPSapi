@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import id.sapi.ktp.aplikasiktpsapi.EditData;
+import id.sapi.ktp.aplikasiktpsapi.EditJadwal;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -110,7 +111,7 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder
             if (view.getId() == edit.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
                     Jadwal clickedDataItem = jadwal.get(posisi);
-                    Intent intent = new Intent(context, EditData.class);
+                    Intent intent = new Intent(context, EditJadwal.class);
                     intent.putExtra("id_jadwal", jadwal.get(posisi).getId_jadwal());
                     intent.putExtra("pakan", jadwal.get(posisi).getId_pakan());
                     intent.putExtra("status", jadwal.get(posisi).getStatus());

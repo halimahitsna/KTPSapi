@@ -50,7 +50,7 @@ public class ResponseData {
         return indukan;
     }
 
-    public void setPakan(List<Pakan> indukan){
+    public void setPakan(List<Pakan> pakan){
         this.pakan = pakan;
     }
 
@@ -82,13 +82,4 @@ public class ResponseData {
         return message;
     }
 
-    @Override
-    public String toString(){
-        return
-                "jenis{" +
-                        "jenis = '" + jenis + '\'' +
-                        ",error = '" + error + '\'' +
-                        ",message = '" + message + '\'' +
-                        "}";
-    }
 }

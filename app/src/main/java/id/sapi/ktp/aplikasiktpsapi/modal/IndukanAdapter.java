@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import id.sapi.ktp.aplikasiktpsapi.EditIndukan;
 import id.sapi.ktp.aplikasiktpsapi.EditJenis;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -94,7 +95,7 @@ public class IndukanAdapter extends RecyclerView.Adapter<IndukanAdapter.ViewHold
             if (view.getId() == edit.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
                     Indukan clickedDataItem = indukan.get(posisi);
-                    Intent intent = new Intent(context, EditJenis.class);
+                    Intent intent = new Intent(context, EditIndukan.class);
                     intent.putExtra("id_indukan", indukan.get(posisi).getId_indukan());
                     intent.putExtra("indukan", indukan.get(posisi).getIndukan());
                     context.startActivity(intent);
@@ -115,7 +116,7 @@ public class IndukanAdapter extends RecyclerView.Adapter<IndukanAdapter.ViewHold
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
                             ApiService api = retrofit.create(ApiService.class);
-                            Call<Result> call = api.hapusJenis(indukan.get(posisi).getId_indukan());
+                            Call<Result> call = api.hapusIndukan(indukan.get(posisi).getId_indukan());
                             call.enqueue(new Callback<Result>() {
                                 @Override
                                 public void onResponse(Call<Result> call, Response<Result> response) {

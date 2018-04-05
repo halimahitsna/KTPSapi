@@ -66,13 +66,12 @@ public class EditJenis extends AppCompatActivity {
         String id = txtid.getText().toString().trim();
         String jns = txtjenis.getText().toString().trim();
 
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertJenis("3", jns);
+        Call<Result> call = api.insertJenis(id, jns);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -94,8 +93,14 @@ public class EditJenis extends AppCompatActivity {
                 Toast.makeText(EditJenis.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
-
+        onBackPressed();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private boolean adaInternet(){
         ConnectivityManager koneksi = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return koneksi.getActiveNetworkInfo() != null;

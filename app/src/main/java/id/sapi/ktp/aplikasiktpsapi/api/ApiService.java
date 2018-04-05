@@ -46,11 +46,39 @@ public interface ApiService {
                             @Field("bobot_hidup") String bobot_hidup,
                             @Field("umur") String umur,
                             @Field("warna") String warna,
+                            @Field("id_user") String id_user,
                             @Field("harga") String harga);
     @FormUrlEncoded
     @POST("insert_jenis.php")
     Call<Result> insertJenis(@Field("id_user") String id_user,
-                                   @Field("jenis") String jenis);
+                             @Field("jenis") String jenis);
+    @FormUrlEncoded
+    @POST("insert_indukan.php")
+    Call<Result> insertIndukan(@Field("id_user") String id_user,
+                               @Field("indukan") String indukan);
+    @FormUrlEncoded
+    @POST("insert_kandang.php")
+    Call<Result> insertKandang(@Field("id_user") String id_user,
+                               @Field("kandang") String kandang,
+                               @Field("batas_suhu") String bsuhu,
+                               @Field("batas_kelembapan") String bkelembapan,
+                               @Field("batas_gas") String bgas);
+    @FormUrlEncoded
+    @POST("insert_pakan.php")
+    Call<Result> insertPakan(@Field("id_user") String id_user,
+                             @Field("pakan") String pakan,
+                             @Field("jumlah") String jumlah,
+                             @Field("status") String status);
+    @FormUrlEncoded
+    @POST("insert_penyakit.php")
+    Call<Result> insertPenyakit(@Field("id_user") String id_user,
+                                @Field("penyakit") String penyakit);
+
+    @FormUrlEncoded
+    @POST("insert_peternakan.php")
+    Call<Result> insertPeternakan(@Field("id_user") String id_user,
+                                  @Field("peternakan") String peternakan);
+
 
     //getdata
     @GET("get_data.php")
@@ -106,9 +134,19 @@ public interface ApiService {
     Call<Result> hapusData(@Query("id_sapi") String id_sapi);
 
     @GET("hapus_jenis.php")
-    Call<Result> hapusJenis(@Query("id_sapi") String id_sapi);
+    Call<Result> hapusJenis(@Query("id_jenis") String id_jenis);
 
+    @GET("hapus_kandang.php")
+    Call<Result> hapusKandang(@Query("id_kandang") String id_kandang);
 
+    @GET("hapus_indukan.php")
+    Call<Result> hapusIndukan(@Query("id_indukan") String id_indukan);
+
+    @GET("hapus_pakan.php")
+    Call<Result> hapusPakan(@Query("id_pakan") String id_pakan);
+
+    @GET("hapus_penyakit.php")
+    Call<Result> hapusPenyakit(@Query("id_penyakit") String id_penyakit);
 
 
 }

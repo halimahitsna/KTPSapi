@@ -60,7 +60,7 @@ holder.nmjenis.setText(jenis.get(position).getJenis());
         TextView id_jenis, nmjenis;
         ImageView edit, hapus;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             id_jenis = (TextView)itemView.findViewById(R.id.idJenis);
             nmjenis = (TextView)itemView.findViewById(R.id.jenis);
@@ -78,13 +78,18 @@ holder.nmjenis.setText(jenis.get(position).getJenis());
                     int pos = getAdapterPosition();
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
-//                        Jenis clickedDataItem = jenis.get(pos);
-//                        Intent intent = new Intent(context,EditJenis.class);
-//                        intent.putExtra("id_jenis", jenis.get(pos).getId_jenis());
-//                        intent.putExtra("jenis", jenis.get(pos).getJenis());
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        context.startActivity(intent);
-//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getJenis(), Toast.LENGTH_SHORT).show();
+                        Jenis clickedDataItem = jenis.get(pos);
+                        AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
+                        alertbox.setMessage("Jenis Sapi : " + jenis.get(pos).getJenis());
+                        alertbox.setTitle("Detail Jenis");
+                        alertbox.setIcon(R.drawable.ic_business_black_24dp);
+                        alertbox.setCancelable(true);
+                        alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0,
+                                                int arg1) {
+                            }
+                        });
+                        alertbox.show();
                     }
                 }
             });

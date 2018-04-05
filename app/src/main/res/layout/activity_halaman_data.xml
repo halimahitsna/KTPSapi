@@ -27,15 +27,20 @@
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
         </android.support.v7.widget.Toolbar>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/card_recycle_view"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh"
+            android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
-            android:scrollbars="vertical"
-            android:tooltipText="@string/app_name"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_below="@id/toolbar"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/card_recycle_view"
+                android:layout_width="match_parent"
+                android:scrollbars="vertical"
+                android:tooltipText="@string/app_name"
+                android:layout_height="wrap_content"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
     <com.getbase.floatingactionbutton.AddFloatingActionButton
         android:id="@+id/add"
