@@ -25,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EditPakan extends AppCompatActivity {
-    EditText txtpakan, txtjml;
+    EditText txtpakan, txtjml, txtid;
     Spinner stat;
     Button btnsimpan;
     Toolbar toolbars;
@@ -48,24 +48,29 @@ public class EditPakan extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        txtid = (EditText)findViewById(R.id.idPakan);
         txtpakan = (EditText)findViewById(R.id.pakan);
         txtjml = (EditText)findViewById(R.id.jml);
         stat = (Spinner)findViewById(R.id.status);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
 
+        txtid.setText(getIntent().getStringExtra("id_pakan"));
+        txtpakan.setText(getIntent().getStringExtra("pakan"));
+        txtjml.setText(getIntent().getStringExtra("jumlah"));
+
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                simpan();
+                update();
             }
         });
     }
 
-    private void simpan() {
+    private void update() {
         koneksi();
-        String id = iduser.toString().trim();
+        String id = txtid.getText().toString().trim();
         String pkn = txtpakan.getText().toString().trim();
-        String jml = txtpakan.getText().toString().trim();
+        String jml = txtjml.getText().toString().trim();
         String st = stat.getSelectedItem().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -73,7 +78,7 @@ public class EditPakan extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertPakan(id, pkn, jml, st);
+        Call<Result> call = api.updatePakan(id, pkn, jml, st);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -82,8 +87,6 @@ public class EditPakan extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(EditPakan.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(EditPakan.this, DataPakan.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(EditPakan.this, message, Toast.LENGTH_SHORT).show();
                 }

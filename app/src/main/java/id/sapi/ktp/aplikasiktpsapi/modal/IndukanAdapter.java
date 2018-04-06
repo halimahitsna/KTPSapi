@@ -127,6 +127,9 @@ public class IndukanAdapter extends RecyclerView.Adapter<IndukanAdapter.ViewHold
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    indukan.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, indukan.size());
                                 }
 
                                 @Override

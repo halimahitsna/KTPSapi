@@ -38,6 +38,7 @@ import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.modal.Indukan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
+import id.sapi.ktp.aplikasiktpsapi.modal.JenisSpinner;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.Pakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Penyakit;
@@ -90,11 +91,11 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        this.setTitle("Edit Data");
 
         actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
-       // actionBar.setDisplayShowHomeEnabled(true);
 
         btnsimpan = (Button) findViewById(R.id.btnSimpan);
         foto = (ImageView) findViewById(R.id.foto);
@@ -106,10 +107,11 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         txtwarna = (EditText)findViewById(R.id.warna);
         txdate = (EditText)findViewById(R.id.date);
         txiduser = (EditText)findViewById(R.id.idu);
+       // tgllahir = (EditText)findViewById(R.id.date);
         //EditTextGet
         txiduser.setText(getIntent().getStringExtra("id_user"));
         txtidSapi.setText(getIntent().getStringExtra("id_sapi"));
-        txtharga.setText(getIntent().getStringExtra("umur"));
+        txtharga.setText(getIntent().getStringExtra("harga"));
         txtumur.setText(getIntent().getStringExtra("umur"));
         txtbobotlahir.setText(getIntent().getStringExtra("bobot_lahir"));
         txtbobothidup.setText(getIntent().getStringExtra("bobot_hidup"));
@@ -123,16 +125,17 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         penyakit = (Spinner) findViewById(R.id.penyakit);
         imdate = (ImageView) findViewById(R.id.set_date);
 
+
 //        jenis.setSelection(Integer.parseInt(getIntent().getStringExtra("jenis")));
 //        indukan.setSelection(Integer.parseInt(getIntent().getStringExtra("indukan")));
 //        pakan.setSelection(Integer.parseInt(getIntent().getStringExtra("pakan")));
 //        kandang.setSelection(Integer.parseInt(getIntent().getStringExtra("kandang")));
 //        penyakit.setSelection(Integer.parseInt(getIntent().getStringExtra("penyakit")));
-//        initSpinnerJenis();
-//        initSpinnerKandang();
-//        initSpinnerIndukan();
-//        initSpinnerPakan();
-//        initSpinnerPeny();
+        initSpinnerJenis();
+        initSpinnerKandang();
+        initSpinnerIndukan();
+        initSpinnerPakan();
+        initSpinnerPeny();
 
         jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -188,7 +191,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                simpan();
+                update();
             }
         });
 
@@ -203,21 +206,21 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         txdate.setText(mDate);
     }
 
-    private void simpan() {
+    private void update() {
         //koneksi();
-        String id = txtidSapi.getText().toString().trim();
-        String bl = txtbobotlahir.getText().toString().trim();
-        String bhdp = txtbobothidup.getText().toString().trim();
-        String hr = txtharga.getText().toString().trim();
-        String umur = txtumur.getText().toString().trim();
-        String wr = txtwarna.getText().toString().trim();
-        String jn = String.valueOf(jenis.getSelectedItemId());
-        String kd = String.valueOf(kandang.getSelectedItemId());
-        String in = String.valueOf(indukan.getSelectedItemId());
-        String pkn = String.valueOf(pakan.getSelectedItemId());
-        String pny = String.valueOf(penyakit.getSelectedItemId());
-        String tg = tgllahir.getText().toString().trim();
-        String user = iduser.toString().trim();
+//        String id = txtidSapi.getText().toString().trim();
+//        String bl = txtbobotlahir.getText().toString().trim();
+//        String bhdp = txtbobothidup.getText().toString().trim();
+//        String hr = txtharga.getText().toString().trim();
+//        String umur = txtumur.getText().toString().trim();
+//        String wr = txtwarna.getText().toString().trim();
+////        String jn = jenis.getSelectedItem().toString().trim();
+////        String kd = kandang.getSelectedItem().toString().trim();
+////        String in = indukan.getSelectedItem().toString().trim();
+////        String pkn = pakan.getSelectedItem().toString().trim();
+////        String pny = penyakit.getSelectedItem().toString().trim();
+//        String tg = txdate.getText().toString().trim();
+////        String user = iduser.toString().trim();
 
         //validate();
         Retrofit retrofit = new Retrofit.Builder()
@@ -225,13 +228,12 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertSapi(id, jn, kd, in, pkn, pny, tg, bl, bhdp, umur, wr,user, hr);
+        Call<Result> call = api.updateSapi("a", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1");
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 String value = response.body().getValue();
                 String message = response.body().getMessage();
-                loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(EditData.this, message, Toast.LENGTH_SHORT).show();
                 } else {
@@ -262,11 +264,11 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                     List<String> listSpinner = new ArrayList<String>();
                     listSpinner.add("- Pilih Jenis Sapi -");
                     for (int i = 0; i < semuadosenItems.size(); i++) {
+                        listSpinner.add(semuadosenItems.get(i).getId_jenis());
                         listSpinner.add(semuadosenItems.get(i).getJenis());
-
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
+                   ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditData.this,
                             android.R.layout.simple_spinner_item, listSpinner);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     jenis.setAdapter(adapter);

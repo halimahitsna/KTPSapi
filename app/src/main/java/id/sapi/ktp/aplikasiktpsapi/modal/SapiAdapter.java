@@ -49,8 +49,14 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
     public void onBindViewHolder(SapiAdapter.ViewHolder viewHolder, int i) {
         viewHolder.id_sapi.setText(sapi.get(i).getId_sapi());
         viewHolder.id_jenis.setText(sapi.get(i).getId_jenis());
-        Picasso.with(context).load(sapi.get(i).getFoto()).resize(100, 100)
-                .into(viewHolder.foto);
+        viewHolder.id_kandang.setText(sapi.get(i).getId_kandang());
+        if(sapi.get(i).getFoto() != null) {
+            Picasso.with(context).load(sapi.get(i).getFoto()).resize(100, 100)
+                    .into(viewHolder.foto);
+        }else {
+            Picasso.with(context).load(R.drawable.ic_person_black_24dp).resize(100, 100)
+                    .into(viewHolder.foto);
+        }
        /* viewHolder.hapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,14 +84,15 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView id_jenis, id_sapi;
+        private TextView id_jenis, id_sapi, id_kandang;
         ImageView foto, edit, hapus;
 
         public ViewHolder(View view) {
             super(view);
 
-            id_jenis = (TextView) view.findViewById(R.id.idSapi);
-            id_sapi = (TextView) view.findViewById(R.id.jenis);
+            id_jenis = (TextView) view.findViewById(R.id.jenis);
+            id_sapi = (TextView) view.findViewById(R.id.idSapi);
+            id_kandang = (TextView)view.findViewById(R.id.kandang);
             foto = (ImageView) view.findViewById(R.id.gbr);
             edit = (ImageView) view.findViewById(R.id.edit);
             hapus = (ImageView) view.findViewById(R.id.hapus);

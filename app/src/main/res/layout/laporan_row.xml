@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="5dp"
+    android:layout_width="match_parent"
+    android:background="@drawable/rounded_view"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/idlap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/alltext"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/judul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="judul Laporan"
+                android:textColor="@color/alltext"/>
+            <TextView
+                android:id="@+id/isi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="Isi Laporan"
+                android:textColor="@color/alltext"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tgl"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="tgl Laporan"
+            android:textColor="@color/alltext"/>
+        <LinearLayout
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="200dp"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="30dp"
+                android:layout_gravity="bottom"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_edit_black_24dp"/>
+            <ImageView
+                android:id="@+id/hapus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_delete_black_24dp"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

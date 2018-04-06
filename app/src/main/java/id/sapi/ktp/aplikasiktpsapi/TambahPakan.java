@@ -82,8 +82,6 @@ public class TambahPakan extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(TambahPakan.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(TambahPakan.this, DataPakan.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(TambahPakan.this, message, Toast.LENGTH_SHORT).show();
                 }

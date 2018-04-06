@@ -137,6 +137,9 @@ public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.Vi
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    kandang.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, kandang.size());
                                 }
 
                                 @Override

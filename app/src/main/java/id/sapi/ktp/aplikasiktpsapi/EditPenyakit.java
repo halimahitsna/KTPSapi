@@ -51,17 +51,17 @@ public class EditPenyakit extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        txtid.setText(getIntent().getStringExtra("id_jenis"));
-        txtjenis.setText(getIntent().getStringExtra("jenis"));
+        txtid.setText(getIntent().getStringExtra("id_penyakit"));
+        txtjenis.setText(getIntent().getStringExtra("penyakit"));
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                simpan();
+                update();
             }
         });
 
     }
-    private void simpan() {
+    private void update() {
         koneksi();
         String id = txtid.getText().toString().trim();
         String jns = txtjenis.getText().toString().trim();
@@ -71,7 +71,7 @@ public class EditPenyakit extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertJenis(id, jns);
+        Call<Result> call = api.updatePenyakit(id, jns);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -80,8 +80,6 @@ public class EditPenyakit extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(EditPenyakit.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(EditPenyakit.this, DataPenyakit.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(EditPenyakit.this, message, Toast.LENGTH_SHORT).show();
                 }

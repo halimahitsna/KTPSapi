@@ -76,7 +76,7 @@ public class MonitoringKandang extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a = new Intent(getActivity(), EditKandang.class);
+                Intent a = new Intent(getActivity(), TambahKandang.class);
                 startActivity(a);
             }
         });

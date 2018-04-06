@@ -134,6 +134,9 @@ holder.nmjenis.setText(jenis.get(position).getJenis());
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    jenis.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, jenis.size());
                                 }
 
                                 @Override

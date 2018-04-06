@@ -21,6 +21,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/idu"
         android:visibility="visible"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/note_item"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     <com.getbase.floatingactionbutton.AddFloatingActionButton
         android:id="@+id/add"
         android:layout_width="wrap_content"

@@ -111,8 +111,6 @@ public interface ApiService {
     @GET("get_laporan.php")
     Call<JSONResponse>getLaporan(@Query("id_user") String id_user);
 
-
-
     //spinner
     @GET("get_jenis.php")
     Call<ResponseData> getJen(@Query("id_user") String id_user);
@@ -148,5 +146,49 @@ public interface ApiService {
     @GET("hapus_penyakit.php")
     Call<Result> hapusPenyakit(@Query("id_penyakit") String id_penyakit);
 
+    //UpdateData
+    @FormUrlEncoded
+    @POST("update_data.php")
+    Call<Result> updateSapi(@Field("id_sapi") String id_sapi,
+                            @Field("id_jenis") String id_jenis,
+                            @Field("id_kandang") String id_kandang,
+                            @Field("id_indukan") String id_indukan,
+                            @Field("id_pakan") String id_pakan,
+                            @Field("id_penyakit") String id_penyakit,
+                            @Field("tgl_lahir") String tgl_lahir,
+                            @Field("bobot_lahir") String bobot_lahir,
+                            @Field("bobot_hidup") String bobot_hidup,
+                            @Field("umur") String umur,
+                            @Field("warna") String warna,
+                            @Field("harga") String harga);
+    @FormUrlEncoded
+    @POST("update_jenis.php")
+    Call<Result> updateJenis(@Field("id_jenis") String id_jenis,
+                             @Field("jenis") String jenis);
+    @FormUrlEncoded
+    @POST("update_indukan.php")
+    Call<Result> updateIndukan(@Field("id_indukan") String id_indukan,
+                               @Field("indukan") String indukan);
+    @FormUrlEncoded
+    @POST("update_kandang.php")
+    Call<Result> updateKandang(@Field("id_kandang") String id_kandang,
+                               @Field("kandang") String kandang,
+                               @Field("batas_suhu") String bsuhu,
+                               @Field("batas_kelembapan") String bkelembapan,
+                               @Field("batas_gas") String bgas);
+    @FormUrlEncoded
+    @POST("update_pakan.php")
+    Call<Result> updatePakan(@Field("id_pakan") String id_pakan,
+                             @Field("pakan") String pakan,
+                             @Field("jumlah") String jumlah,
+                             @Field("status") String status);
+    @FormUrlEncoded
+    @POST("update_penyakit.php")
+    Call<Result> updatePenyakit(@Field("id_penyakit") String id_penyakit,
+                                @Field("penyakit") String penyakit);
 
+    @FormUrlEncoded
+    @POST("update_peternakan.php")
+    Call<Result> updatePeternakan(@Field("id_peternakan") String id_peternakan,
+                                  @Field("peternakan") String peternakan);
 }

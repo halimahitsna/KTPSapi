@@ -137,6 +137,9 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    kandang.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, kandang.size());
                                 }
 
                                 @Override

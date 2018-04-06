@@ -152,6 +152,9 @@ public class JadwalAdapter extends RecyclerView.Adapter<JadwalAdapter.ViewHolder
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    jadwal.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, jadwal.size());
                                 }
 
                                 @Override

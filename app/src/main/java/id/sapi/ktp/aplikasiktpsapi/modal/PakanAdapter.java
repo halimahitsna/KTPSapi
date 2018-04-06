@@ -134,6 +134,9 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    pakan.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, pakan.size());
                                 }
 
                                 @Override

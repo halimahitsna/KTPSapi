@@ -30,11 +30,15 @@ public class EditKandang extends AppCompatActivity {
     Button btnsimpan;
     Toolbar toolbars;
     ActionBar actionBar;
+    String iduser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_kandang);
+
+        Intent i = getIntent();
+        iduser = i.getStringExtra("id_user");
 
         txtid = (EditText) findViewById(R.id.idKandang);
         txtkandang = (EditText)findViewById(R.id.kandang);
@@ -61,12 +65,12 @@ public class EditKandang extends AppCompatActivity {
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                simpan();
+                update();
             }
         });
     }
 
-    private void simpan() {
+    private void update() {
         koneksi();
         String id = txtid.getText().toString().trim();
         String kd = txtkandang.getText().toString().trim();
@@ -79,7 +83,7 @@ public class EditKandang extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertKandang(id, kd, sh, kl, gs);
+        Call<Result> call = api.updateKandang(id, kd, sh, kl, gs);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -88,8 +92,6 @@ public class EditKandang extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(EditKandang.this, DataKandang.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(EditKandang.this, message, Toast.LENGTH_SHORT).show();
                 }

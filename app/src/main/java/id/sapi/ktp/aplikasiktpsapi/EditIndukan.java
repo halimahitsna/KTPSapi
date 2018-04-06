@@ -56,12 +56,12 @@ public class EditIndukan extends AppCompatActivity {
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                simpan();
+                update();
             }
         });
 
     }
-    private void simpan() {
+    private void update() {
         koneksi();
         String id = txtid.getText().toString().trim();
         String jns = txtjenis.getText().toString().trim();
@@ -71,7 +71,7 @@ public class EditIndukan extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertJenis(id, jns);
+        Call<Result> call = api.updateJenis(id, jns);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -80,8 +80,6 @@ public class EditIndukan extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(EditIndukan.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(EditIndukan.this, DataIndukan.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(EditIndukan.this, message, Toast.LENGTH_SHORT).show();
                 }

@@ -37,4 +37,9 @@ public class Jenis {
     public void setId_user(String id_user) {
         this.id_user = id_user;
     }
+
+    public void setAll(String id_user, String jenis) {
+        setId_jenis(id_user);
+        setJenis(jenis);
+    }
 }

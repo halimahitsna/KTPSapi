@@ -30,11 +30,15 @@ public class TambahKandang extends AppCompatActivity {
     Button btnsimpan;
     Toolbar toolbars;
     ActionBar actionBar;
+    String iduser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_kandang);
+
+        Intent i = getIntent();
+        iduser = i.getStringExtra("id_user");
 
         txtid = (EditText) findViewById(R.id.idKandang);
         txtkandang = (EditText)findViewById(R.id.kandang);
@@ -68,7 +72,7 @@ public class TambahKandang extends AppCompatActivity {
 
     private void simpan() {
         koneksi();
-        String id = txtid.getText().toString().trim();
+        String id = iduser.toString().trim();
         String kd = txtkandang.getText().toString().trim();
         String sh = txbsuhu.getText().toString().trim();
         String kl = tbkelembapan.getText().toString().trim();
@@ -88,8 +92,6 @@ public class TambahKandang extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(TambahKandang.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(TambahKandang.this, DataKandang.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(TambahKandang.this, message, Toast.LENGTH_SHORT).show();
                 }

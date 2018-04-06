@@ -36,8 +36,10 @@ public class TambahPenyakit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_jenis);
+
         Intent i = getIntent();
         iduser = i.getStringExtra("id_user");
+
         txtid = (EditText) findViewById(R.id.idJenis);
         txtjenis = (EditText)findViewById(R.id.jenis);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
@@ -63,7 +65,7 @@ public class TambahPenyakit extends AppCompatActivity {
     }
     private void simpan() {
         koneksi();
-        String id = txtid.getText().toString().trim();
+        String id = iduser.toString().trim();
         String jns = txtjenis.getText().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -80,8 +82,6 @@ public class TambahPenyakit extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(TambahPenyakit.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(TambahPenyakit.this, DataPenyakit.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(TambahPenyakit.this, message, Toast.LENGTH_SHORT).show();
                 }

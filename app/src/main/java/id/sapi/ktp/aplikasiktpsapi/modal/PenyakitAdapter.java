@@ -127,6 +127,9 @@ public class PenyakitAdapter extends RecyclerView.Adapter<PenyakitAdapter.ViewHo
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
+                                    penyakit.remove(posisi);
+                                    notifyItemRemoved(posisi);
+                                    notifyItemRangeChanged(posisi, penyakit.size());
                                 }
 
                                 @Override

@@ -84,7 +84,8 @@
         <activity android:name=".TambahJenis" />
         <activity android:name=".TambahPenyakit" />
         <activity android:name=".TambahIndukan" />
-        <activity android:name=".DetailData"></activity>
+        <activity android:name=".DetailData" />
+        <activity android:name=".TambahLaporan"></activity>
     </application>
 
 </manifest>

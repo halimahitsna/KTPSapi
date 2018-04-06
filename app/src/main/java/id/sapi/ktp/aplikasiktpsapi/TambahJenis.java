@@ -63,7 +63,7 @@ public class TambahJenis extends AppCompatActivity {
     }
     private void simpan() {
         koneksi();
-        String id = txtid.getText().toString().trim();
+        String id = iduser.toString().trim();
         String jns = txtjenis.getText().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -80,8 +80,6 @@ public class TambahJenis extends AppCompatActivity {
                 //loading.dismiss();
                 if (value.equals("1")) {
                     Toast.makeText(TambahJenis.this, message, Toast.LENGTH_SHORT).show();
-                    Intent ok = new Intent(TambahJenis.this, DataJenis.class);
-                    startActivity(ok);
                 } else {
                     Toast.makeText(TambahJenis.this, message, Toast.LENGTH_SHORT).show();
                 }
