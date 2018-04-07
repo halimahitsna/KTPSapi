@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     String message = intent.getStringExtra("message");
 
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+                    //Log.d("Push Notif", message);
 
                     txtMessage.setText(message);
                     Notif(message);
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     void Notif(String msg){
         Notification notification = new NotificationCompat.Builder(this)
                 .setTicker("")
-                .setSmallIcon(R.drawable.ic_folder_black_24dp)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle("")
                 .setContentText(msg)
                 .setAutoCancel(true)
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
                 nama.setText(data.get(0).getUser());
                 Picasso.with(MainActivity.this).load( data.get(0).getFoto()).into(image);
-                loadPeternakan();
+             //   loadPeternakan();
             }
 
             @Override
@@ -285,10 +286,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_manajemen:
                 fragment = new MenuManajemen();
-/*
-                bundle.putSerializable("id_user", iduser);
-                bundle.putSerializable("name", namauser);
-                fragment.setArguments(bundle);*/
                 break;
             case R.id.menu_monitoring:
                 fragment = new MonitoringKandang();

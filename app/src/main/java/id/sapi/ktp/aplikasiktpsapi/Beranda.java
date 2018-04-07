@@ -89,7 +89,7 @@ public class Beranda extends Fragment {
         nmpeternakan.setText(sharedPrefManager.getSPId());
 
         //Notification
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+       /* mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
@@ -113,11 +113,11 @@ public class Beranda extends Fragment {
 
                 }
             }
-        };
+        };*/
 
-        displayFirebaseRegId();
+        //displayFirebaseRegId();
     }
-    void Notif(String msg){
+   /* void Notif(String msg){
         Notification notification = new NotificationCompat.Builder(getActivity())
                 .setTicker("")
                 .setSmallIcon(R.drawable.ic_folder_black_24dp)
@@ -165,7 +165,7 @@ public class Beranda extends Fragment {
     public void onPause() {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
-    }
+    }*/
     //end notif
 
     private boolean adaInternet(){
