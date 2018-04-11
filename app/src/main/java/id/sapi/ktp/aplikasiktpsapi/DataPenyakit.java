@@ -1,8 +1,10 @@
 package id.sapi.ktp.aplikasiktpsapi;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +14,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.app.Fragment;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 
@@ -27,8 +32,6 @@ import java.util.Arrays;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import id.sapi.ktp.aplikasiktpsapi.modal.Indukan;
-import id.sapi.ktp.aplikasiktpsapi.modal.IndukanAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Penyakit;
 import id.sapi.ktp.aplikasiktpsapi.modal.PenyakitAdapter;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
@@ -38,7 +41,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DataPenyakit extends AppCompatActivity {
+public class DataPenyakit extends Fragment {
 
     Toolbar toolbar;
     ActionBar actionBar;
@@ -50,39 +53,37 @@ public class DataPenyakit extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     String iduser;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data_penyakit);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //returning our layout file
+        //change R.layout.yourlayoutfilename for each of your fragments
+        return inflater.inflate(R.layout.activity_data_penyakit, container, false);
+    }
 
-        Intent i = getIntent();
-        iduser = i.getStringExtra("id_user");
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //you can set the title for your toolbar here for different fragments different titles
+        getActivity().setTitle("Riwayat Penyakit");
+
+        sharedPrefManager = new SharedPrefManager(getActivity());
         initViews();
-        //Drawerbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-//        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
-
-        btnadd = (AddFloatingActionButton) findViewById(R.id.add);
-        btnadd.setOnClickListener(new View.OnClickListener() {
+        AddFloatingActionButton add = (AddFloatingActionButton) view.findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent a = new Intent(DataPenyakit.this, TambahPenyakit.class);
+                Intent a = new Intent(getActivity(), TambahPenyakit.class);
                 startActivity(a);
             }
         });
-
     }
     private void initViews() {
-        recyclerView = (RecyclerView) findViewById(R.id.card_recycle_view);
+        recyclerView = (RecyclerView)getActivity().findViewById (R.id.card_recycle_view);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -91,19 +92,19 @@ public class DataPenyakit extends AppCompatActivity {
 
     private void loadJSON() {
         koneksi();
+        iduser = sharedPrefManager.getSPId();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService request = retrofit.create(ApiService.class);
-        // Integer id = Integer.valueOf(sharedPrefManager.getSPId());
         Call<JSONResponse> call = request.getPenyakit(iduser);
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getPenyakit()));
-                adapter = new PenyakitAdapter(getApplicationContext(), data);
+                adapter = new PenyakitAdapter(getActivity(), data);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -113,41 +114,15 @@ public class DataPenyakit extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        loadJSON();
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        loadJSON();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
-            finish();
-
-        return super.onOptionsItemSelected(item);
-    }
     private boolean adaInternet(){
-        ConnectivityManager koneks = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return koneks.getActiveNetworkInfo() != null;
+        ConnectivityManager koneksi = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return koneksi.getActiveNetworkInfo() != null;
     }
     private void koneksi(){
         if(adaInternet()){
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(DataPenyakit.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
     }
 }

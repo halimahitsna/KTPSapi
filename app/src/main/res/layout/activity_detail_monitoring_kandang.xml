@@ -69,6 +69,12 @@
                     android:text="Gas Amonia Kandang"
                     android:textSize="16sp"
                     android:textColor="@color/alltext"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Batas Suhu"
+                    android:textSize="16sp"
+                    android:textColor="@color/alltext"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -103,6 +109,13 @@
                     android:text="Gas"
                     android:textSize="16sp"
                     android:textColor="@color/alltext"/>
+                <TextView
+                    android:id="@+id/bsuhu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="bsuhu"
+                    android:textSize="16sp"
+                    android:textColor="@color/alltext"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -132,16 +145,16 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
                 <Switch
+                    android:theme="@style/Theme.AppCompat.Light"
                     android:id="@+id/oto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:textOn="ON"
+                    android:textOff="OFF"
                     android:layout_marginRight="16dp"
-                    android:layout_marginLeft="8dp"
-                    android:checked="true"
-                    android:textOn="On"
-                    android:textOff="Off"/>
+                    android:layout_marginLeft="8dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,10 +174,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="16dp"
-                    android:layout_marginLeft="8dp"
-                    android:checked="true"
-                    android:textOn="On"
-                    android:textOff="Off"/>
+                    android:layout_marginLeft="8dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -184,13 +194,19 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="16dp"
-                    android:layout_marginLeft="8dp"
-                    android:checked="true"
-                    android:textOn="On"
-                    android:textOff="Off"/>
+                    android:layout_marginLeft="8dp"/>
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
-
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan"
+        android:textColor="@color/alltext"
+        android:background="@color/button"
+        android:textAllCaps="false"/>
 </RelativeLayout>

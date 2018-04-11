@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -89,11 +91,16 @@ public class Manajemen extends AppCompatActivity {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        Log.i(LOG_TAG, "onRefresh called from SwipeRefreshLayout");
+                        new Handler().postDelayed(new Runnable() {
+                            @Override public void run() {
 
-                        // This method performs the actual data-refresh operation.
-                        // The method calls setRefreshing(false) when it's finished.
-                        initViews();
+                                // Berhenti berputar/refreshing
+                                swipeRefreshLayout.setRefreshing(false);
+
+                                // fungsi-fungsi lain yang dijalankan saat refresh berhenti
+                                loadJSON();
+                            }
+                        }, 5000);
                     }
                 }
         );

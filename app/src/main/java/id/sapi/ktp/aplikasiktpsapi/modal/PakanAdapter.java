@@ -61,7 +61,7 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
         TextView id_pakan, nmpakan, txjml, txstat;
         ImageView edit, hapus;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             id_pakan = (TextView)itemView.findViewById(R.id.idPakan);
             nmpakan = (TextView)itemView.findViewById(R.id.pakan);
@@ -82,14 +82,26 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
                         Pakan clickedDataItem = pakan.get(pos);
-                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
-                        intent.putExtra("id_pakan", pakan.get(pos).getId_pakan());
-                        intent.putExtra("pakan", pakan.get(pos).getPakan());
-                        intent.putExtra("jumlah", pakan.get(pos).getJumlah());
-                        intent.putExtra("status", pakan.get(pos).getStatus());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getPakan(), Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
+//                        intent.putExtra("id_pakan", pakan.get(pos).getId_pakan());
+//                        intent.putExtra("pakan", pakan.get(pos).getPakan());
+//                        intent.putExtra("jumlah", pakan.get(pos).getJumlah());
+//                        intent.putExtra("status", pakan.get(pos).getStatus());
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(intent);
+//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getPakan(), Toast.LENGTH_SHORT).show();
+
+                        AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
+                        alertbox.setMessage("Pakan Sapi : " + pakan.get(pos).getPakan());
+                        alertbox.setTitle("Detail Pakan");
+                        alertbox.setIcon(R.drawable.ic_business_black_24dp);
+                        alertbox.setCancelable(true);
+                        alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0,
+                                                int arg1) {
+                            }
+                        });
+                        alertbox.show();
                     }
                 }
             });

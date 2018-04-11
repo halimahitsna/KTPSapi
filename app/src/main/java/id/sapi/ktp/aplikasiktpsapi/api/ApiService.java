@@ -191,4 +191,18 @@ public interface ApiService {
     @POST("update_peternakan.php")
     Call<Result> updatePeternakan(@Field("id_peternakan") String id_peternakan,
                                   @Field("peternakan") String peternakan);
+
+    @FormUrlEncoded
+    @POST("pengendali.php")
+    Call<Result> updateStatus(@Field("id_kandang") String id_kandang,
+                              @Field("status_lampu") String status_lampu,
+                              @Field("status_kipas") String status_kipas);
+
+    @FormUrlEncoded
+    @POST("status_lampu.php")
+    Call<Result> updateLampu(@Field("id_kandang") String id_kandang);
+
+    //get data by their id
+    @GET("jenis.php")
+    Call<JSONResponse> getJenis(@Query("id_jenis") String id_jenis);
 }

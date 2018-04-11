@@ -8,10 +8,10 @@
     <color name="alltext">#000000</color>
     <color name="link">#3550d9</color>
     <color name="hinttext">#bdc2c2</color>
-    <color name="plainChart">#4e9ddc</color>
-    <color name="plainChart2">#79c942</color>
+    <color name="blue">#4e9ddc</color>
+    <color name="green">#79c942</color>
     <color name="text1">#ffffff</color>
-    <color name="red">#e72222</color>
+    <color name="merah">#e72222</color>
     <color name="brown">#f4dfc7</color>
     <color name="button">#27AC5E</color>
 

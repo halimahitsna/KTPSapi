@@ -62,7 +62,7 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView id_kandang, txtkandang, txbsuhu, txbkelem, txbgas;
         ImageView edit, hapus;
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             id_kandang = (TextView)itemView.findViewById(R.id.idKandang);
             txtkandang = (TextView)itemView.findViewById(R.id.kandang);
@@ -84,16 +84,29 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
                         Kandang clickedDataItem = kandang.get(pos);
-                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
-                        intent.putExtra("id_kandang", kandang.get(pos).getId_kandang());
-                        intent.putExtra("kandang", kandang.get(pos).getKandang());
-                        intent.putExtra("bsuhu", kandang.get(pos).getBatas_suhu());
-                        intent.putExtra("bkelembapan", kandang.get(pos).getBatas_kelembapan());
-                        intent.putExtra("bgas", kandang.get(pos).getBatas_gas());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getKandang(), Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
+//                        intent.putExtra("id_kandang", kandang.get(pos).getId_kandang());
+//                        intent.putExtra("kandang", kandang.get(pos).getKandang());
+//                        intent.putExtra("bsuhu", kandang.get(pos).getBatas_suhu());
+//                        intent.putExtra("bkelembapan", kandang.get(pos).getBatas_kelembapan());
+//                        intent.putExtra("bgas", kandang.get(pos).getBatas_gas());
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(intent);
+//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getKandang(), Toast.LENGTH_SHORT).show();
+
+                        AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
+                        alertbox.setMessage("Kandang : " + kandang.get(pos).getKandang());
+                        alertbox.setTitle("Detail Kandang");
+                        alertbox.setIcon(R.drawable.ic_business_black_24dp);
+                        alertbox.setCancelable(true);
+                        alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0,
+                                                int arg1) {
+                            }
+                        });
+                        alertbox.show();
                     }
+
                 }
             });
         }

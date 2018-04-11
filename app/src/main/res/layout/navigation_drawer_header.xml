@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/side_nav_bar"
         android:paddingTop="30dp"
         android:paddingBottom="10dp"
         android:orientation="vertical">

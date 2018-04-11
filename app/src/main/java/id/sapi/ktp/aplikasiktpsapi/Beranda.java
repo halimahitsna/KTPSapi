@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,6 +32,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +49,9 @@ import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
+import id.sapi.ktp.aplikasiktpsapi.modal.KandangAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
+import id.sapi.ktp.aplikasiktpsapi.modal.MonitoringAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
@@ -64,9 +68,13 @@ public class Beranda extends Fragment {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtRegId, txtMessage;
     String regId;
-    TextView nmpeternakan;
+    TextView nmpeternakan, tkandang, tsuhu, tkelembapan, tgas, tid;
     private ArrayList<Peternakan> data;
     SharedPrefManager sharedPrefManager;
+    String iduser;
+    private ArrayList<Kandang> kandangs;
+    private KandangAdapter adapter;
+    LinearLayout monitoring;
 
     @Nullable
     @Override
@@ -84,9 +92,40 @@ public class Beranda extends Fragment {
         txtRegId = (TextView) view.findViewById(R.id.txt_reg_id);
         txtMessage = (TextView) view.findViewById(R.id.txt_push_message);
 
-        nmpeternakan = view.findViewById(R.id.namaPeternakan);
+        monitoring = (LinearLayout)view.findViewById(R.id.monitor);
+        tid = (TextView)view.findViewById(R.id.idkandang);
+        nmpeternakan = (TextView) view.findViewById(R.id.namaPeternakan);
+        tkandang = (TextView)view.findViewById(R.id.kandang);
+        tsuhu  =(TextView)view.findViewById(R.id.suhu);
+        tkelembapan = (TextView)view.findViewById(R.id.kelembapan);
+        tgas = (TextView)view.findViewById(R.id.gas);
+
         sharedPrefManager = new SharedPrefManager(getActivity());
-        nmpeternakan.setText(sharedPrefManager.getSPId());
+        SharedPreferences pref = getActivity().getSharedPreferences(Config.SHARED_PREF, 0);
+        regId = pref.getString("regId", null);
+        Log.d("regid", regId);
+
+        monitoring.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), DetailMonitoringKandang.class);
+                i.putExtra("id_kandang", tid.getText().toString());
+                i.putExtra("kandang", nmpeternakan.getText().toString());
+                i.putExtra("suhu", tsuhu.getText().toString());
+                i.putExtra("gas", tgas.getText().toString());
+                i.putExtra("kelembapan", tkelembapan.getText().toString());
+                startActivity(i);
+            }
+        });
+
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                getKandang();
+                handler.postDelayed(this,2000);//60 second delay
+            }
+        };handler.postDelayed(runnable, 2000);
 
         //Notification
        /* mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -117,6 +156,34 @@ public class Beranda extends Fragment {
 
         //displayFirebaseRegId();
     }
+    public void getKandang(){
+     //   koneksi();
+        iduser = sharedPrefManager.getSPId();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService request = retrofit.create(ApiService.class);
+        Call<JSONResponse> call = request.getJSONKandang(iduser);
+        call.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+                JSONResponse jsonResponse = response.body();
+                kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
+                tid.setText(kandangs.get(0).getId_kandang());
+                tkandang.setText(kandangs.get(0).getKandang());
+                tsuhu.setText(kandangs.get(0).getSuhu());
+                tkelembapan.setText(kandangs.get(0).getKelembapan());
+                tgas.setText(kandangs.get(0).getGas_amonia());
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+    }
+
    /* void Notif(String msg){
         Notification notification = new NotificationCompat.Builder(getActivity())
                 .setTicker("")
@@ -168,16 +235,16 @@ public class Beranda extends Fragment {
     }*/
     //end notif
 
-    private boolean adaInternet(){
-        ConnectivityManager koneks = (ConnectivityManager) getActivity().getSystemService(getContext().CONNECTIVITY_SERVICE);
-        return koneks.getActiveNetworkInfo() != null;
-    }
-    private void koneksi(){
-        if(adaInternet()){
-//            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
-        }
-    }
+//    private boolean adaInternet(){
+//        ConnectivityManager koneks = (ConnectivityManager) getActivity().getSystemService(getContext().CONNECTIVITY_SERVICE);
+//        return koneks.getActiveNetworkInfo() != null;
+//    }
+//    private void koneksi(){
+//        if(adaInternet()){
+////            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
+//        }else{
+//            Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
 }

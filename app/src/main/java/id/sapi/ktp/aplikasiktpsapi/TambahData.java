@@ -123,21 +123,16 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         penyakit = (Spinner) findViewById(R.id.penyakit);
         imdate = (ImageView) findViewById(R.id.set_date);
 
-       // initSpinnerJenis();
-//        initSpinnerKandang();
-//        initSpinnerIndukan();
-//        initSpinnerPakan();
-//        initSpinnerPeny();
+        initSpinnerJenis();
+        initSpinnerKandang();
+        initSpinnerIndukan();
+        initSpinnerPakan();
+        initSpinnerPeny();
 
         jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(final AdapterView<?> parent, View view, final int position, long id) {
-                parent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String jn = parent.getItemAtPosition(position).toString().trim();
-                    }
-                });
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedIndukan = parent.getItemAtPosition(position).toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -262,8 +257,8 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                     List<Jenis> semuadosenItems = response.body().getJenis();
                     List<String> listSpinner = new ArrayList<String>();
                     for (int i = 0; i < semuadosenItems.size(); i++) {
-                        listSpinner.add(semuadosenItems.get(i).getJenis());
-                        listSpinner.add(semuadosenItems.get(0).getId_jenis());
+                      //  listSpinner.add(semuadosenItems.get(i).getJenis());
+                        listSpinner.add(semuadosenItems.get(i).getId_jenis());
 
                     }
                     listSpinner.remove(semuadosenItems.get(0).getId_jenis());

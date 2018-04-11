@@ -7,14 +7,44 @@
                     android:id="@+id/menu_utama"
                     android:icon="@drawable/ic_home_black_24dp"
                     android:title="Halaman Utama" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Manajemen Data">
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_manajemen"
                     android:icon="@drawable/ic_folder_black_24dp"
-                    android:title="Manajemen Data Sapi" />
+                    android:title="Data Sapi" />
+                <item
+                    android:id="@+id/riwayat_penyakit"
+                    android:icon="@drawable/ic_folder_black_24dp"
+                    android:title="Riwayat Penyakit Sapi" />
+                <item
+                    android:id="@+id/kandang"
+                    android:icon="@drawable/ic_folder_black_24dp"
+                    android:title="Kandang Sapi" />
+                <item
+                    android:id="@+id/pakan"
+                    android:icon="@drawable/ic_folder_black_24dp"
+                    android:title="Pakan Sapi" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Monitoring Kandang">
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_monitoring"
                     android:icon="@drawable/ic_desktop_mac_black_24dp"
                     android:title="Monitoring Lingkungan" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Tambahan">
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_jadwal"
                     android:icon="@drawable/ic_date_range_black_24dp"

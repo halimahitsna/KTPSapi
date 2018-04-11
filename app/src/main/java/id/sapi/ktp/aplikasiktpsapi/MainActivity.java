@@ -57,14 +57,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private TextView txtRegId, txtMessage;
+    TextView txtRegId, txtMessage;
     Toolbar toolbar;
     private ArrayList<User> data;
     public ArrayList<Peternakan> data1;
     SharedPrefManager sharedPrefManager;
     TextView nama, id_user, nmpeternakan;
     ImageView image;
-    ArrayList<Profil> profilList;
     public static Integer id;
     String regId;
 
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //UserDB.deleteAll();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     void Notif(String msg){
         Notification notification = new NotificationCompat.Builder(this)
                 .setTicker("")
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setSmallIcon(R.drawable.sapi2)
                 .setContentTitle("")
                 .setContentText(msg)
                 .setAutoCancel(true)
@@ -180,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //end notif
 
     private void loadHeader() {
-
+        koneksi();
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View header=navigationView.getHeaderView(0);
         id_user = (TextView)header.findViewById(R.id.tvid);
@@ -209,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
                 nama.setText(data.get(0).getUser());
                 Picasso.with(MainActivity.this).load( data.get(0).getFoto()).into(image);
-             //   loadPeternakan();
+                loadPeternakan();
             }
 
             @Override
@@ -221,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void loadPeternakan() {
-        koneksi();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -286,6 +284,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_manajemen:
                 fragment = new MenuManajemen();
+                break;
+            case R.id.riwayat_penyakit:
+                fragment = new DataPenyakit();
                 break;
             case R.id.menu_monitoring:
                 fragment = new MonitoringKandang();

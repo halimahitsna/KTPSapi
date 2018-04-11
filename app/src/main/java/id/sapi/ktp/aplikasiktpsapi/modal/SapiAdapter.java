@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import id.sapi.ktp.aplikasiktpsapi.DetailData;
 import id.sapi.ktp.aplikasiktpsapi.EditData;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -104,26 +105,25 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    int posisi = getAdapterPosition();
-//
-//                    if(posisi != RecyclerView.NO_POSITION){
-//                        Sapi clickedDataItem = sapi.get(posisi);
-//                        Intent intent = new Intent(context, EditData.class);
-//                        intent.putExtra("id_sapi", sapi.get(posisi).getId_sapi());
-//                        intent.putExtra("id_jenis", sapi.get(posisi).getId_jenis());
-//                        intent.putExtra("id_indukan", sapi.get(posisi).getId_indukan());
-//                        intent.putExtra("id_kandang", sapi.get(posisi).getId_kandang());
-//                        intent.putExtra("id_pakan", sapi.get(posisi).getId_pakan());
-//                        intent.putExtra("bobot_lahir", sapi.get(posisi).getBobot_lahir());
-//                        intent.putExtra("bobot_hidup", sapi.get(posisi).getBobot_hidup());
-//                        intent.putExtra("warna", sapi.get(posisi).getWarna());
-//                        intent.putExtra("umur", sapi.get(posisi).getUmur());
-//                        intent.putExtra("foto", sapi.get(posisi).getFoto());
-//                        intent.putExtra("tgl_lahir", sapi.get(posisi).getTgl_lahir());
-//                        context.startActivity(intent);
-//                        Toast.makeText(view.getContext(), "You clicked " +clickedDataItem.getId_sapi(),Toast.LENGTH_SHORT).show();
-//                    }
-                }
+                    int posisi = getAdapterPosition();
+
+                    Sapi clickedDataItem = sapi.get(posisi);
+                    Intent intent = new Intent(context, DetailData.class);
+                    intent.putExtra("id_sapi", sapi.get(posisi).getId_sapi());
+                    intent.putExtra("id_jenis", sapi.get(posisi).getId_jenis());
+                    intent.putExtra("id_indukan", sapi.get(posisi).getId_indukan());
+                    intent.putExtra("id_kandang", sapi.get(posisi).getId_kandang());
+                    intent.putExtra("id_pakan", sapi.get(posisi).getId_pakan());
+                    intent.putExtra("bobot_lahir", sapi.get(posisi).getBobot_lahir());
+                    intent.putExtra("bobot_hidup", sapi.get(posisi).getBobot_hidup());
+                    intent.putExtra("warna", sapi.get(posisi).getWarna());
+                    intent.putExtra("umur", sapi.get(posisi).getUmur());
+                    intent.putExtra("foto", sapi.get(posisi).getFoto());
+                    intent.putExtra("tgl_lahir", sapi.get(posisi).getTgl_lahir());
+                    context.startActivity(intent);
+                    Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getId_sapi(), Toast.LENGTH_SHORT).show();
+                    }
+
             });
         }
 
