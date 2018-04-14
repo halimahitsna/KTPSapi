@@ -50,4 +50,9 @@ public class Penyakit {
     public void setId_user(String id_user) {
         this.id_user = id_user;
     }
+
+    public void setAll(String id_penyakit, String penyakit) {
+        setId_penyakit(id_penyakit);
+        setPenyakit(penyakit);
+    }
 }

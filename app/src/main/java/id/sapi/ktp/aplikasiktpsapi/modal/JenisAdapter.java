@@ -12,12 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-import id.sapi.ktp.aplikasiktpsapi.EditData;
-import id.sapi.ktp.aplikasiktpsapi.EditJenis;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditJenis;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;

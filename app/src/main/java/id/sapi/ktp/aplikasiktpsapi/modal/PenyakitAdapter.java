@@ -14,8 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import id.sapi.ktp.aplikasiktpsapi.EditJenis;
-import id.sapi.ktp.aplikasiktpsapi.EditPenyakit;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditPenyakit;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -100,6 +99,7 @@ public class PenyakitAdapter extends RecyclerView.Adapter<PenyakitAdapter.ViewHo
                 if (posisi != RecyclerView.NO_POSITION) {
                     Penyakit clickedDataItem = penyakit.get(posisi);
                     Intent intent = new Intent(context, EditPenyakit.class);
+                    intent.putExtra("id_user", penyakit.get(posisi).getId_user());
                     intent.putExtra("id_penyakit", penyakit.get(posisi).getId_penyakit());
                     intent.putExtra("penyakit", penyakit.get(posisi).getPenyakit());
                     context.startActivity(intent);

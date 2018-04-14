@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-import id.sapi.ktp.aplikasiktpsapi.Beranda;
 import id.sapi.ktp.aplikasiktpsapi.R;
 
 /**

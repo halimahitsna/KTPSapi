@@ -1,30 +1,18 @@
 package id.sapi.ktp.aplikasiktpsapi.modal;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import id.sapi.ktp.aplikasiktpsapi.DetailMonitoringKandang;
-import id.sapi.ktp.aplikasiktpsapi.EditJenis;
-import id.sapi.ktp.aplikasiktpsapi.EditKandang;
+import id.sapi.ktp.aplikasiktpsapi.activities.DetailMonitoringKandang;
 import id.sapi.ktp.aplikasiktpsapi.R;
-import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
-import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ASUS on 3/8/2018.

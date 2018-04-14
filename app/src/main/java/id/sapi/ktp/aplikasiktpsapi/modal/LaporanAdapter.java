@@ -3,7 +3,10 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Random;
 
-import id.sapi.ktp.aplikasiktpsapi.EditJenis;
+import id.sapi.ktp.aplikasiktpsapi.activities.DetailData;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditJenis;
 import id.sapi.ktp.aplikasiktpsapi.R;
-import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
-import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.database.LaporanDB;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditLaporan;
 
 public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> {
     Context context;
     List<LaporanDB> laporanDBList;
+    private Random mRandom = new Random();
 
     OnItemClickListener clickListener;
 
@@ -50,6 +50,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
         holder.judul.setText(laporanDBList.get(position).getJudul_laporan());
         holder.isi.setText(laporanDBList.get(position).getIsi_laporan());
         holder.tgl.setText(laporanDBList.get(position).getTanggal());
+
     }
 
     @Override
@@ -60,16 +61,19 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
     class NoteVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView id,judul, isi, tgl ;
         ImageView edit, hapus;
+        public CardView mCardView;
 
         public NoteVH(View itemView) {
             super(itemView);
 
+            mCardView = (CardView)itemView.findViewById(R.id.card);
             id = (TextView) itemView.findViewById(R.id.idlap);
             judul = (TextView) itemView.findViewById(R.id.judul);
             isi = (TextView) itemView.findViewById(R.id.isi);
             tgl = (TextView) itemView.findViewById(R.id.tgl);
             edit = (ImageView) itemView.findViewById(R.id.edit);
             hapus = (ImageView) itemView.findViewById(R.id.hapus);
+            mCardView.setCardBackgroundColor(getRandomColorCode());
 
             edit.setOnClickListener(this);
             hapus.setOnClickListener(this);
@@ -79,14 +83,27 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
                     // get position
                     int pos = getAdapterPosition();
                     // check if item still exists
-                    if(pos != RecyclerView.NO_POSITION){
+                    if (pos != RecyclerView.NO_POSITION) {
                         LaporanDB clickedDataItem = laporanDBList.get(pos);
-
+                        Intent intent = new Intent(context, DetailData.class);
+                        intent.putExtra("judul", laporanDBList.get(pos).getJudul_laporan());
+                        intent.putExtra("isi", laporanDBList.get(pos).getIsi_laporan());
+                        intent.putExtra("tanggal", laporanDBList.get(pos).getTanggal());
+                        context.startActivity(intent);
+                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getJudul_laporan(), Toast.LENGTH_SHORT).show();
                     }
                 }
+
             });
         }
 
+        public int getRandomColorCode(){
+
+            Random random = new Random();
+
+            return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+
+        }
         @Override
         public void onClick(View view) {
             clickListener.onItemClick(view, getAdapterPosition());
@@ -95,10 +112,10 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
             if (view.getId() == edit.getId()) {
                 if (posisi != RecyclerView.NO_POSITION) {
                     LaporanDB clickedDataItem = laporanDBList.get(posisi);
-                    Intent intent = new Intent(context, EditJenis.class);
+                    Intent intent = new Intent(context, EditLaporan.class);
                     intent.putExtra("id_laporan", laporanDBList.get(posisi).getId_laporan());
-                    intent.putExtra("judul_laporan", laporanDBList.get(posisi).getJudul_laporan());
-                    intent.putExtra("isi_laporan", laporanDBList.get(posisi).getIsi_laporan());
+                    intent.putExtra("judul", laporanDBList.get(posisi).getJudul_laporan());
+                    intent.putExtra("isi", laporanDBList.get(posisi).getIsi_laporan());
                     intent.putExtra("tanggal", laporanDBList.get(posisi).getTanggal());
                     context.startActivity(intent);
                     Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getJudul_laporan(), Toast.LENGTH_SHORT).show();
@@ -113,11 +130,11 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
                     alertbox.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            LaporanDB laporan = LaporanDB.findById(LaporanDB.class, Long.valueOf(laporanDBList.get(posisi).getId_laporan()));
-                            laporan.delete();
-                            laporanDBList.remove(posisi);
+
+                            laporanDBList.remove(getAdapterPosition());
                             notifyItemRemoved(posisi);
                             notifyItemRangeChanged(posisi, laporanDBList.size());
+                            LaporanDB.delete(posisi);
                         }
                     });
                     alertbox.setNegativeButton("Batal",

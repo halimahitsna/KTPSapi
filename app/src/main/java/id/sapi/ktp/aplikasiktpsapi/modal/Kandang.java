@@ -86,4 +86,9 @@ public class Kandang {
     public void setId_user(String id_user) {
         this.id_user = id_user;
     }
+
+    public void setAll(String id_kandang, String kandang) {
+        setId_kandang(id_kandang);
+        setKandang(kandang);
+    }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".DetailData">
+    tools:context=".activities.DetailData">
     <RelativeLayout
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
@@ -37,11 +37,12 @@
                 android:layout_gravity="center"
                 android:src="@drawable/ic_person_black_24dp"/>
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/idSapi"
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textColor="@color/blue"
                 android:gravity="center"
                 android:textStyle="bold"

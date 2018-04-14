@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Menu Utama">
+    <item android:title="Menu">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_utama"
                     android:icon="@drawable/ic_home_black_24dp"
                     android:title="Halaman Utama" />
+                <item
+                    android:id="@+id/menu_jadwal"
+                    android:icon="@drawable/ic_date_range_black_24dp"
+                    android:title="Jadwal Pakan Sapi" />
+                <item
+                    android:id="@+id/menu_laporan"
+                    android:icon="@drawable/ic_assessment_black_24dp"
+                    android:title="Laporan" />
             </group>
         </menu>
     </item>
@@ -18,41 +26,27 @@
                     android:icon="@drawable/ic_folder_black_24dp"
                     android:title="Data Sapi" />
                 <item
-                    android:id="@+id/riwayat_penyakit"
-                    android:icon="@drawable/ic_folder_black_24dp"
-                    android:title="Riwayat Penyakit Sapi" />
-                <item
                     android:id="@+id/kandang"
-                    android:icon="@drawable/ic_folder_black_24dp"
+                    android:icon="@drawable/ic_location_city_black_24dp"
                     android:title="Kandang Sapi" />
                 <item
                     android:id="@+id/pakan"
-                    android:icon="@drawable/ic_folder_black_24dp"
+                    android:icon="@drawable/ic_restaurant_black_24dp"
                     android:title="Pakan Sapi" />
+                <item
+                    android:id="@+id/riwayat_penyakit"
+                    android:icon="@drawable/ic_local_hospital_black_24dp"
+                    android:title="Riwayat Penyakit Sapi" />
             </group>
         </menu>
     </item>
-    <item android:title="Monitoring Kandang">
+    <item android:title="Monitoring">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_monitoring"
                     android:icon="@drawable/ic_desktop_mac_black_24dp"
                     android:title="Monitoring Lingkungan" />
-            </group>
-        </menu>
-    </item>
-    <item android:title="Tambahan">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/menu_jadwal"
-                    android:icon="@drawable/ic_date_range_black_24dp"
-                    android:title="Jadwal Pakan Sapi" />
-                <item
-                    android:id="@+id/menu_laporan"
-                    android:icon="@drawable/ic_assessment_black_24dp"
-                    android:title="Laporan" />
             </group>
         </menu>
     </item>

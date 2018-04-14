@@ -57,46 +57,6 @@
                 android:textSize="16sp"
                 android:gravity="center"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/kandang"
-                android:background="@drawable/rounded_view"
-                android:padding="45dp"
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Kandang"
-                android:textColor="@color/alltext"
-                android:textSize="16sp"
-                android:gravity="center"/>
-            <Button
-                android:id="@+id/penyakit"
-                android:background="@drawable/rounded_view"
-                android:padding="45dp"
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Penyakit"
-                android:textColor="@color/alltext"
-                android:textSize="16sp"
-                android:gravity="center"/>
-        </LinearLayout>
-        <Button
-            android:id="@+id/pakan"
-            android:background="@drawable/rounded_view"
-            android:padding="40dp"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pakan"
-            android:textColor="@color/alltext"
-            android:textSize="16sp"
-            android:gravity="center"/>
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

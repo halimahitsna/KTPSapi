@@ -9,11 +9,6 @@ public class Jenis {
     private String jenis;
     private String id_user;
 
-    public Jenis(String id_jenis, String jenis){
-        this.id_jenis = id_jenis;
-        this.jenis = jenis;
-    }
-
     public String getId_jenis() {
         return id_jenis;
     }
@@ -38,8 +33,8 @@ public class Jenis {
         this.id_user = id_user;
     }
 
-    public void setAll(String id_user, String jenis) {
-        setId_jenis(id_user);
+    public void setAll(String id_jenis, String jenis) {
+        setId_jenis(id_jenis);
         setJenis(jenis);
     }
 }

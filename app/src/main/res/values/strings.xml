@@ -16,41 +16,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="suhu">Suhu</string>
-    <string name="lembab">Kelembaban</string>
-    <string name="home">Data Sapi</string>
-    <string name="setting">Pengaturan</string>
-    <string name="profil">Profil Pengguna</string>
-    <string name="trigger">Scan KTP Sapi</string>
-    <string name="ktp">KTP Sapi</string>
-    <string name="jenis">Jenis Sapi</string>
-    <string name="penyakit">Penyakit</string>
-    <string name="kandang">Kandang</string>
-
-    <string name="title_activity_splash_scr">SplashScr</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string-array name="titles">
-        <item>Laporan Data Sapi</item>
-        <item>Laporan Lingkungan</item>
-        <item>Laporan Grafik</item>
-    </string-array>
-    <string-array name="desc">
-        <item>Laporan berisi Jenis, indukan, penyakit dan berat badan Sapi</item>
-        <item>Laporan berisi Suhu dan Kelembapan Lingkungan Kandang Sapi</item>
-        <item>Laporan berisi perkembangan Sapi dalam bentuk Grafik</item>
-    </string-array>
-    <string-array name="pilihan_menu">
-        <item>Rawon</item>
-        <item>Pecel</item>
-        <item>Sambel Goreng</item>
-        <item>Bali</item>
-        <item>Lombok Ijo</item>
-        <item>Sayur Asem</item>
-        <item>Sambel Tomat</item>
-        <item>Ayam Goreng</item>
-        <item>Rujak Legi</item>
-    </string-array>
-    <string name="bluetoothList">Daftar Bluetooth</string>
-    <string name="title_activity_halaman_login">HalamanLogin</string>
+    <string name="Manajemen">Manajemen Data</string>
+    <string name="datasapi">Data Sapi</string>
 </resources>

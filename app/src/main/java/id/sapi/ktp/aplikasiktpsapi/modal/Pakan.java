@@ -68,4 +68,9 @@ public class Pakan {
     public void setId_user(String id_user) {
         this.id_user = id_user;
     }
+
+    public void setAll(String id_pakan, String pakan) {
+        setId_pakan(id_pakan);
+        setPakan(pakan);
+    }
 }

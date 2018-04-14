@@ -16,8 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import id.sapi.ktp.aplikasiktpsapi.EditIndukan;
-import id.sapi.ktp.aplikasiktpsapi.EditJenis;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditIndukan;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;

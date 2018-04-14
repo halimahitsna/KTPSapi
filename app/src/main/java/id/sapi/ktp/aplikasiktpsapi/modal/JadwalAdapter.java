@@ -12,12 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
-import id.sapi.ktp.aplikasiktpsapi.EditData;
-import id.sapi.ktp.aplikasiktpsapi.EditJadwal;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditJadwal;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;

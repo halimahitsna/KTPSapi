@@ -14,53 +14,52 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashScreen" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.SplashScreen" />
         <activity android:name=".tab.tab1" />
         <activity android:name=".tab.tab2" />
-        <activity android:name=".Beranda" />
-        <activity android:name=".HalamanData" />
-        <activity android:name=".HalamanLogin">
+        <activity android:name=".fragment.Beranda" />
+        <activity android:name=".activities.HalamanLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HalamanDaftar" />
+        <activity android:name=".activities.HalamanDaftar" />
 
         <!-- Firebase Notifications -->
-        <service android:name=".MyFirebaseMessagingService"
+        <service android:name=".activities.MyFirebaseMessagingService"
             android:icon="@drawable/ic_notifications_black_24dp">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".MyFirebaseInstanceIDService"
+        <service android:name=".activities.MyFirebaseInstanceIDService"
             android:icon="@drawable/ic_notifications_black_24dp">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
-        <activity android:name=".EditData" />
-        <activity android:name=".Manajemen" />
-        <activity android:name=".EditJenis" />
-        <activity android:name=".DataJenis" />
-        <activity android:name=".Profile" />
-        <activity android:name=".MenuManajemen" />
-        <activity android:name=".Pengaturan" />
-        <activity android:name=".JadwalMakan" />
-        <activity android:name=".Laporan" />
-        <activity android:name=".MonitoringKandang" />
-        <activity android:name=".Tentang" />
-        <activity android:name=".DataKandang" />
-        <activity android:name=".DataIndukan" />
-        <activity android:name=".DataPenyakit" />
-        <activity android:name=".DataPakan" />
-        <activity android:name=".DetailMonitoringKandang" />
-        <activity android:name=".EditKandang" />
-        <activity android:name=".TambahJadwal" />
+        <activity android:name=".edit.EditData" />
+        <activity android:name=".activities.Manajemen" />
+        <activity android:name=".edit.EditJenis" />
+        <activity android:name=".activities.DataJenis" />
+        <activity android:name=".fragment.Profile" />
+        <activity android:name=".fragment.MenuManajemen" />
+        <activity android:name=".fragment.Pengaturan" />
+        <activity android:name=".fragment.JadwalMakan" />
+        <activity android:name=".fragment.Laporan" />
+        <activity android:name=".fragment.MonitoringKandang" />
+        <activity android:name=".fragment.Tentang" />
+        <activity android:name=".fragment.DataKandang" />
+        <activity android:name=".activities.DataIndukan" />
+        <activity android:name=".fragment.DataPenyakit" />
+        <activity android:name=".fragment.DataPakan" />
+        <activity android:name=".activities.DetailMonitoringKandang" />
+        <activity android:name=".edit.EditKandang" />
+        <activity android:name=".tambah.TambahJadwal" />
 
         <meta-data
             android:name="DATABASE"
@@ -75,19 +74,19 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="id.sapi.ktp.aplikasiktpsapi" />
 
-        <activity android:name=".EditMonitoring" />
-        <activity android:name=".EditPakan" />
-        <activity android:name=".EditPenyakit" />
-        <activity android:name=".EditJadwal" />
-        <activity android:name=".EditIndukan" />
-        <activity android:name=".TambahData" />
-        <activity android:name=".TambahKandang" />
-        <activity android:name=".TambahPakan" />
-        <activity android:name=".TambahJenis" />
-        <activity android:name=".TambahPenyakit" />
-        <activity android:name=".TambahIndukan" />
-        <activity android:name=".DetailData" />
-        <activity android:name=".TambahLaporan"></activity>
+        <activity android:name=".edit.EditMonitoring" />
+        <activity android:name=".edit.EditPakan" />
+        <activity android:name=".edit.EditPenyakit" />
+        <activity android:name=".edit.EditJadwal" />
+        <activity android:name=".edit.EditIndukan" />
+        <activity android:name=".tambah.TambahData" />
+        <activity android:name=".tambah.TambahKandang" />
+        <activity android:name=".tambah.TambahPakan" />
+        <activity android:name=".tambah.TambahJenis" />
+        <activity android:name=".tambah.TambahPenyakit" />
+        <activity android:name=".tambah.TambahIndukan" />
+        <activity android:name=".activities.DetailData" />
+        <activity android:name=".tambah.TambahLaporan"></activity>
     </application>
 
 </manifest>

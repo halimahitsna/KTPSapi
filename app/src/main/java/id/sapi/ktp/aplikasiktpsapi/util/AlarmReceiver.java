@@ -19,21 +19,10 @@ package id.sapi.ktp.aplikasiktpsapi.util;
 
 
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
-
-import java.util.Calendar;
-
-import id.sapi.ktp.aplikasiktpsapi.TambahJadwal;
 
 
 public class AlarmReceiver extends WakefulBroadcastReceiver {

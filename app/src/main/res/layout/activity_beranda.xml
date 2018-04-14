@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background">
     <TextView
         android:id="@+id/txt_push_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:visibility="gone"
         android:gravity="center_horizontal"
         android:textColor="@color/colorPrimary"
@@ -32,7 +33,6 @@
         android:id="@+id/monitor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:padding="10dp"
         android:onClick="monitoring"
         android:layout_below="@+id/namaPeternakan"
@@ -140,7 +140,7 @@
         android:layout_below="@id/monitor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         android:padding="10dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
@@ -159,20 +159,5 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@color/background" />
-        <com.shinelw.library.ColorArcProgressBar
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:id="@+id/bar1"
-            app:is_need_content="true"
-            app:front_color1="@color/blue"
-            app:max_value="100"
-            app:back_width="10dp"
-            app:front_width="10dp"
-            app:total_engle="270"
-            app:is_need_unit="true"
-            app:string_unit="bbbb"
-            app:back_color="@color/background"
-            />
     </LinearLayout>
 </RelativeLayout>

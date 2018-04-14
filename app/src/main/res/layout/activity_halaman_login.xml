@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f1f2f2"
-    tools:context="id.sapi.ktp.aplikasiktpsapi.HalamanLogin">
+    tools:context="id.sapi.ktp.aplikasiktpsapi.activities.HalamanLogin">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import id.sapi.ktp.aplikasiktpsapi.modal.Data;
 import id.sapi.ktp.aplikasiktpsapi.modal.Indukan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jadwal;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
@@ -28,6 +29,7 @@ public class JSONResponse {
     private Penyakit[]penyakit;
     private Indukan[]indukan;
     private Jadwal[]jadwal;
+    private Data[]data;
 
     public Sapi[] getSapi(){
         return sapi;
@@ -40,5 +42,6 @@ public class JSONResponse {
     public Penyakit[]getPenyakit(){return penyakit;}
     public Indukan[]getIndukan(){return indukan;}
     public Jadwal[]getJadwal(){return jadwal;}
+    public Data[]getData(){return data;}
 
 }

@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import id.sapi.ktp.aplikasiktpsapi.DetailData;
-import id.sapi.ktp.aplikasiktpsapi.EditData;
+import id.sapi.ktp.aplikasiktpsapi.activities.DetailData;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditData;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;

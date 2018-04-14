@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/background"
     android:id="@+id/navigation_drawer_layout"
-    tools:context="id.sapi.ktp.aplikasiktpsapi.EditKandang">
+    tools:context="id.sapi.ktp.aplikasiktpsapi.edit.EditKandang">
     <RelativeLayout
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"

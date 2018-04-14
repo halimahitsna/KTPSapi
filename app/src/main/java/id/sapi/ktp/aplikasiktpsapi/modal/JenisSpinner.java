@@ -8,60 +8,46 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import id.sapi.ktp.aplikasiktpsapi.R;
 
 public class JenisSpinner extends BaseAdapter {
-    private Activity activity;
-    private LayoutInflater inflater;
-    private List<Jenis> jenisItems;
+    Context c;
+    ArrayList<Jenis> jenisArrayList;
 
-    public JenisSpinner(Activity activity, List<Jenis> jenisItems) {
-        this.activity = activity;
-        this.jenisItems = jenisItems;
+    public JenisSpinner(Context context, ArrayList<Jenis> jenisArrayList) {
+        super();
+        this.c = context;
+        this.jenisArrayList = jenisArrayList;
     }
 
     @Override
     public int getCount() {
-        return jenisItems.size();
+        return jenisArrayList.size();
     }
 
     @Override
-    public Object getItem(int location) {
-        return jenisItems.get(location);
+    public Object getItem(int position) {
+        return jenisArrayList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (inflater == null)
-            inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView != null) {
-            holder = (ViewHolder) convertView.getTag();
-        }else{
-            convertView = inflater.inflate(R.layout.isi_spinner, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        }
-        Jenis m = jenisItems.get(position);
-        holder.id.setText(m.getId_jenis());
-        holder.txt.setText(String.valueOf(m.getJenis()));
-        return convertView;
-    }
-    static class ViewHolder {
-       TextView id, txt;
+        Jenis cur_obj = jenisArrayList.get(position);
+        LayoutInflater inflater = ((Activity) c).getLayoutInflater();
+        View row = inflater.inflate(R.layout.isi_spinner, parent, false);
+        TextView id = (TextView)row.findViewById(R.id.idspin);
+        TextView label = (TextView) row.findViewById(R.id.txItemSpin);
+        id.setText(cur_obj.getId_jenis());
+        label.setText(cur_obj.getJenis());
 
-        ViewHolder(View view) {
-            id = (TextView)view.findViewById(R.id.idspin);
-            txt = (TextView)view.findViewById(R.id.txItemSpin);
-        }
+        return row;
     }
 }

@@ -81,6 +81,9 @@ public interface ApiService {
 
 
     //getdata
+    @GET("spinner.php")
+    Call<JSONResponse> getData(@Query("id_user") String id_user);
+
     @GET("get_data.php")
     Call<JSONResponse> getJSONSapi(@Query("id_user") String id_user);
 
@@ -205,4 +208,10 @@ public interface ApiService {
     //get data by their id
     @GET("jenis.php")
     Call<JSONResponse> getJenis(@Query("id_jenis") String id_jenis);
+
+    //notif
+    @GET("notification.php")
+    Call<ResponseBody> sendNotif (@Query("firebase_id") String firebase_id,
+                                 @Query("title") String title,
+                                 @Query("body") String body);
 }

@@ -50,4 +50,9 @@ public class Indukan {
     public void setId_user(String id_user) {
         this.id_user = id_user;
     }
+
+    public void setAll(String id_indukan, String indukan) {
+        setId_indukan(id_indukan);
+        setIndukan(indukan);
+    }
 }
