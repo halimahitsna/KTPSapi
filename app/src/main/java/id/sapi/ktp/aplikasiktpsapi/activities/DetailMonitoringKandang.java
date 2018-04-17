@@ -16,8 +16,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
-
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -36,7 +34,6 @@ public class DetailMonitoringKandang extends AppCompatActivity {
     Switch swotomatis, swkipas, swlampu;
     String idkan, stlampu, stkipas;
     Integer bsuhu, bkelembapan, bgas, suhu, kelembapan, gas;
-    CircleProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +50,6 @@ public class DetailMonitoringKandang extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        loading = (CircleProgressBar)findViewById(R.id.progress);
         txtkandang = (TextView)findViewById(R.id.kandang);
         txtsuhu = (TextView)findViewById(R.id.suhu);
         txtkelembapan = (TextView)findViewById(R.id.kelembapan);
@@ -168,7 +164,6 @@ public class DetailMonitoringKandang extends AppCompatActivity {
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                loading.setVisibility(View.INVISIBLE);
                 String value = response.body().getValue();
                 String message = response.body().getMessage();
                 if (value.equals("1")) {

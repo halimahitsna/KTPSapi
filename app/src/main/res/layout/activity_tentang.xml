@@ -3,13 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Tentang"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/card_recycle_view"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:tooltipText="@string/app_name"
+            android:layout_height="wrap_content"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

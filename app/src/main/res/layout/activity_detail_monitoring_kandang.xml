@@ -33,13 +33,6 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/alltext"
             android:textSize="16sp"/>
-        <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
-            android:id="@+id/progress"
-            app:mlpb_progress_stoke_width="3dp"
-            app:mlpb_progress_color="#566da9"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

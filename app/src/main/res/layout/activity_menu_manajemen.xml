@@ -16,46 +16,103 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
-        <Button
+        <LinearLayout
             android:id="@+id/sapi"
             android:background="@drawable/rounded_view"
-            android:padding="40dp"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/alltext"
-            android:textSize="16sp"
-            android:text="Data Sapi"
-            android:gravity="center"/>
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Data Sapi"
+                android:padding="30dp"
+                android:gravity="center"
+                android:textColor="@color/alltext"
+                android:textSize="20sp"/>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/background" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/jumlah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="right"
+                android:textColor="@color/alltext"
+                android:textSize="13sp"/>
+        </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/jenis"
+            android:background="@drawable/rounded_view"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/jenis"
-                android:background="@drawable/rounded_view"
-                android:padding="50dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Jenis"
+                android:text="Jenis Sapi"
+                android:padding="30dp"
+                android:gravity="center"
                 android:textColor="@color/alltext"
-                android:textSize="16sp"
-                android:gravity="center"/>
-            <Button
-                android:id="@+id/indukan"
-                android:background="@drawable/rounded_view"
-                android:padding="50dp"
+                android:textSize="20sp"/>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/background" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/jumlahjenis"
                 android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Indukan"
+                android:text="0"
+                android:gravity="right"
                 android:textColor="@color/alltext"
-                android:textSize="16sp"
-                android:gravity="center"/>
+                android:textSize="13sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:id="@+id/indukan"
+            android:background="@drawable/rounded_view"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Indukan Sapi"
+                android:padding="30dp"
+                android:gravity="center"
+                android:textColor="@color/alltext"
+                android:textSize="20sp"/>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/background" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/jumlahinduk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="right"
+                android:textColor="@color/alltext"
+                android:textSize="13sp"/>
         </LinearLayout>
     </LinearLayout>
     </ScrollView>

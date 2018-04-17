@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
-import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +42,6 @@ public class MonitoringKandang extends Fragment {
     private MonitoringAdapter adapter;
     SharedPrefManager sharedPrefManager;
     String iduser;
-    CircleProgressBar loading;
     int progress = 0;
     private Handler handler;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -63,7 +61,6 @@ public class MonitoringKandang extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Monitoring Kandang");
 
-        loading = (CircleProgressBar)view.findViewById(R.id.progress);
         sharedPrefManager = new SharedPrefManager(getActivity());
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         //progress();
@@ -126,20 +123,4 @@ public class MonitoringKandang extends Fragment {
             Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
     }
-
-    private void progress(){
-        handler = new Handler();
-        for (int i = 0; i < 10; i++) {
-            final int finalI = i;
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.VISIBLE);
-
-                }
-            },1000*(i+1));
-        }
-
-    }
-
 }

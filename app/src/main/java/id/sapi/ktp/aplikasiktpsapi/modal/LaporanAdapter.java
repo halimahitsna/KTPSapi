@@ -106,7 +106,6 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
         }
         @Override
         public void onClick(View view) {
-            clickListener.onItemClick(view, getAdapterPosition());
             final int posisi = getAdapterPosition();
 
             if (view.getId() == edit.getId()) {
@@ -131,10 +130,12 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            laporanDBList.remove(getAdapterPosition());
+                            final LaporanDB laporanDB = laporanDBList.get(posisi);
+                            laporanDBList.remove(posisi);
                             notifyItemRemoved(posisi);
-                            notifyItemRangeChanged(posisi, laporanDBList.size());
-                            LaporanDB.delete(posisi);
+
+                            laporanDB.delete();
+
                         }
                     });
                     alertbox.setNegativeButton("Batal",

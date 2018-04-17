@@ -193,6 +193,8 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
+        jenis.setSelection(getIntent().getIntExtra("jenis",0));
+
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

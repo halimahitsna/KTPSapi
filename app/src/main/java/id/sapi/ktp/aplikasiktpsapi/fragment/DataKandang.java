@@ -82,6 +82,7 @@ public class DataKandang extends Fragment {
             }
         });
     }
+
     private void initViews() {
         recyclerView = (RecyclerView)getActivity().findViewById (R.id.card_recycle_view);
         recyclerView.setHasFixedSize(true);

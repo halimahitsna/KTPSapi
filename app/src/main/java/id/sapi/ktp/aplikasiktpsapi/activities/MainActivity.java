@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // now subscribe to `global` topic to receive app wide notifications
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
 
-                    displayFirebaseRegId();
+                    //displayFirebaseRegId();
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
@@ -135,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                    // Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
                     //Log.d("Push Notif", message);
 
-                    txtMessage.setText(message);
-                    Notif(message);
+                    /*txtMessage.setText(message);
+                    Notif(message);*/
 
                 }
             }
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         displayFirebaseRegId();
     }
-    void Notif(String msg){
+    /*void Notif(String msg){
         Notification notification = new NotificationCompat.Builder(this)
                 .setTicker("")
                 .setSmallIcon(R.drawable.sapi2)
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
-    }
+    }*/
 
     // Fetches reg id from shared preferences
     // and displays on the screen
@@ -236,6 +237,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nama = (TextView) header.findViewById(R.id.tvnama);
         image = (ImageView) header.findViewById(R.id.imageView);
         nmpeternakan = (TextView)header.findViewById(R.id.txpeternakan);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+
+            }
+        });
+
         id_user.setText(sharedPrefManager.getSPId());
         UserDB userDB = new UserDB(id_user.getText().toString(), nama.getText().toString());
         userDB.save();
@@ -328,12 +337,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void displaySelectedScreen(int itemId) {
         //creating fragment object
         Fragment fragment = null;
+        Bundle bundle = new Bundle();
         switch (itemId) {
             case R.id.menu_utama:
                 fragment = new Beranda();
                 break;
             case R.id.menu_manajemen:
+                bundle.putString("firebase", regId);
                 fragment = new MenuManajemen();
+                fragment.setArguments(bundle);
                 break;
             case R.id.riwayat_penyakit:
                 fragment = new DataPenyakit();

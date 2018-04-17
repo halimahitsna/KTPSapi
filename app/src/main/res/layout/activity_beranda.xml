@@ -2,10 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/card_recycle_view"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:tooltipText="@string/app_name"
+            android:layout_height="wrap_content"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <TextView
         android:id="@+id/txt_push_message"
         android:layout_width="wrap_content"
@@ -29,135 +40,4 @@
         android:visibility="gone"
         android:textColor="@color/alltext"
         android:gravity="center_horizontal"/>
-    <LinearLayout
-        android:id="@+id/monitor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:onClick="monitoring"
-        android:layout_below="@+id/namaPeternakan"
-        android:background="@drawable/rounded_view"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/foto"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_business_black_24dp"/>
-        <TextView
-            android:id="@+id/idkandang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="idkandang"
-            android:textColor="@color/alltext"
-            android:visibility="gone"
-            android:gravity="center_horizontal"/>
-        <TextView
-            android:id="@+id/kandang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kandang"
-            android:padding="10dp"
-            android:textStyle="bold"
-            android:textColor="@color/alltext"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_gravity="center"
-            android:background="@color/background" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Suhu (Celcius)"
-            android:textColor="@color/alltext"
-            android:textSize="14sp"
-            android:gravity="center_horizontal"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kelembapan (%)"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:textColor="@color/alltext"
-            android:textSize="14sp"
-            android:gravity="center_horizontal"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gas Amonia (%)"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:textColor="@color/alltext"
-            android:textSize="14sp"
-            android:gravity="center_horizontal"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/suhu"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="0"
-                android:textColor="@color/alltext"
-                android:textSize="28sp"
-                android:gravity="center_horizontal"/>
-            <TextView
-                android:id="@+id/kelembapan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:textColor="@color/alltext"
-                android:textSize="28sp"
-                android:gravity="center_horizontal"/>
-            <TextView
-                android:id="@+id/gas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:textColor="@color/alltext"
-                android:textSize="28sp"
-                android:gravity="center_horizontal"/>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/sapi"
-        android:layout_below="@id/monitor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:background="@drawable/rounded_view"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Jumlah Sapi"
-            android:textColor="@color/alltext"
-            android:textSize="18sp"
-            android:gravity="center"/>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/background" />
-    </LinearLayout>
 </RelativeLayout>

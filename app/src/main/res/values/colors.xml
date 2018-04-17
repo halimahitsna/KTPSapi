@@ -14,6 +14,7 @@
     <color name="merah">#e72222</color>
     <color name="brown">#f4dfc7</color>
     <color name="button">#27AC5E</color>
+    <color name="transparent">#00000000</color>
 
     <array name="reds">
         <item>@color/md_red_500</item>
