@@ -66,7 +66,7 @@ public class DetailMonitoringKandang extends AppCompatActivity {
        // bsuhu = Integer.valueOf(txtbsuhu.getText().toString());
 //        bkelembapan = Integer.valueOf(i.getStringExtra("bkelembapan"));
   //      bgas = Integer.valueOf(i.getStringExtra("bgas"));
-        suhu = Integer.valueOf(txtsuhu.getText().toString());
+        suhu = Integer.valueOf(i.getStringExtra("suhu"));
         kelembapan = Integer.valueOf(i.getStringExtra("kelembapan"));
         gas = Integer.valueOf(i.getStringExtra("gas"));
 

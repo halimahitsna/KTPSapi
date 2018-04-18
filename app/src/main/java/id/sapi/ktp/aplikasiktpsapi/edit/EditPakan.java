@@ -10,10 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -25,7 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class EditPakan extends AppCompatActivity {
+public class EditPakan extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText txtpakan, txtjml, txtid;
     Spinner stat;
     Button btnsimpan;
@@ -58,6 +63,18 @@ public class EditPakan extends AppCompatActivity {
         txtid.setText(getIntent().getStringExtra("id_pakan"));
         txtpakan.setText(getIntent().getStringExtra("pakan"));
         txtjml.setText(getIntent().getStringExtra("jumlah"));
+
+        stat.setOnItemSelectedListener(this);
+        List<String> status = new ArrayList<String>();
+        status.add("Tersedia");
+        status.add("Tidak tersedia");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        stat.setAdapter(dataAdapter);
 
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,5 +150,18 @@ public class EditPakan extends AppCompatActivity {
         }else{
             Toast.makeText(EditPakan.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String item = adapterView.getItemAtPosition(i).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(adapterView.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+        stat.setPrompt("Pilih status");
     }
 }

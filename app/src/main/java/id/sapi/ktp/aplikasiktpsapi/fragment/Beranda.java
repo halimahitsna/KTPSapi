@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ import id.sapi.ktp.aplikasiktpsapi.modal.DataAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
+import id.sapi.ktp.aplikasiktpsapi.modal.LinePagerIndicator;
 import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
@@ -90,10 +93,34 @@ public class Beranda extends Fragment {
 
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        //mRecyclerView.setItemAnimator(new LinePagerIndicator());
         mRecyclerView.setLayoutManager(layoutManager);
+        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+        pagerSnapHelper.attachToRecyclerView(mRecyclerView);
+        mRecyclerView.addItemDecoration(new LinePagerIndicator());
+
 
         loadJSON();
+    }
+
+    public void autoScroll(){
+        final int speedScroll = 4000;
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            int count = 0;
+            @Override
+            public void run() {
+                if(count == adapter.getItemCount())
+                    count = 0;
+//                    mRecyclerView.smoothScrollToPosition(count);
+//                    handler.postDelayed( this,speedScroll);
+                if(count < adapter.getItemCount()){
+                    mRecyclerView.smoothScrollToPosition(++count);
+                    handler.postDelayed( this,speedScroll);
+                    }
+                }
+            };
+        handler.postDelayed(runnable,speedScroll);
     }
 
     private void loadJSON() {
@@ -115,6 +142,7 @@ public class Beranda extends Fragment {
                 adapter = new KandangSlide(getActivity(), kandangs);
                 mRecyclerView.setAdapter(adapter);
                 swipeRefreshLayout.setRefreshing(false);
+                autoScroll();
             }
 
             @Override

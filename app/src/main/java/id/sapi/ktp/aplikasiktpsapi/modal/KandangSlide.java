@@ -110,6 +110,7 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
                     intent.putExtra("suhu", kandangs.get(posisi).getSuhu());
                     intent.putExtra("kelembapan", kandangs.get(posisi).getKelembapan());
                     intent.putExtra("gas", kandangs.get(posisi).getGas_amonia());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
 

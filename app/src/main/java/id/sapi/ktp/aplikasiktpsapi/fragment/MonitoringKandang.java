@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import id.sapi.ktp.aplikasiktpsapi.R;
+import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
 import id.sapi.ktp.aplikasiktpsapi.tambah.TambahKandang;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
@@ -39,11 +40,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MonitoringKandang extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<Kandang> kandangs;
-    private MonitoringAdapter adapter;
+    private KandangSlide adapter;
     SharedPrefManager sharedPrefManager;
     String iduser;
-    int progress = 0;
-    private Handler handler;
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
@@ -63,18 +62,10 @@ public class MonitoringKandang extends Fragment {
 
         sharedPrefManager = new SharedPrefManager(getActivity());
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
-        //progress();
-        initViews();
 
-        AddFloatingActionButton add = (AddFloatingActionButton) view.findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent a = new Intent(getActivity(), TambahKandang.class);
-                startActivity(a);
-            }
-        });
+        initViews();
     }
+
     private void initViews() {
         recyclerView = (RecyclerView)getActivity().findViewById (R.id.card_recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -101,7 +92,7 @@ public class MonitoringKandang extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
                 JSONResponse jsonResponse = response.body();
                 kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
-                adapter = new MonitoringAdapter(getActivity(), kandangs);
+                adapter = new KandangSlide(getActivity(), kandangs);
                 recyclerView.setAdapter(adapter);
             }
 
