@@ -43,6 +43,12 @@
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
+        <service
+            android:name=".activities.NotificationIntentService">
+            <intent-filter android:priority="10000">
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </service>
         <activity android:name=".edit.EditData" />
         <activity android:name=".activities.Manajemen" />
         <activity android:name=".edit.EditJenis" />

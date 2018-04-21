@@ -1,8 +1,17 @@
 package id.sapi.ktp.aplikasiktpsapi.tambah;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,13 +31,17 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.sapi.ktp.aplikasiktpsapi.R;
+import id.sapi.ktp.aplikasiktpsapi.activities.MainActivity;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
+import id.sapi.ktp.aplikasiktpsapi.api.BaseResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.modal.Indukan;
@@ -45,6 +58,9 @@ import id.sapi.ktp.aplikasiktpsapi.modal.PenyakitSpinner;
 import id.sapi.ktp.aplikasiktpsapi.modal.ResponseData;
 import id.sapi.ktp.aplikasiktpsapi.modal.Result;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,17 +68,25 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TambahData extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
     ActionBar actionBar;
     Toolbar toolbar;
     ProgressDialog loading;
     Button btnsimpan;
     EditText txtidSapi, txtbobotlahir, txtbobothidup, txtumur, txtharga, txtwarna, tgllahir, txdate, txiduser;
-    ImageView foto, imdate;
+    ImageView imdate;
+    CircleImageView foto;
+    FloatingActionButton add;
     Spinner jenis, kandang, indukan, pakan, penyakit;
     //DatePicker tgl_lahir;
     Context mcontext;
     Retrofit apiService;
-    String iduser, sjenis, skandang, sindukan, spakan, spenyakit;
+    String iduser, sjenis, skandang, sindukan, spakan, spenyakit, imagePath;
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
     private String mDate;
@@ -87,6 +111,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         sharedPrefManager = new SharedPrefManager(this);
         Intent i = getIntent();
         iduser = i.getStringExtra("id_user");
+        verifyStoragePermissions(this);
 
         mcontext = this;
         apiService = UtilsApi.getClient();
@@ -101,7 +126,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         // actionBar.setDisplayShowHomeEnabled(true);
 
         btnsimpan = (Button) findViewById(R.id.btnSimpan);
-        foto = (ImageView) findViewById(R.id.foto);
+        foto = (CircleImageView) findViewById(R.id.foto);
         txtidSapi = (EditText) findViewById(R.id.idSapi);
         txtharga = (EditText) findViewById(R.id.harga);
         txtbobothidup = (EditText) findViewById(R.id.bobot_hidup);
@@ -110,6 +135,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         txtwarna = (EditText)findViewById(R.id.warna);
         txdate = (EditText)findViewById(R.id.date);
         txiduser = (EditText)findViewById(R.id.idu);
+        add = (FloatingActionButton)findViewById(R.id.btnfoto);
         //EditTextGet
         txiduser.setText(getIntent().getStringExtra("id_user"));
         txtidSapi.setText(getIntent().getStringExtra("id_sapi"));
@@ -192,7 +218,21 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                simpan();
+                if(imagePath!=null) {
+                    simpan();
+                }else
+                    Toast.makeText(getApplicationContext(),"Please select image", Toast.LENGTH_LONG).show();
+            }
+        });
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_PICK);
+
+                final Intent chooserIntent = Intent.createChooser(galleryIntent, "Choose image");
+                startActivityForResult(chooserIntent, 100);
             }
         });
 
@@ -241,6 +281,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                 } else {
                     Toast.makeText(TambahData.this, message, Toast.LENGTH_SHORT).show();
                 }
+                uploadImage();
             }
 
             @Override
@@ -479,6 +520,94 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                 now.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+    private void uploadImage() {
+
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("loading...");
+        progressDialog.show();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ktpsapi.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        File file = new File(imagePath);
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        MultipartBody.Part text = MultipartBody.Part.createFormData("id_user", iduser.trim());
+
+        ApiService request = retrofit.create(ApiService.class);
+        Call<BaseResponse> call = request.uploadFotoSapi(body,text);
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                progressDialog.dismiss();
+                // Response Success or Fail
+                if (response.isSuccessful()) {
+                    if (response.body().isSuccess()==true) {
+                        Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    }else
+                        Toast.makeText(getApplicationContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+                }
+
+                //ifoto.setImageDrawable(null);
+                imagePath = null;
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            if (data == null) {
+                Toast.makeText(getApplicationContext(),"Unable to pick image",Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Uri imageUri = data.getData();
+            foto.setImageURI(imageUri);
+            imagePath =getRealPathFromURI(imageUri);
+
+        }
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
     }
 }
 

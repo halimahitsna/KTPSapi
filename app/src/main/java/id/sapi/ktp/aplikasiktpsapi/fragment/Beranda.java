@@ -1,11 +1,19 @@
 package id.sapi.ktp.aplikasiktpsapi.fragment;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -28,6 +36,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
@@ -81,6 +90,7 @@ public class Beranda extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -94,13 +104,13 @@ public class Beranda extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         //mRecyclerView.setItemAnimator(new LinePagerIndicator());
-        mRecyclerView.setLayoutManager(layoutManager);
+
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
-        mRecyclerView.addItemDecoration(new LinePagerIndicator());
+       // mRecyclerView.addItemDecoration(new LinePagerIndicator());
+        mRecyclerView.setLayoutManager(layoutManager);
 
-
-        loadJSON();
+    loadJSON();
     }
 
     public void autoScroll(){
@@ -112,6 +122,7 @@ public class Beranda extends Fragment {
             public void run() {
                 if(count == adapter.getItemCount())
                     count = 0;
+                mRecyclerView.smoothScrollToPosition(0);
 //                    mRecyclerView.smoothScrollToPosition(count);
 //                    handler.postDelayed( this,speedScroll);
                 if(count < adapter.getItemCount()){
@@ -151,5 +162,44 @@ public class Beranda extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void notif() {
+        // Create NotificationManager
+        final NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // NotificationTargetActivity is the activity opened when user click notification.
+        Intent intent = new Intent(getActivity(), MenuManajemen.class);
+        Intent intentArr[] = {intent};
+
+        PendingIntent pendingIntent = PendingIntent.getActivities(getActivity(), 0, intentArr, 0);
+
+        // Create a new Notification instance.
+        Notification notification = new Notification();
+
+        // Set small icon.
+        notification.icon = R.drawable.ic_notifications_black_24dp;
+
+        // Set large icon.
+        BitmapDrawable bitmapDrawable = (BitmapDrawable)getActivity().getDrawable(R.drawable.sapi2);
+        Bitmap largeIconBitmap = bitmapDrawable.getBitmap();
+        notification.largeIcon = largeIconBitmap;
+
+        // Set flags.
+        notification.flags = Notification.FLAG_ONGOING_EVENT;
+
+        // Set send time.
+        notification.when = System.currentTimeMillis();
+
+        // Create and set notification content view.
+        RemoteViews customRemoteViews = new RemoteViews(getActivity().getPackageName(), R.layout.custom_notifications);
+        notification.contentView = customRemoteViews;
+
+        // Set notification intent.
+        notification.contentIntent = pendingIntent;
+
+        notificationManager.notify(5, notification);
     }
 }

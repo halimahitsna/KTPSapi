@@ -61,6 +61,5 @@ dependencies {
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.github.satyan:sugar:1.4'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
-    implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
 }
 apply plugin: 'com.google.gms.google-services'

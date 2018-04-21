@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.Circle;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public ArrayList<Peternakan> data1;
     SharedPrefManager sharedPrefManager;
     TextView nama, id_user, nmpeternakan;
-    ImageView image;
+    CircleImageView image;
     public static Integer id;
     String regId;
     Context mContext;
@@ -235,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View header=navigationView.getHeaderView(0);
         id_user = (TextView)header.findViewById(R.id.tvid);
         nama = (TextView) header.findViewById(R.id.tvnama);
-        image = (ImageView) header.findViewById(R.id.imageView);
+        image = (CircleImageView) header.findViewById(R.id.imageView);
         nmpeternakan = (TextView)header.findViewById(R.id.txpeternakan);
         image.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,6 +6,7 @@ package id.sapi.ktp.aplikasiktpsapi.api;
 
 public class BaseResponse {
     private boolean error;
+    private boolean success;
     private String message;
 
     public boolean isError() {
@@ -22,5 +23,13 @@ public class BaseResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

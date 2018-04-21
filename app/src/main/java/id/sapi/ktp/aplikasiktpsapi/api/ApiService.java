@@ -4,12 +4,16 @@ package id.sapi.ktp.aplikasiktpsapi.api;
 import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
 import id.sapi.ktp.aplikasiktpsapi.modal.ResponseData;
 import id.sapi.ktp.aplikasiktpsapi.modal.Result;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -214,4 +218,22 @@ public interface ApiService {
     Call<ResponseBody> sendNotif (@Query("firebase_id") String firebase_id,
                                  @Query("title") String title,
                                  @Query("body") String body);
+
+    //UploadImage
+
+    @Multipart
+    @POST("uploadimage.php")
+    Call<BaseResponse> uploadFotoUser(@Part MultipartBody.Part file,
+                                      @Part MultipartBody.Part id_user);
+
+    @Multipart
+    @POST("uploadsapi.php")
+    Call<BaseResponse> uploadFotoSapi(@Part MultipartBody.Part file,
+                                      @Part MultipartBody.Part id_sapi);
+
+    @Multipart
+    @POST("uploadkandang.php")
+    Call<BaseResponse> uploadFotoKandang(@Part MultipartBody.Part file,
+                                      @Part MultipartBody.Part id_kandang);
+
 }
