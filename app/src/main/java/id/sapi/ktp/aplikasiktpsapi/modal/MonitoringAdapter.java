@@ -1,87 +1,124 @@
 package id.sapi.ktp.aplikasiktpsapi.modal;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
-import id.sapi.ktp.aplikasiktpsapi.activities.DetailMonitoringKandang;
 import id.sapi.ktp.aplikasiktpsapi.R;
+import id.sapi.ktp.aplikasiktpsapi.activities.DetailData;
+import id.sapi.ktp.aplikasiktpsapi.activities.DetailMonitoringKandang;
+import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
+import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditData;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by ASUS on 3/8/2018.
+ * Created by hali on 25/08/2017.
  */
 
 public class MonitoringAdapter extends RecyclerView.Adapter<MonitoringAdapter.ViewHolder> {
-    private ArrayList<Kandang> kandang;
+    private ArrayList<Kandang> kandangs;
     private Context context;
 
-    public MonitoringAdapter(Context context, ArrayList<Kandang> kandang){
-        this.kandang = kandang;
+    public MonitoringAdapter(Context context, ArrayList<Kandang> kandangs) {
+        this.kandangs = kandangs;
         this.context = context;
     }
 
     @Override
-    public MonitoringAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
+    public MonitoringAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.monitoring_row, viewGroup, false);
-        return  new ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MonitoringAdapter.ViewHolder viewHolder, int i){
-        viewHolder.id_kandang.setText(kandang.get(i).getId_kandang());
-        viewHolder.txtkandang.setText(kandang.get(i).getKandang());
-        viewHolder.txtsuhu.setText(kandang.get(i).getSuhu());
-        viewHolder.txtkel.setText(kandang.get(i).getKelembapan());
-        viewHolder.txtgas.setText(kandang.get(i).getGas_amonia());
+    public void onBindViewHolder(MonitoringAdapter.ViewHolder viewHolder, int i) {
+        viewHolder.id.setText(kandangs.get(i).getId_kandang());
+        viewHolder.nama.setText(kandangs.get(i).getKandang());
+
+        if(kandangs.get(i).getSuhu() != null)
+            viewHolder.asuhu.setProgress(Integer.valueOf(kandangs.get(i).getSuhu()));
+        else
+            viewHolder.asuhu.setProgress(0);
+
+        if(kandangs.get(i).getGas_amonia() != null)
+            viewHolder.agas.setProgress(Integer.valueOf(kandangs.get(i).getGas_amonia()));
+        else
+            viewHolder.agas.setProgress(0);
+
+        if(kandangs.get(i).getKelembapan() != null)
+            viewHolder.akelembapan.setProgress(Integer.valueOf(kandangs.get(i).getKelembapan()));
+        else
+            viewHolder.akelembapan.setProgress(0);
+
+        if(kandangs.get(i).getFoto() != null) {
+            Picasso.with(context).load(kandangs.get(i).getFoto()).placeholder(R.drawable.load).into(viewHolder.foto);
+        }else {
+            Picasso.with(context).load(R.drawable.ic_person_black_24dp).placeholder(R.drawable.load).into(viewHolder.foto);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return kandang.size();
+        return kandangs.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView id_kandang, txtkandang, txtsuhu, txtkel, txtgas;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            id_kandang = (TextView)itemView.findViewById(R.id.idKandang);
-            txtkandang = (TextView)itemView.findViewById(R.id.kandang);
-            txtsuhu= (TextView)itemView.findViewById(R.id.suh);
-            txtkel = (TextView)itemView.findViewById(R.id.kel);
-            txtgas = (TextView)itemView.findViewById(R.id.gas);
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView id, nama;
+        ImageView foto;
+        ArcProgress asuhu, agas, akelembapan;
 
-            // on item click
-            itemView.setOnClickListener(new View.OnClickListener(){
+        public ViewHolder(View view) {
+            super(view);
+
+            id = (TextView) view.findViewById(R.id.idkandang);
+            nama = (TextView) view.findViewById(R.id.kandang);
+            foto = (ImageView) view.findViewById(R.id.foto);
+            asuhu = (ArcProgress) view.findViewById(R.id.suhu);
+            agas = (ArcProgress) view.findViewById(R.id.gas);
+            akelembapan = (ArcProgress)view.findViewById(R.id.kelembapan);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    // get position
-                    int pos = getAdapterPosition();
-                    // check if item still exists
-                    if(pos != RecyclerView.NO_POSITION){
-                        Kandang clickedDataItem = kandang.get(pos);
-                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
-                        intent.putExtra("id_kandang", kandang.get(pos).getId_kandang());
-                        intent.putExtra("kandang", kandang.get(pos).getKandang());
-                        intent.putExtra("suhu", kandang.get(pos).getSuhu());
-                        intent.putExtra("bsuhu", kandang.get(pos).getBatas_suhu());
-                        intent.putExtra("kelembapan", kandang.get(pos).getKelembapan());
-                        intent.putExtra("bkelembapan", kandang.get(pos).getBatas_kelembapan());
-                        intent.putExtra("gas", kandang.get(pos).getGas_amonia());
-                        intent.putExtra("bgas", kandang.get(pos).getBatas_gas());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getKandang(), Toast.LENGTH_SHORT).show();
-                    }
+                public void onClick(View view) {
+                    int posisi = getAdapterPosition();
+
+                    Kandang clickedDataItem = kandangs.get(posisi);
+                    Intent intent = new Intent(context, DetailMonitoringKandang.class);
+                    intent.putExtra("id_kandang", kandangs.get(posisi).getId_kandang());
+                    intent.putExtra("kandang", kandangs.get(posisi).getKandang());
+                    intent.putExtra("suhu", kandangs.get(posisi).getSuhu());
+                    intent.putExtra("kelembapan", kandangs.get(posisi).getKelembapan());
+                    intent.putExtra("gas", kandangs.get(posisi).getGas_amonia());
+                    intent.putExtra("foto", kandangs.get(posisi).getFoto());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 }
+
             });
         }
 
+        @Override
+        public void onClick(View view) {
+
+        }
     }
 }

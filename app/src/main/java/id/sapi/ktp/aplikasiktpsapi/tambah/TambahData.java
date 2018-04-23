@@ -27,6 +27,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -124,7 +125,8 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
         // actionBar.setDisplayShowHomeEnabled(true);
-
+        TextView judul = (TextView)findViewById(R.id.toolbar_title);
+        judul.setText(R.string.tambah_data);
         btnsimpan = (Button) findViewById(R.id.btnSimpan);
         foto = (CircleImageView) findViewById(R.id.foto);
         txtidSapi = (EditText) findViewById(R.id.idSapi);
@@ -220,6 +222,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
             public void onClick(View view) {
                 if(imagePath!=null) {
                     simpan();
+                    uploadImage();
                 }else
                     Toast.makeText(getApplicationContext(),"Please select image", Toast.LENGTH_LONG).show();
             }
@@ -281,7 +284,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                 } else {
                     Toast.makeText(TambahData.this, message, Toast.LENGTH_SHORT).show();
                 }
-                uploadImage();
+
             }
 
             @Override
@@ -290,7 +293,6 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                 Toast.makeText(TambahData.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
-        onBackPressed();
     }
 
     private void initSpinnerJenis() {
@@ -437,6 +439,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
             }
         });
     }
+
     private void initSpinnerPeny() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
@@ -473,29 +476,6 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         });
     }
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         monthOfYear ++;
@@ -523,12 +503,6 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
     }
 
     private void uploadImage() {
-
-        final ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("loading...");
-        progressDialog.show();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ktpsapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -539,15 +513,13 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
 
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-        MultipartBody.Part text = MultipartBody.Part.createFormData("id_user", iduser.trim());
+        MultipartBody.Part text = MultipartBody.Part.createFormData("id_sapi", txtidSapi.getText().toString().trim());
 
         ApiService request = retrofit.create(ApiService.class);
         Call<BaseResponse> call = request.uploadFotoSapi(body,text);
         call.enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                progressDialog.dismiss();
-                // Response Success or Fail
                 if (response.isSuccessful()) {
                     if (response.body().isSuccess()==true) {
                         Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
@@ -564,9 +536,9 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
 
             @Override
             public void onFailure(Call<BaseResponse> call, Throwable t) {
-                progressDialog.dismiss();
             }
         });
+        onBackPressed();
     }
 
     @Override
@@ -608,6 +580,27 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }
 

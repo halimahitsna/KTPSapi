@@ -14,13 +14,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="#f2f2f2"
+            android:background="@color/background"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Judul"
-                android:textColor="#000000"
+                android:text="@string/detail_data"
+                android:textColor="@color/alltext"
                 android:textSize="16sp"
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
@@ -30,12 +30,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/foto"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_person_black_24dp"/>
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_account_circle_black_24dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#ffffff"
+                android:layout_gravity="center" />
             <TextView
                 android:layout_marginTop="10dp"
                 android:id="@+id/idSapi"

@@ -7,15 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.Circle;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
@@ -32,7 +36,7 @@ public class DetailData extends AppCompatActivity {
     ActionBar actionBar;
     Toolbar toolbar;
     TextView txtidSapi,txjenis, txindukan, txpakan, txpenyakit, txkandang, txtbobotlahir, txtbobothidup, txtumur, txtharga, txtwarna, txdate, txiduser, judul;
-    ImageView foto;
+    CircleImageView foto;
     private ArrayList<Jenis> jenis;
 
     @Override
@@ -44,13 +48,13 @@ public class DetailData extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        this.setTitle("Detail Data Sapi");
+        this.setTitle(R.string.detail_data);
 
         actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        foto = (ImageView) findViewById(R.id.foto);
+        foto = (CircleImageView) findViewById(R.id.foto);
         txtidSapi = (TextView) findViewById(R.id.idSapi);
         txjenis = (TextView) findViewById(R.id.jenis);
         txindukan = (TextView) findViewById(R.id.indukan);
@@ -91,5 +95,19 @@ public class DetailData extends AppCompatActivity {
         }else{
             Toast.makeText(DetailData.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home)
+            finish();
+
+        return super.onOptionsItemSelected(item);
     }
 }

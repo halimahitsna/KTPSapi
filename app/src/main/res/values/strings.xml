@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">KTP Sapi</string>
     <string name="title_activity_login">Masuk</string>
+    <string name="title_activity_daftar">Daftar</string>
 
     <!-- Strings related to login -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -16,6 +17,37 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="Manajemen">Manajemen Data</string>
-    <string name="datasapi">Data Sapi</string>
+    <string name="title_manajemen">Manajemen Data</string>
+    <string name="title_datasapi">Data Sapi</string>
+    <string name="title_halaman_utama">Halaman Utama</string>
+    <string name="title_jadwal">Jadwal Pakan Sapi</string>
+    <string name="title_laporan">Laporan</string>
+    <string name="title_kandang">Data Kandang</string>
+    <string name="title_pakan">Data Pakan</string>
+    <string name="title_penyakit">Data Penyakit</string>
+    <string name="title_monitoring">Monitoring Kandang</string>
+    <string name="title_profil">Profil</string>
+    <string name="title_pengaturan">Pengaturan</string>
+    <string name="title_tentang">Tentang</string>
+    <string name="tambah_data">Tambah Sapi</string>
+    <string name="tambah_jenis">Tambah Jenis</string>
+    <string name="tambah_indukan">Tambah Indukan</string>
+    <string name="tambah_kandang">Tambah Kandang </string>
+    <string name="tambah_pakan">Tambah Pakan</string>
+    <string name="tambah_penyakit">Tambah Riwayat Penyakit</string>
+    <string name="tambah_laporan">Tambah Laporan</string>
+    <string name="edit_data">Edit Sapi</string>
+    <string name="edit_jenis">Edit Jenis</string>
+    <string name="edit_indukan">Edit Indukan</string>
+    <string name="edit_kandang">Edit Kandang</string>
+    <string name="edit_penyakit">Edit Penyakit</string>
+    <string name="edit_pakan">Edit Pakan</string>
+    <string name="edit_laporan">Edit Laporan</string>
+    <string name="detail_data">Detail Data Sapi</string>
+    <string name="detail_jenis">Detail Jenis</string>
+    <string name="detail_indukan">Detail Indukan</string>
+    <string name="detail_kandang">Detail Kandang</string>
+    <string name="detail_pakan">Detail Pakan</string>
+    <string name="detail_penyakit">Detail Penyakit</string>
+    <string name="detail_laporan">Detail Laporan</string>
 </resources>

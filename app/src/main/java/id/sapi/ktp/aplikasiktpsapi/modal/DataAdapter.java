@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.Circle;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.activities.DetailData;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -86,7 +88,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView id_jenis, id_sapi, id_kandang;
-        ImageView foto, edit, hapus;
+        ImageView edit, hapus;
+        CircleImageView foto;
 
         public ViewHolder(View view) {
             super(view);
@@ -94,7 +97,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             id_jenis = (TextView) view.findViewById(R.id.jenis);
             id_sapi = (TextView) view.findViewById(R.id.idSapi);
             id_kandang = (TextView)view.findViewById(R.id.kandang);
-            foto = (ImageView) view.findViewById(R.id.gbr);
+            foto = (CircleImageView) view.findViewById(R.id.gbr);
             edit = (ImageView) view.findViewById(R.id.edit);
             hapus = (ImageView) view.findViewById(R.id.hapus);
 

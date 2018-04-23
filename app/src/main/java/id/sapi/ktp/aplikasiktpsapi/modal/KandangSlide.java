@@ -44,7 +44,7 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
 
     @Override
     public KandangSlide.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.beranda_row, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.monitoring_row, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -68,13 +68,11 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
         else
             viewHolder.akelembapan.setProgress(0);
 
-//        if(kandangs.get(i).getKandang() != null) {
-//            Picasso.with(context).load(datas.get(i).getFoto()).placeholder(R.drawable.load).resize(100, 100)
-//                    .into(viewHolder.foto);
-//        }else {
-//            Picasso.with(context).load(R.drawable.ic_person_black_24dp).placeholder(R.drawable.load).resize(100, 100)
-//                    .into(viewHolder.foto);
-//        }
+        if(kandangs.get(i).getFoto() != null) {
+            Picasso.with(context).load(kandangs.get(i).getFoto()).placeholder(R.drawable.load).into(viewHolder.foto);
+        }else {
+            Picasso.with(context).load(R.drawable.ic_person_black_24dp).placeholder(R.drawable.load).into(viewHolder.foto);
+        }
     }
 
     @Override
@@ -110,6 +108,7 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
                     intent.putExtra("suhu", kandangs.get(posisi).getSuhu());
                     intent.putExtra("kelembapan", kandangs.get(posisi).getKelembapan());
                     intent.putExtra("gas", kandangs.get(posisi).getGas_amonia());
+                    intent.putExtra("foto", kandangs.get(posisi).getFoto());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }

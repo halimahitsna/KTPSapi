@@ -222,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // clear the notification area when the app is opened
         NotificationUtils.clearNotifications(getApplicationContext());
+        loadHeader();
     }
 
     @Override
@@ -414,4 +415,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //make this method blank
         return true;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loadHeader();
+    }
+
 }

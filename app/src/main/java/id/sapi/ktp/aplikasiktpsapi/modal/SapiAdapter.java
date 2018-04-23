@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.sapi.ktp.aplikasiktpsapi.activities.DetailData;
 import id.sapi.ktp.aplikasiktpsapi.edit.EditData;
 import id.sapi.ktp.aplikasiktpsapi.R;
@@ -86,7 +87,8 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView id_jenis, id_sapi, id_kandang;
-        ImageView foto, edit, hapus;
+        ImageView edit, hapus;
+        CircleImageView foto;
 
         public ViewHolder(View view) {
             super(view);
@@ -94,7 +96,7 @@ public class SapiAdapter extends RecyclerView.Adapter<SapiAdapter.ViewHolder> {
             id_jenis = (TextView) view.findViewById(R.id.jenis);
             id_sapi = (TextView) view.findViewById(R.id.idSapi);
             id_kandang = (TextView)view.findViewById(R.id.kandang);
-            foto = (ImageView) view.findViewById(R.id.gbr);
+            foto = (CircleImageView) view.findViewById(R.id.gbr);
             edit = (ImageView) view.findViewById(R.id.edit);
             hapus = (ImageView) view.findViewById(R.id.hapus);
 

@@ -12,9 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -32,6 +35,7 @@ public class DetailMonitoringKandang extends AppCompatActivity {
     ActionBar actionBar;
     TextView txtid, txtkandang, txtsuhu, txtkelembapan, txtgas, txtbsuhu;
     Switch swotomatis, swkipas, swlampu;
+    ImageView foto;
     String idkan, stlampu, stkipas;
     Integer bsuhu, bkelembapan, bgas, suhu, kelembapan, gas;
 
@@ -57,15 +61,13 @@ public class DetailMonitoringKandang extends AppCompatActivity {
         swotomatis  = (Switch) findViewById(R.id.oto);
         swkipas = (Switch)findViewById(R.id.kipas);
         swlampu = (Switch)findViewById(R.id.lampu);
+        foto = (ImageView)findViewById(R.id.foto);
 
         txtkandang.setText(getIntent().getStringExtra("kandang"));
-        txtsuhu.setText(getIntent().getStringExtra("suhu"));
-        txtkelembapan.setText(getIntent().getStringExtra("kelembapan"));
-        txtgas.setText(getIntent().getStringExtra("gas"));
-        //txtbsuhu.setText(getIntent().getStringExtra("bsuhu"));
-       // bsuhu = Integer.valueOf(txtbsuhu.getText().toString());
-//        bkelembapan = Integer.valueOf(i.getStringExtra("bkelembapan"));
-  //      bgas = Integer.valueOf(i.getStringExtra("bgas"));
+        txtsuhu.setText(getIntent().getStringExtra("suhu") +" Celcius");
+        txtkelembapan.setText(getIntent().getStringExtra("kelembapan") +" %");
+        txtgas.setText(getIntent().getStringExtra("gas")+" %");
+        Picasso.with(this).load(getIntent().getStringExtra("foto")).into(foto);
         suhu = Integer.valueOf(i.getStringExtra("suhu"));
         kelembapan = Integer.valueOf(i.getStringExtra("kelembapan"));
         gas = Integer.valueOf(i.getStringExtra("gas"));

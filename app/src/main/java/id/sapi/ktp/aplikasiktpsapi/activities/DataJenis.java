@@ -149,6 +149,7 @@ public class DataJenis extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     private boolean adaInternet(){
         ConnectivityManager koneks = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return koneks.getActiveNetworkInfo() != null;

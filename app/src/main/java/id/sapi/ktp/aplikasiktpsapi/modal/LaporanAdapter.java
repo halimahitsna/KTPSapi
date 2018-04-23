@@ -112,10 +112,10 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
                 if (posisi != RecyclerView.NO_POSITION) {
                     LaporanDB clickedDataItem = laporanDBList.get(posisi);
                     Intent intent = new Intent(context, EditLaporan.class);
-                    intent.putExtra("id_laporan", laporanDBList.get(posisi).getId_laporan());
-                    intent.putExtra("judul", laporanDBList.get(posisi).getJudul_laporan());
-                    intent.putExtra("isi", laporanDBList.get(posisi).getIsi_laporan());
-                    intent.putExtra("tanggal", laporanDBList.get(posisi).getTanggal());
+//                    intent.putExtra("id_laporan", laporanDBList.get(posisi).getId_laporan());
+//                    intent.putExtra("judul", laporanDBList.get(posisi).getJudul_laporan());
+//                    intent.putExtra("isi", laporanDBList.get(posisi).getIsi_laporan());
+//                    intent.putExtra("tanggal", laporanDBList.get(posisi).getTanggal());
                     context.startActivity(intent);
                     Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getJudul_laporan(), Toast.LENGTH_SHORT).show();
                 }

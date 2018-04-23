@@ -14,6 +14,7 @@ public class Kandang {
     private String kelembapan;
     private String gas_amonia;
     private String id_user;
+    private String foto;
 
     public String getId_kandang() {
         return id_kandang;
@@ -85,6 +86,14 @@ public class Kandang {
 
     public void setId_user(String id_user) {
         this.id_user = id_user;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public void setAll(String id_kandang, String kandang) {

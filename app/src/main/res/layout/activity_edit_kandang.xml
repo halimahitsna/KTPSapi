@@ -26,8 +26,33 @@
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
         </android.support.v7.widget.Toolbar>
-        <LinearLayout
+        <FrameLayout
             android:layout_below="@id/toolbar"
+            android:id="@+id/frame"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/foto"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_account_circle_black_24dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#ffffff"
+                android:layout_gravity="center" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnfoto"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                android:layout_gravity="bottom|right"/>
+        </FrameLayout>
+        <LinearLayout
+            android:layout_below="@id/frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16sp"
