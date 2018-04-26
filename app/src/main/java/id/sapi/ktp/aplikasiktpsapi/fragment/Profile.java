@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -37,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.common.api.Api;
 import com.squareup.picasso.Picasso;
 
@@ -57,6 +57,8 @@ import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.RetrofitClient;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditData;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditProfil;
 import id.sapi.ktp.aplikasiktpsapi.modal.User;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import okhttp3.MediaType;
@@ -71,18 +73,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.app.Activity.RESULT_OK;
 
 public class Profile extends Fragment {
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-
     TextView tid, tuser, tname, tpass;
     EditText eid;
-    CircleImageView ifoto, btnfoto;
+    CircleImageView ifoto;
+    FloatingActionButton btnedit;
     private ArrayList<User> data;
-    Button simpan;
-    FloatingActionButton add;
     SharedPrefManager sharedPrefManager;
     String iduser, imagePath;
 
@@ -102,7 +97,6 @@ public class Profile extends Fragment {
         getActivity().setTitle("Profile");
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId();
-        verifyStoragePermissions(getActivity());
 
         eid = (EditText) view.findViewById(R.id.id);
         eid.setText(iduser);
@@ -110,32 +104,22 @@ public class Profile extends Fragment {
         tname = (TextView)view.findViewById(R.id.nama);
         tpass = (TextView)view.findViewById(R.id.password);
         ifoto= (CircleImageView) view.findViewById(R.id.foto);
-        add = (FloatingActionButton) view.findViewById(R.id.btnfoto);
-        simpan = (Button)view.findViewById(R.id.btnSimpan);
+        btnedit = (FloatingActionButton)view.findViewById(R.id.edit);
         loadHeader();
 
-        add.setOnClickListener(new View.OnClickListener() {
+        btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent galleryIntent = new Intent();
-                galleryIntent.setType("image/*");
-                galleryIntent.setAction(Intent.ACTION_PICK);
-
-                final Intent chooserIntent = Intent.createChooser(galleryIntent, "Choose image");
-                startActivityForResult(chooserIntent, 100);
+                Intent a = new Intent(getActivity(), EditProfil.class);
+                a.putExtra("id_user", eid.getText().toString().trim());
+                a.putExtra("foto", data.get(0).getFoto());
+                a.putExtra("username", data.get(0).getUser());
+                a.putExtra("nama", data.get(0).getName());
+                a.putExtra("password", data.get(0).getPassword());
+                a.putExtra("jeniskelamin", data.get(0).getJenis_kelamin());
+                startActivity(a);
             }
         });
-
-        simpan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(imagePath!=null)
-                    uploadImage();
-                else
-                    Toast.makeText(getActivity(),"Please select image", Toast.LENGTH_LONG).show();
-            }
-        });
-
     }
 
     private void loadHeader() {
@@ -154,10 +138,11 @@ public class Profile extends Fragment {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
                // tid.setText(data.get(0).getId_user());
-                Picasso.with(getActivity()).load( data.get(0).getFoto()).placeholder(R.drawable.load).into(ifoto);
+                Picasso.with(getActivity()).load(data.get(0).getFoto()).placeholder(R.drawable.load).into(ifoto);
                 tname.setText(data.get(0).getName());
                 tuser.setText(data.get(0).getUser());
                 tpass.setText(data.get(0).getPassword());
+                //Picasso.with(MainActivity.class).load(data.get(0).getFoto()).placeholder(R.drawable.load).into(MainActivity.id.byteValue())
             }
 
             @Override
@@ -168,12 +153,6 @@ public class Profile extends Fragment {
     }
 
     private void uploadImage() {
-
-        final ProgressDialog progressDialog;
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("loading...");
-        progressDialog.show();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ktpsapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -191,13 +170,9 @@ public class Profile extends Fragment {
         call.enqueue(new Callback<BaseResponse>() {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                progressDialog.dismiss();
-                // Response Success or Fail
                 if (response.isSuccessful()) {
                     if (response.body().isSuccess()==true) {
                         Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                        loadHeader();
-
                     }else
                         Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
 
@@ -205,55 +180,25 @@ public class Profile extends Fragment {
                     Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
                 }
 
-                ifoto.setImageDrawable(null);
+                //ifoto.setImageDrawable(null);
                 imagePath = null;
             }
 
             @Override
             public void onFailure(Call<BaseResponse> call, Throwable t) {
-                progressDialog.dismiss();
             }
         });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 100) {
-            if (data == null) {
-                Toast.makeText(getActivity(),"Unable to pick image",Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            Uri imageUri = data.getData();
-            ifoto.setImageURI(imageUri);
-            imagePath =getRealPathFromURI(imageUri);
-
-        }
+        loadHeader();
     }
 
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        CursorLoader loader = new CursorLoader(getActivity(), contentUri, proj, null, null, null);
-        Cursor cursor = loader.loadInBackground();
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String result = cursor.getString(column_index);
-        cursor.close();
-        return result;
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadHeader();
     }
 
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
-    }
 }
