@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,10 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by hali on 25/08/2017.
  */
-
 public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> {
     private ArrayList<Kandang> kandangs;
     private Context context;
+    public int colorBefore;
 
     public KandangSlide(Context context, ArrayList<Kandang> kandangs) {
         this.kandangs = kandangs;
@@ -50,6 +51,14 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
 
     @Override
     public void onBindViewHolder(KandangSlide.ViewHolder viewHolder, int i) {
+        final int[] androidColors = viewHolder.id.getContext().getResources().getIntArray(R.array.cardColors);
+        final int randomAndroidColor = androidColors[colorBefore + 1];
+        if (colorBefore == 4){
+            colorBefore = 0;
+        } else {
+            colorBefore = colorBefore + 1;
+        }
+        viewHolder.cardView.setCardBackgroundColor(randomAndroidColor);
         viewHolder.id.setText(kandangs.get(i).getId_kandang());
         viewHolder.nama.setText(kandangs.get(i).getKandang());
 
@@ -84,10 +93,11 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
         private TextView id, nama;
         ImageView foto;
         ArcProgress asuhu, agas, akelembapan;
+        CardView cardView;
 
         public ViewHolder(View view) {
             super(view);
-
+            cardView = (CardView)view.findViewById(R.id.card);
             id = (TextView) view.findViewById(R.id.idkandang);
             nama = (TextView) view.findViewById(R.id.kandang);
             foto = (ImageView) view.findViewById(R.id.foto);

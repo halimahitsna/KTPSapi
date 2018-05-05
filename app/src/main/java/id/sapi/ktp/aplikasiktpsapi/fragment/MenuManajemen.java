@@ -1,20 +1,15 @@
 package id.sapi.ktp.aplikasiktpsapi.fragment;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
@@ -29,15 +24,12 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Line;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import id.sapi.ktp.aplikasiktpsapi.activities.DataIndukan;
 import id.sapi.ktp.aplikasiktpsapi.activities.DataJenis;
@@ -48,13 +40,9 @@ import id.sapi.ktp.aplikasiktpsapi.activities.NotificationIntentService;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
 import id.sapi.ktp.aplikasiktpsapi.modal.Data;
-import id.sapi.ktp.aplikasiktpsapi.modal.DataAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Indukan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
-import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
-import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -171,7 +159,6 @@ public class MenuManajemen extends Fragment {
 
         RemoteViews collapsedView = new RemoteViews(getActivity().getPackageName(), R.layout.view_collapsed_notification);
         collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
                 // these are the three things a NotificationCompat.Builder object requires at a minimum
                 .setSmallIcon(R.drawable.sapi2)

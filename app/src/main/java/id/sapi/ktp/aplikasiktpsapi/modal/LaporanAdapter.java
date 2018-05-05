@@ -27,7 +27,7 @@ import id.sapi.ktp.aplikasiktpsapi.edit.EditLaporan;
 public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> {
     Context context;
     List<LaporanDB> laporanDBList;
-    private Random mRandom = new Random();
+    public int colorBefore;
 
     OnItemClickListener clickListener;
 
@@ -46,6 +46,14 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
 
     @Override
     public void onBindViewHolder(NoteVH holder, int position) {
+        final int[] androidColors = holder.id.getContext().getResources().getIntArray(R.array.cardColors);
+        final int randomAndroidColor = androidColors[colorBefore + 1];
+        if (colorBefore == 4){
+            colorBefore = 0;
+        } else {
+            colorBefore = colorBefore + 1;
+        }
+        holder.mCardView.setCardBackgroundColor(randomAndroidColor);
         holder.id.setText(laporanDBList.get(position).getId_laporan());
         holder.judul.setText(laporanDBList.get(position).getJudul_laporan());
         holder.isi.setText(laporanDBList.get(position).getIsi_laporan());
@@ -73,7 +81,6 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
             tgl = (TextView) itemView.findViewById(R.id.tgl);
             edit = (ImageView) itemView.findViewById(R.id.edit);
             hapus = (ImageView) itemView.findViewById(R.id.hapus);
-            mCardView.setCardBackgroundColor(getRandomColorCode());
 
             edit.setOnClickListener(this);
             hapus.setOnClickListener(this);
@@ -97,13 +104,6 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
             });
         }
 
-        public int getRandomColorCode(){
-
-            Random random = new Random();
-
-            return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
-
-        }
         @Override
         public void onClick(View view) {
             final int posisi = getAdapterPosition();

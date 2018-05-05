@@ -3,7 +3,12 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private ArrayList<Data> datas;
     private Context context;
+    public int colorBefore;
 
     public DataAdapter(Context context, ArrayList<Data> datas) {
         this.datas = datas;
@@ -50,35 +56,27 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(DataAdapter.ViewHolder viewHolder, int i) {
+        final int[] androidColors = viewHolder.id_jenis.getContext().getResources().getIntArray(R.array.cardColors);
+        final int randomAndroidColor = androidColors[colorBefore + 1];
+        if (colorBefore == 4){
+            colorBefore = 0;
+        } else {
+            colorBefore = colorBefore + 1;
+        }
+        viewHolder.cardview.setCardBackgroundColor(randomAndroidColor);
+        Drawable mDrawable = ContextCompat.getDrawable(viewHolder.id_jenis.getContext(), R.drawable.rounded_view);
+        mDrawable.setColorFilter(new PorterDuffColorFilter(randomAndroidColor, PorterDuff.Mode.MULTIPLY));
+
         viewHolder.id_sapi.setText(datas.get(i).getId_sapi());
         viewHolder.id_jenis.setText(datas.get(i).getJenis());
         viewHolder.id_kandang.setText(datas.get(i).getKandang());
         if(datas.get(i).getFoto() != null) {
-            Picasso.with(context).load(datas.get(i).getFoto()).placeholder(R.drawable.load).resize(100, 100)
+            Picasso.with(context).load(datas.get(i).getFoto()).centerCrop().placeholder(R.drawable.load).resize(100, 100)
                     .into(viewHolder.foto);
         }else {
             Picasso.with(context).load(R.drawable.ic_person_black_24dp).placeholder(R.drawable.load).resize(100, 100)
                     .into(viewHolder.foto);
         }
-       /* viewHolder.hapus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder alertbox = new AlertDialog.Builder(view.getRootView().getContext());
-                alertbox.setMessage("No Internet Connection");
-                alertbox.setTitle("Warning");
-                alertbox.setIcon(R.drawable.ic_warning_black_24dp);
-
-                alertbox.setNeutralButton("OK",
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface arg0,
-                                                int arg1) {
-
-                            }
-                        });
-                alertbox.show();
-            }
-        });*/
     }
 
     @Override
@@ -90,6 +88,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         private TextView id_jenis, id_sapi, id_kandang;
         ImageView edit, hapus;
         CircleImageView foto;
+        public CardView cardview;
 
         public ViewHolder(View view) {
             super(view);
@@ -100,6 +99,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             foto = (CircleImageView) view.findViewById(R.id.gbr);
             edit = (ImageView) view.findViewById(R.id.edit);
             hapus = (ImageView) view.findViewById(R.id.hapus);
+            cardview = (CardView) view.findViewById(R.id.card);
 
             //edit.setTag(R.integer.cast_libraries_material_featurehighlight_pulse_base_alpha, view);
             edit.setOnClickListener(this);

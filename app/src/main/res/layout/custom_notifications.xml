@@ -87,21 +87,24 @@
         android:layout_centerInParent="true">
 
         <Button
+            style="@style/Widget.Compat.NotificationActionContainer"
             android:id="@+id/left_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Notification"
+            android:textAppearance="@style/Widget.Compat.NotificationActionText"
             android:text="CLICK ME"/>
 
         <Button
             android:id="@+id/right_button"
+            style="@style/Widget.Compat.NotificationActionContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Notification"
+            android:textAppearance="@style/Widget.Compat.NotificationActionText"
             android:text="CLICK ME"/>
     </LinearLayout>
 
     <TextView
+        style = "@style/TextAppearance.AppCompat.Notification"
         android:id="@+id/timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,9 +1,5 @@
 package id.sapi.ktp.aplikasiktpsapi.api;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
 import id.sapi.ktp.aplikasiktpsapi.modal.Data;
 import id.sapi.ktp.aplikasiktpsapi.modal.Indukan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jadwal;
@@ -12,7 +8,6 @@ import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.Pakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.Penyakit;
 import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
-import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
 import id.sapi.ktp.aplikasiktpsapi.modal.User;
 
 /**
@@ -20,7 +15,6 @@ import id.sapi.ktp.aplikasiktpsapi.modal.User;
  */
 
 public class JSONResponse {
-    private Sapi[] sapi;
     private Kandang[]kandang;
     private Jenis[]jenis;
     private Peternakan[]peternakan;
@@ -31,9 +25,6 @@ public class JSONResponse {
     private Jadwal[]jadwal;
     private Data[]data;
 
-    public Sapi[] getSapi(){
-        return sapi;
-    }
     public Kandang[]getKandang(){return kandang;}
     public Jenis[]getJenis(){return jenis;}
     public Peternakan[]getPeternakan(){return peternakan;}

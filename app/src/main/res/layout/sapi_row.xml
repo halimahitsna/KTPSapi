@@ -5,6 +5,7 @@
     android:layout_marginBottom="5dp"
     app:cardBackgroundColor="#ffffff"
     app:cardCornerRadius="5dp"
+    android:id="@+id/card"
     android:layout_width="match_parent"
     android:background="@drawable/rounded_view"
     android:layout_height="wrap_content">

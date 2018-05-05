@@ -30,8 +30,6 @@ import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.modal.Data;
 import id.sapi.ktp.aplikasiktpsapi.modal.DataAdapter;
-import id.sapi.ktp.aplikasiktpsapi.modal.Sapi;
-import id.sapi.ktp.aplikasiktpsapi.modal.SapiAdapter;
 import id.sapi.ktp.aplikasiktpsapi.tambah.TambahData;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
@@ -40,16 +38,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by NgocTri on 4/9/2016.
- */
 public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     Toolbar toolbar;
     ActionBar actionBar;
     private RecyclerView recyclerView;
-    private ArrayList<Sapi> data;
-    private SapiAdapter adapter;
     private ArrayList<Data> data1;
     private DataAdapter adapter1;
     SharedPrefManager sharedPrefManager;
@@ -87,14 +80,7 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
         actionBar.setDisplayHomeAsUpEnabled(true);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
         initViews();
-//        swipeRefreshLayout.post(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        swipeRefreshLayout.setRefreshing(true);
-//                                        initViews();
-//                                    }
-//                                }
-//        );
+
     }
 
     @Override
@@ -139,33 +125,6 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
             }
         });
     }
-    /*private void loadJSON() {
-        swipeRefreshLayout.setRefreshing(true);
-        koneksi();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UtilsApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONSapi(iduser);
-        call.enqueue(new Callback<JSONResponse>() {
-            @Override
-            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-                swipeRefreshLayout.setRefreshing(false);
-                JSONResponse jsonResponse = response.body();
-                data = new ArrayList<>(Arrays.asList(jsonResponse.getSapi()));
-                adapter = new SapiAdapter(getApplicationContext(), data);
-                recyclerView.setAdapter(adapter);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(Call<JSONResponse> call, Throwable t) {
-                Log.d("Error", t.getMessage());
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

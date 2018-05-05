@@ -6,29 +6,46 @@
     xmlns:fab="http://schemas.android.com/tools"
     android:background="@color/background">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/foto"
-        android:layout_marginTop="20dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_account_circle_black_24dp"
-        app:civ_border_width="1dp"
-        android:layout_centerHorizontal="true"
-        app:civ_border_color="#ffffff"
-        android:layout_gravity="center" />
+    <FrameLayout
+        android:id="@+id/fotoframe"
+        android:padding="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_nav_bar">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/foto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_account_circle_black_24dp"
+            app:civ_border_width="1dp"
+            android:layout_centerHorizontal="true"
+            app:civ_border_color="#ffffff"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fab_colorNormal="@color/alltext"
+        android:src="@drawable/ic_edit_white_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="210dp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Id"
         android:id="@+id/id"
-        android:layout_below="@id/foto"
+        android:layout_below="@id/fotoframe"
         android:textColor="@color/alltext"
         android:visibility="gone"
         android:layout_centerHorizontal="true" />
     <LinearLayout
-        android:layout_below="@id/foto"
+        android:layout_below="@id/fotoframe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -120,14 +137,4 @@
                 android:layout_centerHorizontal="true" />
         </LinearLayout>
     </LinearLayout>
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:clickable="true"
-        app:fab_colorNormal="@color/alltext"
-        android:src="@drawable/ic_edit_white_24dp"
-        android:layout_marginBottom="10dp"
-        android:layout_centerInParent="true"/>
 </RelativeLayout>

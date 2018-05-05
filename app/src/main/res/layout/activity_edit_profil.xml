@@ -35,7 +35,7 @@
                 android:id="@+id/foto"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:scaleType="centerCropg"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_account_circle_black_24dp"
                 app:civ_border_width="1dp"
                 app:civ_border_color="#ffffff"
