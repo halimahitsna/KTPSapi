@@ -47,9 +47,6 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
     public void onBindViewHolder(KandangAdapter.ViewHolder viewHolder, int i){
         viewHolder.id_kandang.setText(kandang.get(i).getId_kandang());
         viewHolder.txtkandang.setText(kandang.get(i).getKandang());
-        viewHolder.txbsuhu.setText(kandang.get(i).getBatas_suhu());
-        viewHolder.txbkelem.setText(kandang.get(i).getBatas_kelembapan());
-        viewHolder.txbgas.setText(kandang.get(i).getBatas_gas());
     }
 
     @Override
@@ -58,15 +55,12 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView id_kandang, txtkandang, txbsuhu, txbkelem, txbgas;
+        TextView id_kandang, txtkandang;
         ImageView edit, hapus;
         public ViewHolder(final View itemView) {
             super(itemView);
             id_kandang = (TextView)itemView.findViewById(R.id.idKandang);
-            txtkandang = (TextView)itemView.findViewById(R.id.kandang);
-            txbsuhu = (TextView)itemView.findViewById(R.id.bsuhu);
-            txbkelem = (TextView)itemView.findViewById(R.id.bkelembapan);
-            txbgas = (TextView)itemView.findViewById(R.id.bgas);
+            txtkandang = (TextView)itemView.findViewById(R.id.kandang);;
             edit = (ImageView) itemView.findViewById(R.id.edit);
             hapus = (ImageView) itemView.findViewById(R.id.hapus);
 

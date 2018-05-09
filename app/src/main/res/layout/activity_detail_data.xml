@@ -106,6 +106,13 @@
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
                             android:textColor="@color/alltext"
+                            android:text="Jenis Kelamin"/>
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="@color/alltext"
                             android:text="Tanggal Lahir"/>
                         <TextView
                             android:padding="5dp"
@@ -188,6 +195,14 @@
                             android:textSize="16sp"
                             android:textColor="@color/blue"
                             android:text="Riwayat Penyakit"/>
+                        <TextView
+                            android:id="@+id/jk"
+                            android:padding="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="@color/blue"
+                            android:text="Jenis Kelamin"/>
                         <TextView
                             android:id="@+id/tgl"
                             android:padding="5dp"

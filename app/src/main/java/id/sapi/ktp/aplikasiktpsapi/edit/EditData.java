@@ -58,6 +58,7 @@ import id.sapi.ktp.aplikasiktpsapi.modal.Penyakit;
 import id.sapi.ktp.aplikasiktpsapi.modal.PenyakitSpinner;
 import id.sapi.ktp.aplikasiktpsapi.modal.ResponseData;
 import id.sapi.ktp.aplikasiktpsapi.modal.Result;
+import id.sapi.ktp.aplikasiktpsapi.tambah.TambahData;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -83,14 +84,13 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
     ImageView imdate;
     CircleImageView foto;
     FloatingActionButton add;
-    Spinner jenis, kandang, indukan, pakan, penyakit;
+    Spinner jenis, kandang, indukan, pakan, penyakit, jeniskel;
     //DatePicker tgl_lahir;
     Context mcontext;
     Retrofit apiService;
-    String iduser, sjenis, skandang, sindukan, spakan, spenyakit, imagePath;
+    String iduser, sjenis, skandang, sindukan, spakan, spenyakit, imagePath, sjk, mDate;
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
-    private String mDate;
     SharedPrefManager sharedPrefManager;
     private ArrayList<Jenis> data1;
     private ArrayList<Indukan> data2;
@@ -154,66 +154,91 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         pakan = (Spinner) findViewById(R.id.pakan);
         penyakit = (Spinner) findViewById(R.id.penyakit);
         imdate = (ImageView) findViewById(R.id.set_date);
+        jeniskel = (Spinner)findViewById(R.id.piljk);
 
+        txtidSapi.setActivated(false);
         initSpinnerJenis();
         initSpinnerKandang();
         initSpinnerIndukan();
         initSpinnerPakan();
         initSpinnerPeny();
 
-        jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final List<String> status = new ArrayList<String>();
+        status.add("Jantan");
+        status.add("Betina");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        jeniskel.setAdapter(dataAdapter);
+        jeniskel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sjenis = data1.get(position).getId_jenis();
-                Toast.makeText(EditData.this, sjenis, Toast.LENGTH_SHORT).show();
+                String item = status.get(position).toString();
+                sjk = item;
+                // Toast.makeText(TambahData.this, "Selected: " + item, Toast.LENGTH_LONG).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                sjk = "belum diatur";
+            }
+        });
+        jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sjenis = data1.get(position).getId_jenis();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+                sjenis = "belum diatur";
             }
         });
         kandang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 skandang = data3.get(position).getId_kandang();
-                Toast.makeText(EditData.this, skandang, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                skandang = "belum diatur";
             }
         });
         indukan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sindukan = data2.get(position).getId_indukan();
-                Toast.makeText(EditData.this, sindukan, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                sindukan = "belum diatur";
             }
         });
         pakan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spakan = data4.get(position).getId_pakan();
-                Toast.makeText(EditData.this, spakan, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                spakan = "belum diatur";
             }
         });
         penyakit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spenyakit = data5.get(position).getId_penyakit();
-                Toast.makeText(EditData.this, spenyakit, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                spenyakit = "belum diatur";
             }
         });
 
@@ -221,10 +246,13 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
             @Override
             public void onClick(View view) {
                 if(imagePath!=null) {
-                    simpan();
+                    update();
                     uploadImage();
-                }else
-                    Toast.makeText(getApplicationContext(),"Please select image", Toast.LENGTH_LONG).show();
+                }else if(txtidSapi.getText().toString().isEmpty())
+                    txtidSapi.setError("Id Sapi masih kosong!");
+                else if(imagePath ==null) {
+                    update();
+                }
             }
         });
         add.setOnClickListener(new View.OnClickListener() {
@@ -250,7 +278,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         txdate.setText(mDate);
     }
 
-    private void simpan() {
+    private void update() {
         //koneksi();
         String id = txtidSapi.getText().toString().trim();
         String bl = txtbobotlahir.getText().toString().trim();
@@ -258,6 +286,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         String hr = txtharga.getText().toString().trim();
         String umur = txtumur.getText().toString().trim();
         String wr = txtwarna.getText().toString().trim();
+        String jkel = sjk.trim();
         String jn = sjenis.trim();
         String kd = skandang.trim();
         String in = sindukan.trim();
@@ -272,7 +301,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.updateSapi(id, jn, kd, in, pkn, pny, tg, bl, bhdp, umur, wr, hr);
+        Call<Result> call = api.updateSapi(id, jn, kd, in, pkn, pny, jkel, tg, bl, bhdp, umur, wr, hr);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -284,9 +313,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                 } else {
                     Toast.makeText(EditData.this, message, Toast.LENGTH_SHORT).show();
                 }
-
             }
-
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                 // progress.dismiss();

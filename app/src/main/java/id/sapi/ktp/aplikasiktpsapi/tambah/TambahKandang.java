@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TambahKandang extends AppCompatActivity {
 
-    EditText txtid, txtkandang, txbsuhu, tbkelembapan, tbgas;
+    EditText txtid, txtkandang;
     Button btnsimpan;
     Toolbar toolbars;
     ActionBar actionBar;
@@ -42,9 +42,6 @@ public class TambahKandang extends AppCompatActivity {
 
         txtid = (EditText) findViewById(R.id.idKandang);
         txtkandang = (EditText)findViewById(R.id.kandang);
-        txbsuhu = (EditText)findViewById(R.id.bsuhu);
-        tbkelembapan = (EditText)findViewById(R.id.bkelembapan);
-        tbgas=(EditText)findViewById(R.id.bgas);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
 
         //Drawerbar
@@ -58,9 +55,6 @@ public class TambahKandang extends AppCompatActivity {
 
         txtid.setText(getIntent().getStringExtra("id_kandang"));
         txtkandang.setText(getIntent().getStringExtra("kandang"));
-        txbsuhu.setText(getIntent().getStringExtra("bsuhu"));
-        tbkelembapan.setText(getIntent().getStringExtra("bkelembapan"));
-        tbgas.setText(getIntent().getStringExtra("bgas"));
 
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,16 +68,13 @@ public class TambahKandang extends AppCompatActivity {
         koneksi();
         String id = iduser.toString().trim();
         String kd = txtkandang.getText().toString().trim();
-        String sh = txbsuhu.getText().toString().trim();
-        String kl = tbkelembapan.getText().toString().trim();
-        String gs = tbgas.getText().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertKandang(id, kd, sh, kl, gs);
+        Call<Result> call = api.insertKandang(id, kd);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

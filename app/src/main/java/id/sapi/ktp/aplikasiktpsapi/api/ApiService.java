@@ -45,6 +45,7 @@ public interface ApiService {
                             @Field("id_indukan") String id_indukan,
                             @Field("id_pakan") String id_pakan,
                             @Field("id_penyakit") String id_penyakit,
+                            @Field("jenis_kelamin") String jenis_kelamin,
                             @Field("tgl_lahir") String tgl_lahir,
                             @Field("bobot_lahir") String bobot_lahir,
                             @Field("bobot_hidup") String bobot_hidup,
@@ -63,10 +64,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("insert_kandang.php")
     Call<Result> insertKandang(@Field("id_user") String id_user,
-                               @Field("kandang") String kandang,
-                               @Field("batas_suhu") String bsuhu,
-                               @Field("batas_kelembapan") String bkelembapan,
-                               @Field("batas_gas") String bgas);
+                               @Field("kandang") String kandang);
     @FormUrlEncoded
     @POST("insert_pakan.php")
     Call<Result> insertPakan(@Field("id_user") String id_user,
@@ -162,6 +160,7 @@ public interface ApiService {
                             @Field("id_indukan") String id_indukan,
                             @Field("id_pakan") String id_pakan,
                             @Field("id_penyakit") String id_penyakit,
+                            @Field("jenis_kelamin") String jenis_kelamin,
                             @Field("tgl_lahir") String tgl_lahir,
                             @Field("bobot_lahir") String bobot_lahir,
                             @Field("bobot_hidup") String bobot_hidup,
@@ -179,10 +178,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("update_kandang.php")
     Call<Result> updateKandang(@Field("id_kandang") String id_kandang,
-                               @Field("kandang") String kandang,
-                               @Field("batas_suhu") String bsuhu,
-                               @Field("batas_kelembapan") String bkelembapan,
-                               @Field("batas_gas") String bgas);
+                               @Field("kandang") String kandang);
     @FormUrlEncoded
     @POST("update_pakan.php")
     Call<Result> updatePakan(@Field("id_pakan") String id_pakan,

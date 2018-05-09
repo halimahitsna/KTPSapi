@@ -115,7 +115,7 @@ public class Laporan extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent a = new Intent(getActivity(), TambahLaporan.class);
-                a.putExtra("id_user", iduser);
+                //a.putExtra("id_user", iduser);
                 startActivity(a);
             }
         });

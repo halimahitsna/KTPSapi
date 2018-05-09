@@ -7,9 +7,6 @@ package id.sapi.ktp.aplikasiktpsapi.modal;
 public class Kandang {
     private String id_kandang;
     private String kandang;
-    private String batas_suhu;
-    private String batas_kelembapan;
-    private String batas_gas;
     private String suhu;
     private String kelembapan;
     private String gas_amonia;
@@ -22,30 +19,6 @@ public class Kandang {
 
     public void setId_kandang(String id_kandang) {
         this.id_kandang = id_kandang;
-    }
-
-    public String getBatas_suhu() {
-        return batas_suhu;
-    }
-
-    public void setBatas_suhu(String batas_suhu) {
-        this.batas_suhu = batas_suhu;
-    }
-
-    public String getBatas_kelembapan() {
-        return batas_kelembapan;
-    }
-
-    public void setBatas_kelembapan(String batas_kelembapan) {
-        this.batas_kelembapan = batas_kelembapan;
-    }
-
-    public String getBatas_gas() {
-        return batas_gas;
-    }
-
-    public void setBatas_gas(String batas_gas) {
-        this.batas_gas = batas_gas;
     }
 
     public String getKandang() {

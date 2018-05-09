@@ -47,7 +47,7 @@ public class EditKandang extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-    EditText txtid, txtkandang, txbsuhu, tbkelembapan, tbgas;
+    EditText txtid, txtkandang;
     Button btnsimpan;
     Toolbar toolbars;
     ActionBar actionBar;
@@ -66,9 +66,6 @@ public class EditKandang extends AppCompatActivity {
 
         txtid = (EditText) findViewById(R.id.idKandang);
         txtkandang = (EditText)findViewById(R.id.kandang);
-        txbsuhu = (EditText)findViewById(R.id.bsuhu);
-        tbkelembapan = (EditText)findViewById(R.id.bkelembapan);
-        tbgas=(EditText)findViewById(R.id.bgas);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
         ifoto = (CircleImageView)findViewById(R.id.foto);
         add = (FloatingActionButton)findViewById(R.id.btnfoto);
@@ -84,9 +81,6 @@ public class EditKandang extends AppCompatActivity {
 
         txtid.setText(getIntent().getStringExtra("id_kandang"));
         txtkandang.setText(getIntent().getStringExtra("kandang"));
-        txbsuhu.setText(getIntent().getStringExtra("suhu"));
-        tbkelembapan.setText(getIntent().getStringExtra("kelembapan"));
-        tbgas.setText(getIntent().getStringExtra("gas"));
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,16 +110,13 @@ public class EditKandang extends AppCompatActivity {
         koneksi();
         String id = txtid.getText().toString().trim();
         String kd = txtkandang.getText().toString().trim();
-        String sh = txbsuhu.getText().toString().trim();
-        String kl = tbkelembapan.getText().toString().trim();
-        String gs = tbgas.getText().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.updateKandang(id, kd, sh, kl, gs);
+        Call<Result> call = api.updateKandang(id, kd);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

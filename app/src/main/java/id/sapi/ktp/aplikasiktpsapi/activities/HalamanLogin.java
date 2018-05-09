@@ -95,7 +95,7 @@ public class HalamanLogin extends AppCompatActivity {
             String user = Euser.getText().toString();
             String password = Epass.getText().toString();
 
-            if(user .isEmpty()){
+            if(user.isEmpty()){
                 Euser.setError("Username masih kosong!");
                 valid = false;
             }else {

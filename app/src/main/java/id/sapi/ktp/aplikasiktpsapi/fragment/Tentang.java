@@ -163,7 +163,7 @@ public class Tentang extends Fragment implements DatePickerDialog.OnDateSetListe
             @Override
             public void onClick(View view) {
                 if(imagePath!=null) {
-                    simpan();
+                   // simpan();
                     uploadImage();
                 }else
                     Toast.makeText(getActivity(),"Please select image", Toast.LENGTH_LONG).show();
@@ -192,50 +192,7 @@ public class Tentang extends Fragment implements DatePickerDialog.OnDateSetListe
         txdate.setText(mDate);
     }
 
-    private void simpan() {
-        //koneksi();
-        String id = txtidSapi.getText().toString().trim();
-        String bl = txtbobotlahir.getText().toString().trim();
-        String bhdp = txtbobothidup.getText().toString().trim();
-        String hr = txtharga.getText().toString().trim();
-        String umur = txtumur.getText().toString().trim();
-        String wr = txtwarna.getText().toString().trim();
-        String jn = sjenis.trim();
-        String kd = skandang.trim();
-        String in = sindukan.trim();
-        String pkn = spakan.trim();
-        String pny = spakan.trim();
-        String tg = mDate.toString().trim();
-        String user = iduser.toString().trim();
 
-        //validate();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UtilsApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.updateSapi(id, jn, kd, in, pkn, pny, tg, bl, bhdp, umur, wr, hr);
-        call.enqueue(new Callback<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                String value = response.body().getValue();
-                String message = response.body().getMessage();
-//                loading.dismiss();
-                if (value.equals("1")) {
-                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-                // progress.dismiss();
-                Toast.makeText(getActivity(), "Jaringan Error!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

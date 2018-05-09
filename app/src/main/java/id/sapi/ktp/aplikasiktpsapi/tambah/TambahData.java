@@ -83,11 +83,11 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
     ImageView imdate;
     CircleImageView foto;
     FloatingActionButton add;
-    Spinner jenis, kandang, indukan, pakan, penyakit;
+    Spinner jenis, kandang, indukan, pakan, penyakit, jeniskel;
     //DatePicker tgl_lahir;
     Context mcontext;
     Retrofit apiService;
-    String iduser, sjenis, skandang, sindukan, spakan, spenyakit, imagePath;
+    String iduser, sjenis, skandang, sindukan, spakan, spenyakit,sjk, imagePath;
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
     private String mDate;
@@ -154,66 +154,93 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         pakan = (Spinner) findViewById(R.id.pakan);
         penyakit = (Spinner) findViewById(R.id.penyakit);
         imdate = (ImageView) findViewById(R.id.set_date);
+        jeniskel = (Spinner)findViewById(R.id.piljk);
 
         initSpinnerJenis();
         initSpinnerKandang();
         initSpinnerIndukan();
         initSpinnerPakan();
         initSpinnerPeny();
+        final List<String> status = new ArrayList<String>();
+        status.add("Jantan");
+        status.add("Betina");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        jeniskel.setAdapter(dataAdapter);
+        jeniskel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = status.get(position).toString();
+                sjk = item;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+                sjk = "belum diatur";
+            }
+        });
 
         jenis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sjenis = data1.get(position).getId_jenis();
-                Toast.makeText(TambahData.this, sjenis, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(TambahData.this, sjenis, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                sjenis = "belum diatur";
             }
         });
         kandang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 skandang = data3.get(position).getId_kandang();
-                Toast.makeText(TambahData.this, skandang, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(TambahData.this, skandang, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                skandang = "belum diatur";
             }
         });
         indukan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sindukan = data2.get(position).getId_indukan();
-                Toast.makeText(TambahData.this, sindukan, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(TambahData.this, sindukan, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                sindukan = "belum diatur";
             }
         });
         pakan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spakan = data4.get(position).getId_pakan();
-                Toast.makeText(TambahData.this, spakan, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                spakan = "belum diatur";
             }
         });
         penyakit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spenyakit = data5.get(position).getId_penyakit();
-                Toast.makeText(TambahData.this, spenyakit, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(TambahData.this, spenyakit, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+                spenyakit = "belum diatur";
             }
         });
 
@@ -223,8 +250,11 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                 if(imagePath!=null) {
                     simpan();
                     uploadImage();
-                }else
-                    Toast.makeText(getApplicationContext(),"Please select image", Toast.LENGTH_LONG).show();
+                }else if(txtidSapi.getText().toString().isEmpty())
+                    txtidSapi.setError("Id Sapi masih kosong!");
+                else if(imagePath ==null) {
+                    simpan();
+                }
             }
         });
         add.setOnClickListener(new View.OnClickListener() {
@@ -260,6 +290,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         String wr = txtwarna.getText().toString().trim();
         String jn = sjenis.trim();
         String kd = skandang.trim();
+        String jkel = sjk.trim();
         String in = sindukan.trim();
         String pkn = spakan.trim();
         String pny = spakan.trim();
@@ -272,7 +303,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.insertSapi(id, jn, kd, in, pkn, pny, tg, bl, bhdp, umur, wr,user, hr);
+        Call<Result> call = api.insertSapi(id, jn, kd, in, pkn, pny,jkel, tg, bl, bhdp, umur, wr,user, hr);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -318,7 +349,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                         obj.setAll(data1.get(i).getId_jenis(), data1.get(i).getJenis());
                         objects.add(obj);
                     }
-
+                   // sjenis = data1.get(0).getId_jenis();
                     jenis.setAdapter(new JenisSpinner(TambahData.this, objects));
                 } else {
                     Toast.makeText(TambahData.this, "Gagal mengambil data jenis", Toast.LENGTH_SHORT).show();
@@ -353,6 +384,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                         obj.setAll(data3.get(i).getId_kandang(), data3.get(i).getKandang());
                         objects.add(obj);
                     }
+//                    skandang = data3.get(0).getId_kandang();
                     kandang.setPrompt("Pilih Kandang");
                     kandang.setAdapter(new KandangSpinner(TambahData.this, objects));
 
@@ -389,6 +421,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                         obj.setAll(data2.get(i).getId_indukan(), data2.get(i).getIndukan());
                         objects.add(obj);
                     }
+                  //  sindukan = data2.get(0).getId_indukan();
                     indukan.setPrompt("Pilih Indukan Sapi");
                     indukan.setAdapter(new IndukanSpinner(TambahData.this, objects));
 
@@ -425,6 +458,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                         obj.setAll(data4.get(i).getId_pakan(), data4.get(i).getPakan());
                         objects.add(obj);
                     }
+                   // spakan = data4.get(0).getId_pakan();
                     pakan.setPrompt("Pilih Pakan Sapi");
                     pakan.setAdapter(new PakanSpinner(TambahData.this, objects));
 
@@ -461,6 +495,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                         obj.setAll(data5.get(i).getId_penyakit(), data5.get(i).getPenyakit());
                         objects.add(obj);
                     }
+                //    spenyakit = data5.get(0).getId_penyakit();
                     penyakit.setPrompt("Pilih Riwayat Penyakit");
                     penyakit.setAdapter(new PenyakitSpinner(TambahData.this, objects));
 
@@ -602,6 +637,8 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         }
         return false;
     }
+
+
 }
 
 

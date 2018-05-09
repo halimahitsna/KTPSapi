@@ -46,7 +46,7 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
     private ArrayList<Data> data1;
     private DataAdapter adapter1;
     SharedPrefManager sharedPrefManager;
-    public TextView nama;
+    public TextView nama, tkoneksi;
     public ImageView image;
     String iduser;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -79,6 +79,8 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
+        tkoneksi = (TextView)findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.INVISIBLE);
         initViews();
 
     }
@@ -115,7 +117,7 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
                 data1 = new ArrayList<>(Arrays.asList(jsonResponse.getData()));
                 adapter1 = new DataAdapter(getApplicationContext(), data1);
                 recyclerView.setAdapter(adapter1);
-                swipeRefreshLayout.setRefreshing(false);
+                //swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -162,6 +164,8 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(Manajemen.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
         }
     }
 }

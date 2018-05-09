@@ -77,9 +77,9 @@ holder.nmjenis.setText(jenis.get(position).getJenis());
                     if(pos != RecyclerView.NO_POSITION){
                         Jenis clickedDataItem = jenis.get(pos);
                         AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
-                        alertbox.setMessage("Jenis Sapi : " + jenis.get(pos).getJenis());
+                        alertbox.setMessage("\nNama Jenis : " + jenis.get(pos).getJenis());
                         alertbox.setTitle("Detail Jenis");
-                        alertbox.setIcon(R.drawable.ic_business_black_24dp);
+                        alertbox.setIcon(R.drawable.ic_info_black_24dp);
                         alertbox.setCancelable(true);
                         alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0,

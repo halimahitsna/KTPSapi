@@ -51,15 +51,7 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
 
     @Override
     public void onBindViewHolder(KandangSlide.ViewHolder viewHolder, int i) {
-        final int[] androidColors = viewHolder.id.getContext().getResources().getIntArray(R.array.cardColors);
-        final int randomAndroidColor = androidColors[colorBefore + 1];
-        if (colorBefore == 4){
-            colorBefore = 0;
-        } else {
-            colorBefore = colorBefore + 1;
-        }
-        viewHolder.cardView.setCardBackgroundColor(randomAndroidColor);
-        viewHolder.id.setText(kandangs.get(i).getId_kandang());
+       viewHolder.id.setText(kandangs.get(i).getId_kandang());
         viewHolder.nama.setText(kandangs.get(i).getKandang());
 
         if(kandangs.get(i).getSuhu() != null)

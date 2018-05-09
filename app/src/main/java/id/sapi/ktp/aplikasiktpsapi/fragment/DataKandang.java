@@ -50,6 +50,7 @@ public class DataKandang extends Fragment {
     SharedPrefManager sharedPrefManager;
     String iduser;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView tkoneksi;
 
     @Nullable
     @Override
@@ -68,7 +69,8 @@ public class DataKandang extends Fragment {
 
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId();
-
+        tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.VISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         initViews();
 
@@ -140,7 +142,9 @@ public class DataKandang extends Fragment {
         if(adaInternet()){
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
         }
     }
 }

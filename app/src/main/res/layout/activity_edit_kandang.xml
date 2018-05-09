@@ -78,33 +78,6 @@
                 android:textSize="16sp"
                 android:background="@drawable/rounded_view"
                 android:id="@+id/kandang" />
-            <EditText
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Batas Suhu"
-                android:textColor="@color/alltext"
-                android:textSize="16sp"
-                android:background="@drawable/rounded_view"
-                android:id="@+id/bsuhu" />
-            <EditText
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Batas kelembapan"
-                android:textSize="16sp"
-                android:textColor="@color/alltext"
-                android:background="@drawable/rounded_view"
-                android:id="@+id/bkelembapan" />
-            <EditText
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Batas Maksimal Kadar Gas Amonia"
-                android:textSize="16sp"
-                android:textColor="@color/alltext"
-                android:background="@drawable/rounded_view"
-                android:id="@+id/bgas" />
         </LinearLayout>
     </RelativeLayout>
     <Button

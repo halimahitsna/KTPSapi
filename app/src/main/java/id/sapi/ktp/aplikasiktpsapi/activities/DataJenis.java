@@ -45,7 +45,7 @@ public class DataJenis extends AppCompatActivity {
     Toolbar toolbar;
     ActionBar actionBar;
     AddFloatingActionButton btnadd;
-    private TextView id;
+    private TextView id, tkoneksi;
     private RecyclerView recyclerView;
     private ArrayList<Jenis> data1;
     private JenisAdapter adapter1;
@@ -72,6 +72,8 @@ public class DataJenis extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        tkoneksi = (TextView)findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
         btnadd = (AddFloatingActionButton) findViewById(R.id.add);
         btnadd.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +161,8 @@ public class DataJenis extends AppCompatActivity {
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(DataJenis.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
         }
     }
 }

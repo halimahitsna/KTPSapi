@@ -118,6 +118,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
                     intent.putExtra("kandang", datas.get(posisi).getKandang());
                     intent.putExtra("pakan", datas.get(posisi).getPakan());
                     intent.putExtra("penyakit", datas.get(posisi).getPenyakit());
+                    intent.putExtra("jenis_kelamin", datas.get(posisi).getJenis_kelamin());
                     intent.putExtra("bobot_lahir", datas.get(posisi).getBobot_lahir());
                     intent.putExtra("bobot_hidup", datas.get(posisi).getBobot_hidup());
                     intent.putExtra("warna", datas.get(posisi).getWarna());
@@ -146,6 +147,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
                     intent.putExtra("kandang", datas.get(posisi).getKandang());
                     intent.putExtra("pakan", datas.get(posisi).getPakan());
                     intent.putExtra("penyakit", datas.get(posisi).getPenyakit());
+                    intent.putExtra("jenis_kelamin", datas.get(posisi).getJenis_kelamin());
                     intent.putExtra("bobot_lahir", datas.get(posisi).getBobot_lahir());
                     intent.putExtra("bobot_hidup", datas.get(posisi).getBobot_hidup());
                     intent.putExtra("warna", datas.get(posisi).getWarna());

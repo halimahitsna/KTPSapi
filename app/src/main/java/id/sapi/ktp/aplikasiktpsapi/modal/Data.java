@@ -6,6 +6,7 @@ public class Data {
     private String id_indukan;
     private String id_pakan;
     private String id_kandang;
+    private String jenis_kelamin;
     private String tgl_lahir;
     private String bobot_lahir;
     private String bobot_hidup;
@@ -177,5 +178,13 @@ public class Data {
 
     public void setHarga_sapi(String harga_sapi) {
         this.harga_sapi = harga_sapi;
+    }
+
+    public String getJenis_kelamin() {
+        return jenis_kelamin;
+    }
+
+    public void setJenis_kelamin(String jenis_kelamin) {
+        this.jenis_kelamin = jenis_kelamin;
     }
 }

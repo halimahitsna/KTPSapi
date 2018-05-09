@@ -22,6 +22,8 @@ import android.support.v4.app.Fragment;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -42,9 +44,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataPenyakit extends Fragment {
 
     Toolbar toolbar;
-    ActionBar actionBar;
     AddFloatingActionButton btnadd;
-    private TextView textView;
+    private TextView tkoneksi;
     private RecyclerView recyclerView;
     private ArrayList<Penyakit> data;
     private PenyakitAdapter adapter;
@@ -69,12 +70,13 @@ public class DataPenyakit extends Fragment {
 
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId();
-
+        tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         initViews();
 
-        AddFloatingActionButton add = (AddFloatingActionButton) view.findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
+        btnadd = (AddFloatingActionButton) view.findViewById(R.id.add);
+        btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent a = new Intent(getActivity(), TambahPenyakit.class);
@@ -140,6 +142,8 @@ public class DataPenyakit extends Fragment {
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
         }
     }
 }

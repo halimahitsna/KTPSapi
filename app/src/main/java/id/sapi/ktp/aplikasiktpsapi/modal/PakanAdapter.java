@@ -90,9 +90,9 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
 //                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getPakan(), Toast.LENGTH_SHORT).show();
 
                         AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
-                        alertbox.setMessage("Pakan Sapi : " + pakan.get(pos).getPakan());
+                        alertbox.setMessage("Nama Pakan\t: " + pakan.get(pos).getPakan() + "\nJumlah\t: " +pakan.get(pos).getJumlah() + "\nStatus\t: " +pakan.get(pos).getStatus());
                         alertbox.setTitle("Detail Pakan");
-                        alertbox.setIcon(R.drawable.ic_business_black_24dp);
+                        alertbox.setIcon(R.drawable.ic_info_black_24dp);
                         alertbox.setCancelable(true);
                         alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0,

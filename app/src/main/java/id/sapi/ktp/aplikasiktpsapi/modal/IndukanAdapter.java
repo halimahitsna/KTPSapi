@@ -82,9 +82,9 @@ public class IndukanAdapter extends RecyclerView.Adapter<IndukanAdapter.ViewHold
                         AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
                         new AlertDialog.Builder(
                                 new ContextThemeWrapper(context, android.R.style.Theme_DeviceDefault_Light_Dialog));
-                        alertbox.setMessage("Indukan Sapi : " + indukan.get(pos).getIndukan());
+                        alertbox.setMessage("\nNama Indukan : " + indukan.get(pos).getIndukan());
                         alertbox.setTitle("Detail Indukan");
-                        alertbox.setIcon(R.drawable.ic_business_black_24dp);
+                        alertbox.setIcon(R.drawable.ic_info_black_24dp);
                         alertbox.setCancelable(true);
                         alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0,

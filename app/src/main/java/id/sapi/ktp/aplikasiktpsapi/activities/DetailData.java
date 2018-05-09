@@ -35,7 +35,7 @@ public class DetailData extends AppCompatActivity {
 
     ActionBar actionBar;
     Toolbar toolbar;
-    TextView txtidSapi,txjenis, txindukan, txpakan, txpenyakit, txkandang, txtbobotlahir, txtbobothidup, txtumur, txtharga, txtwarna, txdate, txiduser, judul;
+    TextView txtidSapi,txjenis, txindukan, txpakan, txpenyakit, txkandang, txjk, txtbobotlahir, txtbobothidup, txtumur, txtharga, txtwarna, txdate, txiduser, judul;
     CircleImageView foto;
     private ArrayList<Jenis> jenis;
 
@@ -67,6 +67,7 @@ public class DetailData extends AppCompatActivity {
         txtumur = (TextView) findViewById(R.id.umur);
         txtwarna = (TextView) findViewById(R.id.warna);
         txdate = (TextView) findViewById(R.id.tgl);
+        txjk = (TextView)findViewById(R.id.jk) ;
 
         //TextGet
         txtidSapi.setText(getIntent().getStringExtra("id_sapi"));
@@ -76,6 +77,7 @@ public class DetailData extends AppCompatActivity {
         txpakan.setText(getIntent().getStringExtra("pakan"));
         txpenyakit.setText(getIntent().getStringExtra("penyakit"));
         txtharga.setText("Rp "+getIntent().getStringExtra("harga"));
+        txjk.setText(getIntent().getStringExtra("jenis_kelamin"));
         txtumur.setText(getIntent().getStringExtra("umur"));
         txtwarna.setText(getIntent().getStringExtra("warna"));
         txdate.setText(getIntent().getStringExtra("tgl_lahir"));

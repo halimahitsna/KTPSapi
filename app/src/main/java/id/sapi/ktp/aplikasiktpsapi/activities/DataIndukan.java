@@ -39,15 +39,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DataIndukan extends AppCompatActivity {
-    DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
     AddFloatingActionButton btnadd;
-    private TextView textView;
+    private TextView tkoneksi;
     private RecyclerView recyclerView;
     private ArrayList<Indukan> data;
     private IndukanAdapter adapter;
-    SharedPrefManager sharedPrefManager;
     String iduser;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -68,7 +66,8 @@ public class DataIndukan extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-//        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+        tkoneksi = (TextView)findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
         btnadd = (AddFloatingActionButton) findViewById(R.id.add);
         btnadd.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +153,8 @@ public class DataIndukan extends AppCompatActivity {
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(DataIndukan.this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
         }
     }
 }

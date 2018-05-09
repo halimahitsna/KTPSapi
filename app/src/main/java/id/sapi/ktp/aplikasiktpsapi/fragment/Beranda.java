@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,11 +19,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +41,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +55,7 @@ import az.plainpie.animation.PieAngleAnimation;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.activities.Config;
 import id.sapi.ktp.aplikasiktpsapi.activities.MainActivity;
+import id.sapi.ktp.aplikasiktpsapi.activities.NotificationIntentService;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -66,12 +73,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 public class Beranda extends Fragment {
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtRegId, txtMessage;
     String regId, iduser;
-    TextView nmpeternakan, tkandang,tid;
+    TextView nmpeternakan, tkandang,tid, tkoneksi;
     private ArrayList<Peternakan> data;
     SharedPrefManager sharedPrefManager;
     private ArrayList<Kandang> kandangs;
@@ -96,6 +105,8 @@ public class Beranda extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("KTP Sapi");
+        tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
         sharedPrefManager = new SharedPrefManager(getActivity());
@@ -167,7 +178,7 @@ public class Beranda extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void notif() {
-        // Create NotificationManager
+        /*// Create NotificationManager
         final NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 
         // NotificationTargetActivity is the activity opened when user click notification.
@@ -200,6 +211,51 @@ public class Beranda extends Fragment {
         // Set notification intent.
         notification.contentIntent = pendingIntent;
 
-        notificationManager.notify(5, notification);
+        notificationManager.notify(5, notification);*/
+            RemoteViews expandedView = new RemoteViews(getActivity().getPackageName(), R.layout.custom_notifications);
+            expandedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
+            expandedView.setTextViewText(R.id.notification_message,"Notif");
+            // adding action to left button
+            Intent leftIntent = new Intent(getActivity(), NotificationIntentService.class);
+            leftIntent.setAction("left");
+            expandedView.setOnClickPendingIntent(R.id.left_button, PendingIntent.getService(getActivity(), 0, leftIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+            // adding action to right button
+            Intent rightIntent = new Intent(getActivity(), NotificationIntentService.class);
+            rightIntent.setAction("right");
+            expandedView.setOnClickPendingIntent(R.id.right_button, PendingIntent.getService(getActivity(), 1, rightIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+
+            RemoteViews collapsedView = new RemoteViews(getActivity().getPackageName(), R.layout.view_collapsed_notification);
+            collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
+                    // these are the three things a NotificationCompat.Builder object requires at a minimum
+                    .setSmallIcon(R.drawable.sapi2)
+                    .setContentTitle("Judul")
+                    .setContentText("Pesan")
+                    // notification will be dismissed when tapped
+                    .setAutoCancel(true)
+                    // tapping notification will open MainActivity
+                    .setContentIntent(PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(), MainActivity.class), 0))
+                    // setting the custom collapsed and expanded views
+                    .setCustomContentView(collapsedView)
+                    .setCustomBigContentView(expandedView)
+                    // setting style to DecoratedCustomViewStyle() is necessary for custom views to display
+                    .setStyle(new android.support.v7.app.NotificationCompat.DecoratedCustomViewStyle());
+
+            // retrieves android.app.NotificationManager
+            NotificationManager notificationManager = (android.app.NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(0, builder.build());
+    }
+    private boolean adaInternet(){
+        ConnectivityManager koneksi = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return koneksi.getActiveNetworkInfo() != null;
+    }
+    private void koneksi(){
+        if(adaInternet()){
+//            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
+        }
     }
 }

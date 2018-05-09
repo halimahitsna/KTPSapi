@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
@@ -43,6 +44,7 @@ public class JadwalMakan extends Fragment {
     SharedPrefManager sharedPrefManager;
     String iduser;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView tkoneksi;
 
     @Nullable
     @Override
@@ -61,6 +63,8 @@ public class JadwalMakan extends Fragment {
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId().toString();
 
+        tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.VISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         initViews();
         btnAdd = (AddFloatingActionButton)view.findViewById(R.id.add_reminder);
@@ -115,7 +119,9 @@ public class JadwalMakan extends Fragment {
         if(adaInternet()){
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(getContext(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
+            //Toast.makeText(getContext(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
         }
     }
 }
