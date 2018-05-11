@@ -36,7 +36,7 @@ public class EditPakan extends AppCompatActivity implements AdapterView.OnItemSe
     Button btnsimpan;
     Toolbar toolbars;
     ActionBar actionBar;
-    String iduser;
+    String iduser, txtstat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class EditPakan extends AppCompatActivity implements AdapterView.OnItemSe
         String id = txtid.getText().toString().trim();
         String pkn = txtpakan.getText().toString().trim();
         String jml = txtjml.getText().toString().trim();
-        String st = stat.getSelectedItem().toString().trim();
+        String st = txtstat.trim();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
@@ -154,10 +154,9 @@ public class EditPakan extends AppCompatActivity implements AdapterView.OnItemSe
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String item = adapterView.getItemAtPosition(i).toString();
-
+        txtstat = adapterView.getItemAtPosition(i).toString();
         // Showing selected spinner item
-        Toast.makeText(adapterView.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        //Toast.makeText(adapterView.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {

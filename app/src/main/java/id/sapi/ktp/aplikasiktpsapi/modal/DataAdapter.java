@@ -41,11 +41,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private ArrayList<Data> datas;
     private Context context;
+    private ArrayList<Data> mFilteredList;
     public int colorBefore;
 
     public DataAdapter(Context context, ArrayList<Data> datas) {
         this.datas = datas;
         this.context = context;
+        this.mFilteredList = datas;
+    }
+
+    public void filterList(ArrayList<Data> filterdNames) {
+        this.datas = filterdNames;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -133,6 +140,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             });
         }
 
+
         @Override
         public void onClick(View view) {
             final int posisi = getAdapterPosition();
@@ -141,6 +149,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
                 if (posisi != RecyclerView.NO_POSITION) {
                     Data clickedDataItem = datas.get(posisi);
                     Intent intent = new Intent(context, EditData.class);
+                    intent.putExtra("id_user", datas.get(posisi).getId_indukan());
                     intent.putExtra("id_sapi", datas.get(posisi).getId_sapi());
                     intent.putExtra("jenis", datas.get(posisi).getJenis());
                     intent.putExtra("indukan", datas.get(posisi).getIndukan());

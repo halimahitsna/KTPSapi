@@ -111,7 +111,9 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         setContentView(R.layout.activity_edit_data);
         sharedPrefManager = new SharedPrefManager(this);
         Intent i = getIntent();
-        iduser = i.getStringExtra("id_user");
+        //iduser = i.getStringExtra("id_user");
+        sharedPrefManager = new SharedPrefManager(getApplicationContext());
+        iduser = sharedPrefManager.getSPId();
         verifyStoragePermissions(this);
 
         mcontext = this;
@@ -141,8 +143,10 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         //EditTextGet
         txiduser.setText(getIntent().getStringExtra("id_user"));
         txtidSapi.setText(getIntent().getStringExtra("id_sapi"));
-        txtharga.setText(getIntent().getStringExtra("umur"));
+        txtharga.setText(getIntent().getStringExtra("harga"));
         txtumur.setText(getIntent().getStringExtra("umur"));
+        txtwarna.setText(getIntent().getStringExtra("warna"));
+        txdate.setText(getIntent().getStringExtra("tgl_lahir"));
         txtbobotlahir.setText(getIntent().getStringExtra("bobot_lahir"));
         txtbobothidup.setText(getIntent().getStringExtra("bobot_hidup"));
         Picasso.with(mcontext).load(getIntent().getStringExtra("foto")).resize(150, 150)
@@ -250,7 +254,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                     uploadImage();
                 }else if(txtidSapi.getText().toString().isEmpty())
                     txtidSapi.setError("Id Sapi masih kosong!");
-                else if(imagePath ==null) {
+                else {
                     update();
                 }
             }
@@ -279,7 +283,6 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
     private void update() {
-        //koneksi();
         String id = txtidSapi.getText().toString().trim();
         String bl = txtbobotlahir.getText().toString().trim();
         String bhdp = txtbobothidup.getText().toString().trim();
@@ -320,8 +323,8 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                 Toast.makeText(EditData.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });
+        onBackPressed();
     }
-
     private void initSpinnerJenis() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
@@ -345,7 +348,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         obj.setAll(data1.get(i).getId_jenis(), data1.get(i).getJenis());
                         objects.add(obj);
                     }
-
+                    // sjenis = data1.get(0).getId_jenis();
                     jenis.setAdapter(new JenisSpinner(EditData.this, objects));
                 } else {
                     Toast.makeText(EditData.this, "Gagal mengambil data jenis", Toast.LENGTH_SHORT).show();
@@ -380,6 +383,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         obj.setAll(data3.get(i).getId_kandang(), data3.get(i).getKandang());
                         objects.add(obj);
                     }
+//                    skandang = data3.get(0).getId_kandang();
                     kandang.setPrompt("Pilih Kandang");
                     kandang.setAdapter(new KandangSpinner(EditData.this, objects));
 
@@ -416,6 +420,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         obj.setAll(data2.get(i).getId_indukan(), data2.get(i).getIndukan());
                         objects.add(obj);
                     }
+                    //  sindukan = data2.get(0).getId_indukan();
                     indukan.setPrompt("Pilih Indukan Sapi");
                     indukan.setAdapter(new IndukanSpinner(EditData.this, objects));
 
@@ -452,6 +457,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         obj.setAll(data4.get(i).getId_pakan(), data4.get(i).getPakan());
                         objects.add(obj);
                     }
+                    // spakan = data4.get(0).getId_pakan();
                     pakan.setPrompt("Pilih Pakan Sapi");
                     pakan.setAdapter(new PakanSpinner(EditData.this, objects));
 
@@ -488,6 +494,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         obj.setAll(data5.get(i).getId_penyakit(), data5.get(i).getPenyakit());
                         objects.add(obj);
                     }
+                    //    spenyakit = data5.get(0).getId_penyakit();
                     penyakit.setPrompt("Pilih Riwayat Penyakit");
                     penyakit.setAdapter(new PenyakitSpinner(EditData.this, objects));
 

@@ -5,7 +5,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +17,10 @@ import android.widget.Toast;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
-import java.util.List;
 
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.database.LaporanDB;
+import id.sapi.ktp.aplikasiktpsapi.fragment.Laporan;
 
 public class EditLaporan extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ActionBar actionBar;
@@ -32,7 +31,6 @@ public class EditLaporan extends AppCompatActivity implements DatePickerDialog.O
     EditText eid, ejudul, eisi, etgl;
     ImageView tgl;
     Button btnsimpan;
-    String jdl, isilap, tangg;
 
     // Constant values in milliseconds
     private static final long milMinute = 60000L;
@@ -71,14 +69,6 @@ public class EditLaporan extends AppCompatActivity implements DatePickerDialog.O
         eisi.setMinLines(3);
         eisi.setMaxLines(10);
 
-        ejudul.setText(getIntent().getStringExtra("judul"));
-        eisi.setText(getIntent().getStringExtra("isi"));
-        etgl.setText(getIntent().getStringExtra("tanggal"));
-
-        jdl = getIntent().getStringExtra("judul");
-        isilap = getIntent().getStringExtra("isi");
-        tangg = getIntent().getStringExtra("tanggal");
-
         mCalendar = Calendar.getInstance();
         mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
         mMinute = mCalendar.get(Calendar.MINUTE);
@@ -92,34 +82,25 @@ public class EditLaporan extends AppCompatActivity implements DatePickerDialog.O
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //simpan();
+                simpan();
             }
         });
     }
 
-    private void simpan() {
+    private void simpan(){
         Long i = LaporanDB.count(LaporanDB.class, "", null);
         String id = eid.getText().toString().trim();
-        String newjudul = ejudul.getText().toString().trim();
-        String newisi = eisi.getText().toString().trim();
-        String newtanggal = mDate.trim();
+        String judul = ejudul.getText().toString().trim();
+        String isi = eisi.getText().toString().trim();
+        String tanggal = mDate.trim();
 
-        Log.d("Note", "updating");
-
-        List<LaporanDB> laporanDBS = LaporanDB.find(LaporanDB.class, "judul = ?", jdl);
-        if (laporanDBS.size() > 0) {
-
-            LaporanDB note = laporanDBS.get(0);
-            Log.d("got note", "note: " + note.getJudul_laporan());
-            note.judul_laporan = newjudul;
-            note.isi_laporan = newisi;
-            note.input_date = newtanggal;
-
-            note.save();
-
-            Toast.makeText(EditLaporan.this, "berhasil simpan", Toast.LENGTH_SHORT).show();
-            onBackPressed();
-        }
+        LaporanDB laporanDB = (LaporanDB.find(LaporanDB.class, "id = ?", id)).get(0);
+        laporanDB.setJudul_laporan(judul);
+        laporanDB.setIsi_laporan(isi);
+        laporanDB.setUpdate_date(tanggal);
+        laporanDB.save();
+        Toast.makeText(EditLaporan.this, "berhasil update laporan", Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 
     @Override

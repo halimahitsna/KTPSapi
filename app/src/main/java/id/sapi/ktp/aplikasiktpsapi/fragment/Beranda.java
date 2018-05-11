@@ -148,7 +148,7 @@ public class Beranda extends Fragment {
     private void loadJSON() {
         iduser = sharedPrefManager.getSPId();
         swipeRefreshLayout.setRefreshing(true);
-        //koneksi();
+        koneksi();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -115,6 +115,7 @@ public class PakanAdapter extends RecyclerView.Adapter<PakanAdapter.ViewHolder>{
                     Intent intent = new Intent(context, EditPakan.class);
                     intent.putExtra("id_pakan", pakan.get(posisi).getId_pakan());
                     intent.putExtra("pakan", pakan.get(posisi).getPakan());
+                    intent.putExtra("jumlah", pakan.get(posisi).getJumlah());
                     context.startActivity(intent);
                     Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getPakan(), Toast.LENGTH_SHORT).show();
                 }

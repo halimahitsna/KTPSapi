@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 import id.sapi.ktp.aplikasiktpsapi.activities.DetailData;
+import id.sapi.ktp.aplikasiktpsapi.activities.DetailLaporan;
 import id.sapi.ktp.aplikasiktpsapi.edit.EditJenis;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.database.LaporanDB;
@@ -92,7 +93,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.NoteVH> 
                     // check if item still exists
                     if (pos != RecyclerView.NO_POSITION) {
                         LaporanDB clickedDataItem = laporanDBList.get(pos);
-                        Intent intent = new Intent(context, DetailData.class);
+                        Intent intent = new Intent(context, DetailLaporan.class);
                         intent.putExtra("judul", laporanDBList.get(pos).getJudul_laporan());
                         intent.putExtra("isi", laporanDBList.get(pos).getIsi_laporan());
                         intent.putExtra("tanggal", laporanDBList.get(pos).getTanggal());

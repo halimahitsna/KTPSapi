@@ -96,7 +96,9 @@
         <activity android:name=".tambah.TambahIndukan" />
         <activity android:name=".activities.DetailData" />
         <activity android:name=".tambah.TambahLaporan" />
-        <activity android:name=".edit.EditProfil"></activity>
+        <activity android:name=".edit.EditLaporan" />
+        <activity android:name=".edit.EditProfil" />
+        <activity android:name=".activities.DetailLaporan"></activity>
     </application>
 
 </manifest>

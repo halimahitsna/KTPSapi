@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -81,6 +83,9 @@ public class EditKandang extends AppCompatActivity {
 
         txtid.setText(getIntent().getStringExtra("id_kandang"));
         txtkandang.setText(getIntent().getStringExtra("kandang"));
+        Picasso.with(EditKandang.this).load(getIntent().getStringExtra("foto")).centerCrop().placeholder(R.drawable.load).resize(100, 100)
+                    .into(ifoto);
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override

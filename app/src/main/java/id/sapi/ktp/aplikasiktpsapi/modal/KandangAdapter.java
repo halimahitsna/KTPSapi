@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import id.sapi.ktp.aplikasiktpsapi.edit.EditKandang;
@@ -47,6 +49,13 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
     public void onBindViewHolder(KandangAdapter.ViewHolder viewHolder, int i){
         viewHolder.id_kandang.setText(kandang.get(i).getId_kandang());
         viewHolder.txtkandang.setText(kandang.get(i).getKandang());
+        if(kandang.get(i).getFoto() != null) {
+            Picasso.with(context).load(kandang.get(i).getFoto()).centerCrop().placeholder(R.drawable.load).resize(100, 100)
+                    .into(viewHolder.ifoto);
+        }else {
+            Picasso.with(context).load(R.drawable.ic_person_black_24dp).placeholder(R.drawable.load).resize(100, 100)
+                    .into(viewHolder.ifoto);
+        }
     }
 
     @Override
@@ -56,11 +65,12 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView id_kandang, txtkandang;
-        ImageView edit, hapus;
+        ImageView edit, hapus, ifoto;
         public ViewHolder(final View itemView) {
             super(itemView);
             id_kandang = (TextView)itemView.findViewById(R.id.idKandang);
-            txtkandang = (TextView)itemView.findViewById(R.id.kandang);;
+            txtkandang = (TextView)itemView.findViewById(R.id.kandang);
+            ifoto = (ImageView)itemView.findViewById(R.id.foto);
             edit = (ImageView) itemView.findViewById(R.id.edit);
             hapus = (ImageView) itemView.findViewById(R.id.hapus);
 
@@ -113,6 +123,7 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
                     Intent intent = new Intent(context, EditKandang.class);
                     intent.putExtra("id_kandang", kandang.get(posisi).getId_kandang());
                     intent.putExtra("kandang", kandang.get(posisi).getKandang());
+                    intent.putExtra("foto", kandang.get(posisi).getFoto());
                     context.startActivity(intent);
                     Toast.makeText(view.getContext(), "You clicked " + clickedDataItem.getKandang(), Toast.LENGTH_SHORT).show();
                 }
