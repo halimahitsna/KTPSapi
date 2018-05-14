@@ -12,10 +12,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,7 @@ import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
+import id.sapi.ktp.aplikasiktpsapi.modal.Data;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.JenisAdapter;
 import id.sapi.ktp.aplikasiktpsapi.tambah.TambahJenis;
@@ -44,8 +49,11 @@ public class DataJenis extends AppCompatActivity {
 
     Toolbar toolbar;
     ActionBar actionBar;
+    private MenuItem mSearchAction;
+    private boolean isSearchOpened = false;
+    private EditText edtSeach;
     AddFloatingActionButton btnadd;
-    private TextView id, tkoneksi;
+    private TextView id, tkoneksi, tjudul;
     private RecyclerView recyclerView;
     private ArrayList<Jenis> data1;
     private JenisAdapter adapter1;
@@ -74,6 +82,8 @@ public class DataJenis extends AppCompatActivity {
 
         tkoneksi = (TextView)findViewById(R.id.txtkoneksi);
         tkoneksi.setVisibility(View.INVISIBLE);
+        tjudul = (TextView)findViewById(R.id.toolbar_title);
+        tjudul.setText("Jenis Sapi");
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
         btnadd = (AddFloatingActionButton) findViewById(R.id.add);
         btnadd.setOnClickListener(new View.OnClickListener() {
@@ -138,18 +148,107 @@ public class DataJenis extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        mSearchAction = menu.findItem(R.id.action_search);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_setting, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
-            finish();
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }else if(item.getItemId() == R.id.action_search){
+            tjudul.setVisibility(View.INVISIBLE);
+            handleMenuSearch();
+            return true;
+        }else
+            tjudul.setVisibility(View.VISIBLE);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void handleMenuSearch(){
+        ActionBar action = getSupportActionBar(); //get the actionbar
+
+        if(isSearchOpened){ //test if the search is open
+
+            action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
+            action.setDisplayShowTitleEnabled(false); //show the title in the action bar
+            tjudul.setVisibility(View.VISIBLE);
+
+            //hides the keyboard
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(edtSeach.getWindowToken(), 0);
+
+            //add the search icon in the action bar
+            mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_search_black_24dp));
+
+            isSearchOpened = false;
+        } else { //open the search entry
+
+            action.setDisplayShowCustomEnabled(true); //enable it to display a
+            // custom view in the action bar.
+            action.setCustomView(R.layout.search_bar);//add the custom view
+            action.setDisplayShowTitleEnabled(false); //hide the title
+
+            edtSeach = (EditText)action.getCustomView().findViewById(R.id.edtSearch); //the text editor
+
+            edtSeach.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    //after the change calling the method and passing the search input
+                    doSearch(editable.toString());
+                }
+            });
+
+
+            edtSeach.requestFocus();
+
+            //open the keyboard focused in the edtSearch
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(edtSeach, InputMethodManager.SHOW_IMPLICIT);
+
+
+            //add the close icon
+            mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_close_black_24dp));
+
+            isSearchOpened = true;
+        }
+    }
+
+    private void doSearch(String text){
+        //new array list that will hold the filtered data
+        ArrayList<Jenis> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (Jenis jenis : data1) {
+            //if the existing elements contains the search input
+            if (jenis.getId_jenis().toLowerCase().contains(text.toLowerCase()) || jenis.getJenis().toLowerCase().contains(text.toLowerCase()) ) {
+
+                filterdNames.add(jenis);
+            }
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+        adapter1.filterList(filterdNames);
     }
 
     private boolean adaInternet(){

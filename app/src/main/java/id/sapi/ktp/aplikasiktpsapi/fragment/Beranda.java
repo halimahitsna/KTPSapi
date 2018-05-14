@@ -76,19 +76,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Beranda extends Fragment {
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private TextView txtRegId, txtMessage;
-    String regId, iduser;
-    TextView nmpeternakan, tkandang,tid, tkoneksi;
+    String iduser;
+    TextView  tkoneksi;
     private ArrayList<Peternakan> data;
     SharedPrefManager sharedPrefManager;
     private ArrayList<Kandang> kandangs;
     private KandangSlide adapter;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    Context mContext;
-    ApiService mApiService;
 
     @Nullable
     @Override

@@ -85,47 +85,16 @@ public class NotificationUtils {
                 }
             }
         } else {
-            showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
             playNotificationSound();
+            showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+
         }
+
     }
 
 
     private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound) {
-
-        RemoteViews expandedView = new RemoteViews(mContext.getPackageName(), R.layout.custom_notifications);
-        expandedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(mContext, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-        expandedView.setTextViewText(R.id.notification_message,"Notif");
-        // adding action to left button
-        Intent leftIntent = new Intent(mContext, NotificationIntentService.class);
-        leftIntent.setAction("left");
-        expandedView.setOnClickPendingIntent(R.id.left_button, PendingIntent.getService(mContext, 0, leftIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-        // adding action to right button
-        Intent rightIntent = new Intent(mContext, NotificationIntentService.class);
-        rightIntent.setAction("right");
-        expandedView.setOnClickPendingIntent(R.id.right_button, PendingIntent.getService(mContext, 1, rightIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-
-        RemoteViews collapsedView = new RemoteViews(mContext.getPackageName(), R.layout.view_collapsed_notification);
-        collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(mContext, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext)
-                // these are the three things a NotificationCompat.Builder object requires at a minimum
-                .setSmallIcon(R.drawable.sapi2)
-                .setContentTitle(title)
-                .setContentText(message)
-                // notification will be dismissed when tapped
-                .setAutoCancel(true)
-                // tapping notification will open MainActivity
-                .setContentIntent(PendingIntent.getActivity(mContext, 0, new Intent(mContext, MainActivity.class), 0))
-                // setting the custom collapsed and expanded views
-                .setCustomContentView(collapsedView)
-                .setCustomBigContentView(expandedView)
-                // setting style to DecoratedCustomViewStyle() is necessary for custom views to display
-                .setStyle(new android.support.v7.app.NotificationCompat.DecoratedCustomViewStyle());
-
-        // retrieves android.app.NotificationManager
-        NotificationManager notificationManager = (android.app.NotificationManager)mContext.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, builder.build());
-        /*NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
         inboxStyle.addLine(message);
 
@@ -143,7 +112,7 @@ public class NotificationUtils {
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_ID, notification);*/
+        notificationManager.notify(Config.NOTIFICATION_ID, notification);
     }
 
     private void showBigNotification(Bitmap bitmap, NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound) {

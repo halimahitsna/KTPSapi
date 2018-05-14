@@ -232,4 +232,9 @@ public interface ApiService {
     Call<BaseResponse> uploadFotoKandang(@Part MultipartBody.Part file,
                                       @Part MultipartBody.Part id_kandang);
 
+    @FormUrlEncoded
+    @POST("update_token.php")
+    Call<Result> updateToken(@Field("device_id") String device_id,
+                             @Field("id_user") String id_user);
+
 }

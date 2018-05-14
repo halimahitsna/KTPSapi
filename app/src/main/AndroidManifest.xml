@@ -17,8 +17,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.SplashScreen" />
-        <activity android:name=".tab.tab1" />
-        <activity android:name=".tab.tab2" />
         <activity android:name=".fragment.Beranda" />
         <activity android:name=".activities.HalamanLogin">
             <intent-filter>

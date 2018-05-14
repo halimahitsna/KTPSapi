@@ -7,15 +7,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-/**
- * Created by sherryy on 4/3/17.
- */
-
 public class NotificationIntentService extends IntentService {
-
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     */
     public NotificationIntentService() {
         super("notificationIntentService");
     }

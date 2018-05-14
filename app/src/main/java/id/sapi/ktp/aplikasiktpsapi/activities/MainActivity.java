@@ -2,6 +2,7 @@ package id.sapi.ktp.aplikasiktpsapi.activities;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,12 +22,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +52,7 @@ import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
 import id.sapi.ktp.aplikasiktpsapi.database.UserDB;
+import id.sapi.ktp.aplikasiktpsapi.edit.EditData;
 import id.sapi.ktp.aplikasiktpsapi.fragment.Beranda;
 import id.sapi.ktp.aplikasiktpsapi.fragment.DataKandang;
 import id.sapi.ktp.aplikasiktpsapi.fragment.DataPakan;
@@ -60,6 +65,7 @@ import id.sapi.ktp.aplikasiktpsapi.fragment.Pengaturan;
 import id.sapi.ktp.aplikasiktpsapi.fragment.Profile;
 import id.sapi.ktp.aplikasiktpsapi.fragment.Tentang;
 import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
+import id.sapi.ktp.aplikasiktpsapi.modal.Result;
 import id.sapi.ktp.aplikasiktpsapi.modal.User;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import okhttp3.ResponseBody;
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    TextView txtRegId, txtMessage;
+    EditText txtRegId, txtMessage;
     Toolbar toolbar;
     private ArrayList<User> data;
     public ArrayList<Peternakan> data1;
@@ -106,11 +112,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //add this line to display menu1 when the activity is loaded
         displaySelectedScreen(R.id.menu_utama);
-
-        txtRegId = (TextView) findViewById(R.id.txt_reg_id);
-        txtMessage = (TextView) findViewById(R.id.txt_push_message);
-
         sharedPrefManager = new SharedPrefManager(this);
+        txtRegId = (EditText) findViewById(R.id.txt_reg_id);
+        txtMessage = (EditText) findViewById(R.id.txt_push_message);
+        txtMessage.setText(sharedPrefManager.getSPId());
+
+
         if (!sharedPrefManager.getSPSudahLogin()) {
             startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
@@ -128,83 +135,75 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // now subscribe to `global` topic to receive app wide notifications
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
 
-                    //displayFirebaseRegId();
+                    displayFirebaseRegId();
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
 
                     String message = intent.getStringExtra("message");
 
-                   // Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-                    //Log.d("Push Notif", message);
+                   Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+//                   Log.d("Push Notif", message);
 
-                    /*txtMessage.setText(message);
-                    Notif(message);*/
+                   txtMessage.setText(message);
+                    Notif(message);
 
                 }
             }
         };
 
         displayFirebaseRegId();
-    }
-    /*void Notif(String msg){
-        Notification notification = new NotificationCompat.Builder(this)
-                .setTicker("")
-                .setSmallIcon(R.drawable.sapi2)
-                .setContentTitle("")
-                .setContentText(msg)
-                .setAutoCancel(true)
-                .build();
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
-    }*/
+
+    }
+    void Notif(String msg){
+        RemoteViews expandedView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.custom_notifications);
+        expandedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
+        expandedView.setTextViewText(R.id.notification_message,msg);
+        // adding action to left button
+        Intent leftIntent = new Intent(getApplicationContext(), NotificationIntentService.class);
+        leftIntent.setAction("left");
+        expandedView.setOnClickPendingIntent(R.id.left_button, PendingIntent.getService(getApplicationContext(), 0, leftIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+        // adding action to right button
+        Intent rightIntent = new Intent(getApplicationContext(), NotificationIntentService.class);
+        rightIntent.setAction("right");
+        expandedView.setOnClickPendingIntent(R.id.right_button, PendingIntent.getService(getApplicationContext(), 1, rightIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+
+        RemoteViews collapsedView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.view_collapsed_notification);
+        collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                // these are the three things a NotificationCompat.Builder object requires at a minimum
+                .setSmallIcon(R.drawable.sapi2)
+                .setContentTitle("Judul")
+                .setContentText(msg)
+                // notification will be dismissed when tapped
+                .setAutoCancel(true)
+                // tapping notification will open MainActivity
+                .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
+                // setting the custom collapsed and expanded views
+                .setCustomContentView(collapsedView)
+                .setCustomBigContentView(expandedView)
+                // setting style to DecoratedCustomViewStyle() is necessary for custom views to display
+                .setStyle(new android.support.v7.app.NotificationCompat.DecoratedCustomViewStyle());
+
+        // retrieves android.app.NotificationManager
+        NotificationManager notificationManager = (android.app.NotificationManager)getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(90, builder.build());
+    }
 
     // Fetches reg id from shared preferences
     // and displays on the screen
     private void displayFirebaseRegId() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         regId = pref.getString("regId", null);
-
+        updateRegid();
         Log.e(TAG, "Firebase reg id: " + regId);
 
         if (!TextUtils.isEmpty(regId))
-            txtRegId.setText("Firebase Reg Id: " + regId);
-        else
+            txtRegId.setText(regId);
+        else {
             txtRegId.setText("Firebase Reg Id is not received yet!");
-        //sendNotification();
-    }
-
-    private void sendNotification(){
-        mApiService.sendNotif(regId.toString().trim(), "judul", "pesan")
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.isSuccessful()){
-                            try{
-                                JSONObject jsonRESULT = new JSONObject(response.body().string());
-                                if(jsonRESULT.getString("failure").equals(0)){
-                                    Toast.makeText(mContext, "Berhasil notif", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    String error_message= jsonRESULT.getString("error_msg");
-                                    Toast.makeText(mContext, error_message, Toast.LENGTH_SHORT).show();
-                                }
-                            }catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }else {
-                            Toast.makeText(mContext, "Error notif", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("debug", "OnFailure: ERROR > " +t.toString());
-                    }
-                });
+        }
     }
 
     @Override
@@ -324,15 +323,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -394,6 +385,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void updateRegid() {
+        String id = txtMessage.getText().toString().trim();
+        String token = txtRegId.getText().toString().trim();
+
+        koneksi();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService api = retrofit.create(ApiService.class);
+        Call<Result> call = api.updateToken(regId.trim(), txtMessage.getText().toString().trim());
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                String value = response.body().getValue();
+                String message = response.body().getMessage();
+                if (value.equals("1")) {
+                    Log.d("Pesan", message);
+                } else {
+                    Log.d("Pesan", message);
+                }
+            }
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+       // onBackPressed();
     }
 
     private boolean adaInternet(){

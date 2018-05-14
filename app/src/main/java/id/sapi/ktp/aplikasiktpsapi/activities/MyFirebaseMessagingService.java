@@ -1,16 +1,23 @@
 package id.sapi.ktp.aplikasiktpsapi.activities;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import id.sapi.ktp.aplikasiktpsapi.R;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -90,6 +97,39 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
                 notificationUtils.playNotificationSound();
+                RemoteViews expandedView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.custom_notifications);
+                expandedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
+                expandedView.setTextViewText(R.id.notification_message,message);
+                // adding action to left button
+                Intent leftIntent = new Intent(getApplicationContext(), NotificationIntentService.class);
+                leftIntent.setAction("left");
+                expandedView.setOnClickPendingIntent(R.id.left_button, PendingIntent.getService(getApplicationContext(), 0, leftIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                // adding action to right button
+                Intent rightIntent = new Intent(getApplicationContext(), NotificationIntentService.class);
+                rightIntent.setAction("right");
+                expandedView.setOnClickPendingIntent(R.id.right_button, PendingIntent.getService(getApplicationContext(), 1, rightIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+
+                RemoteViews collapsedView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.view_collapsed_notification);
+                collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
+                        // these are the three things a NotificationCompat.Builder object requires at a minimum
+                        .setSmallIcon(R.drawable.sapi2)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        // notification will be dismissed when tapped
+                        .setAutoCancel(true)
+                        // tapping notification will open MainActivity
+                        .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
+                        // setting the custom collapsed and expanded views
+                        .setCustomContentView(collapsedView)
+                        .setCustomBigContentView(expandedView)
+                        // setting style to DecoratedCustomViewStyle() is necessary for custom views to display
+                        .setStyle(new android.support.v7.app.NotificationCompat.DecoratedCustomViewStyle());
+
+                // retrieves android.app.NotificationManager
+                NotificationManager notificationManager = (android.app.NotificationManager)getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(90, builder.build());
+
             } else {
                 // app is in background, show the notification in notification tray
                 Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -102,6 +142,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     // image is present, show notification with image
                     showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
                 }
+                showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
@@ -116,7 +157,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
         notificationUtils = new NotificationUtils(context);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
+       notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
+
     }
 
     /**

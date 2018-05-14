@@ -38,6 +38,12 @@ public class IndukanAdapter extends RecyclerView.Adapter<IndukanAdapter.ViewHold
         this.context = context;
         this.indukan = indukan;
     }
+
+    public void filterList(ArrayList<Indukan> filterdNames) {
+        this.indukan = filterdNames;
+        notifyDataSetChanged();
+    }
+
     @Override
     public IndukanAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.jenis_row, parent, false);

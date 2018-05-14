@@ -36,6 +36,12 @@ public class JenisAdapter extends RecyclerView.Adapter<JenisAdapter.ViewHolder>{
         this.context = context;
         this.jenis = jenis;
     }
+
+    public void filterList(ArrayList<Jenis> filterdNames) {
+        this.jenis = filterdNames;
+        notifyDataSetChanged();
+    }
+
     @Override
     public JenisAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.jenis_row, parent, false);

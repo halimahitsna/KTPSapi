@@ -10,7 +10,7 @@
     android:id="@+id/navigation_drawer_layout"
     tools:openDrawer="start"
     tools:context="id.sapi.ktp.aplikasiktpsapi.activities.MainActivity">
-    <TextView
+    <EditText
         android:id="@+id/txt_push_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:gravity="center_horizontal"
         android:textColor="@color/colorPrimary"
         android:textSize="26dp" />
-    <TextView
+    <EditText
         android:id="@+id/txt_reg_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
