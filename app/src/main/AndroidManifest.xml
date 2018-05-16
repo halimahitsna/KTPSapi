@@ -28,7 +28,7 @@
         <activity android:name=".activities.HalamanDaftar" />
 
         <!-- Firebase Notifications -->
-        <service
+        <!--<service
             android:name=".activities.MyFirebaseMessagingService"
             android:icon="@drawable/ic_notifications_black_24dp">
             <intent-filter>
@@ -42,10 +42,37 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <!-- ./Firebase Notifications -->
+        &lt;!&ndash; ./Firebase Notifications &ndash;&gt;
         <service android:name=".activities.NotificationIntentService">
             <intent-filter android:priority="10000">
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/notification_channel_id" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/sapi2" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+
+        <service
+            android:name=".activities.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".activities.MyFirebaseInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 

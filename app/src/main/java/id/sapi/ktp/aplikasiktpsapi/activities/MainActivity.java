@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.Circle;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
@@ -117,7 +118,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         txtMessage = (EditText) findViewById(R.id.txt_push_message);
         txtMessage.setText(sharedPrefManager.getSPId());
 
-
+        //notif
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String tmp = "";
+            for (String key : bundle.keySet()) {
+                Object value = bundle.get(key);
+                tmp += key + ": " + value + "\n\n";
+            }
+            txtRegId.setText(tmp);
+        }
+        txtRegId.setText(FirebaseInstanceId.getInstance().getToken());
+        Log.i("token", FirebaseInstanceId.getInstance().getToken());
+        regId = FirebaseInstanceId.getInstance().getToken().toString();
+        updateRegid();
+        Toast.makeText(MainActivity.this, regId, Toast.LENGTH_LONG).show();
+        //end notif
         if (!sharedPrefManager.getSPSudahLogin()) {
             startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             finish();
@@ -125,111 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadHeader();
 
         //Notification
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                // checking for type intent filter
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-
-                    displayFirebaseRegId();
-
-                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                    // new push notification is received
-
-                    String message = intent.getStringExtra("message");
-
-                   Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-//                   Log.d("Push Notif", message);
-
-                   txtMessage.setText(message);
-                    Notif(message);
-
-                }
-            }
-        };
-
-        displayFirebaseRegId();
-
-
     }
-    void Notif(String msg){
-        RemoteViews expandedView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.custom_notifications);
-        expandedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-        expandedView.setTextViewText(R.id.notification_message,msg);
-        // adding action to left button
-        Intent leftIntent = new Intent(getApplicationContext(), NotificationIntentService.class);
-        leftIntent.setAction("left");
-        expandedView.setOnClickPendingIntent(R.id.left_button, PendingIntent.getService(getApplicationContext(), 0, leftIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-        // adding action to right button
-        Intent rightIntent = new Intent(getApplicationContext(), NotificationIntentService.class);
-        rightIntent.setAction("right");
-        expandedView.setOnClickPendingIntent(R.id.right_button, PendingIntent.getService(getApplicationContext(), 1, rightIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-
-        RemoteViews collapsedView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.view_collapsed_notification);
-        collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                // these are the three things a NotificationCompat.Builder object requires at a minimum
-                .setSmallIcon(R.drawable.sapi2)
-                .setContentTitle("Judul")
-                .setContentText(msg)
-                // notification will be dismissed when tapped
-                .setAutoCancel(true)
-                // tapping notification will open MainActivity
-                .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), 0))
-                // setting the custom collapsed and expanded views
-                .setCustomContentView(collapsedView)
-                .setCustomBigContentView(expandedView)
-                // setting style to DecoratedCustomViewStyle() is necessary for custom views to display
-                .setStyle(new android.support.v7.app.NotificationCompat.DecoratedCustomViewStyle());
-
-        // retrieves android.app.NotificationManager
-        NotificationManager notificationManager = (android.app.NotificationManager)getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(90, builder.build());
-    }
-
-    // Fetches reg id from shared preferences
-    // and displays on the screen
-    private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        regId = pref.getString("regId", null);
-        updateRegid();
-        Log.e(TAG, "Firebase reg id: " + regId);
-
-        if (!TextUtils.isEmpty(regId))
-            txtRegId.setText(regId);
-        else {
-            txtRegId.setText("Firebase Reg Id is not received yet!");
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.REGISTRATION_COMPLETE));
-
-        // register new push message receiver
-        // by doing this, the activity will be notified each time a new message arrives
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.PUSH_NOTIFICATION));
-
-        // clear the notification area when the app is opened
-        NotificationUtils.clearNotifications(getApplicationContext());
-        loadHeader();
-    }
-
-    @Override
-    protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        super.onPause();
-    }
-    //end notif
 
     private void loadHeader() {
         koneksi();
@@ -414,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d("Error", t.getMessage());
             }
         });
-       // onBackPressed();
+        // onBackPressed();
     }
 
     private boolean adaInternet(){

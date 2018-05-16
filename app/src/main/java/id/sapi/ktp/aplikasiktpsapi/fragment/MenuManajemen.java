@@ -60,13 +60,12 @@ public class MenuManajemen extends Fragment {
     SharedPrefManager sharedPrefManager;
     public TextView nama, idusers, jmlsapi, jmljenis, jmlindukan;
     public ImageView image;
-    String iduser, idfirebase;
+    String iduser;
     Context mContext;
     ApiService mApiService;
     private ArrayList<Data> data1;
     private ArrayList<Jenis> data2;
     private ArrayList<Indukan> data3;
-    Activity context;
 
     @Nullable
     @Override
@@ -87,14 +86,14 @@ public class MenuManajemen extends Fragment {
 
         mContext = getContext();
         mApiService = UtilsApi.getAPIService();
-        idusers = (TextView)view.findViewById(R.id.idu);
+        idusers = (TextView) view.findViewById(R.id.idu);
         datasapi = (LinearLayout) view.findViewById(R.id.sapi);
         jenis = (LinearLayout) view.findViewById(R.id.jenis);
         indukan = (LinearLayout) view.findViewById(R.id.indukan);
-        jmlsapi = (TextView)view.findViewById(R.id.jumlah);
-        jmljenis = (TextView)view.findViewById(R.id.jumlahjenis);
-        jmlindukan = (TextView)view.findViewById(R.id.jumlahinduk);
-        Toast.makeText(getActivity(),"" +getArguments().getString("firebase"), Toast.LENGTH_SHORT ).show();
+        jmlsapi = (TextView) view.findViewById(R.id.jumlah);
+        jmljenis = (TextView) view.findViewById(R.id.jumlahjenis);
+        jmlindukan = (TextView) view.findViewById(R.id.jumlahinduk);
+        Toast.makeText(getActivity(), "" + getArguments().getString("firebase"), Toast.LENGTH_SHORT).show();
 
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId();
@@ -105,7 +104,7 @@ public class MenuManajemen extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent j = new Intent(getActivity(), DataJenis.class);
-                j.putExtra("id_user",iduser);
+                j.putExtra("id_user", iduser);
                 startActivity(j);
             }
         });
@@ -113,7 +112,7 @@ public class MenuManajemen extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), DataIndukan.class);
-                i.putExtra("id_user",iduser);
+                i.putExtra("id_user", iduser);
                 startActivity(i);
             }
         });
@@ -121,97 +120,12 @@ public class MenuManajemen extends Fragment {
         datasapi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendNotification();
                 Intent s = new Intent(getActivity(), Manajemen.class);
-                s.putExtra("id_user",iduser);
+                s.putExtra("id_user", iduser);
                 startActivity(s);
             }
         });
-        sendNotification();
-        Button btnnotif = (Button)view.findViewById(R.id.notif);
-        btnnotif.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View view) {
-                notif();
-            }
-        });
-
-        if(Integer.valueOf(jmlsapi.getText().toString()) <= 10){
-            notif();
-        }else{
-
-        }
     }
-
-    private void notif(){
-        RemoteViews expandedView = new RemoteViews(getActivity().getPackageName(), R.layout.custom_notifications);
-        expandedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-        expandedView.setTextViewText(R.id.notification_message,"Notif");
-        // adding action to left button
-        Intent leftIntent = new Intent(getActivity(), NotificationIntentService.class);
-        leftIntent.setAction("left");
-        expandedView.setOnClickPendingIntent(R.id.left_button, PendingIntent.getService(getActivity(), 0, leftIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-        // adding action to right button
-        Intent rightIntent = new Intent(getActivity(), NotificationIntentService.class);
-        rightIntent.setAction("right");
-        expandedView.setOnClickPendingIntent(R.id.right_button, PendingIntent.getService(getActivity(), 1, rightIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-
-        RemoteViews collapsedView = new RemoteViews(getActivity().getPackageName(), R.layout.view_collapsed_notification);
-        collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
-                // these are the three things a NotificationCompat.Builder object requires at a minimum
-                .setSmallIcon(R.drawable.sapi2)
-                .setContentTitle("Judul")
-                .setContentText("Pesan")
-                // notification will be dismissed when tapped
-                .setAutoCancel(true)
-                // tapping notification will open MainActivity
-                .setContentIntent(PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(), MainActivity.class), 0))
-                // setting the custom collapsed and expanded views
-                .setCustomContentView(collapsedView)
-                .setCustomBigContentView(expandedView)
-                // setting style to DecoratedCustomViewStyle() is necessary for custom views to display
-                .setStyle(new android.support.v7.app.NotificationCompat.DecoratedCustomViewStyle());
-
-        // retrieves android.app.NotificationManager
-        NotificationManager notificationManager = (android.app.NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, builder.build());
-    }
-
-    private void sendNotification(){
-        idfirebase = getArguments().getString("firebase");
-        mApiService.sendNotif(idfirebase.trim(), "judul", "pesan")
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.isSuccessful()){
-                            try{
-                                JSONObject jsonRESULT = new JSONObject(response.body().string());
-                                if(jsonRESULT.getString("success").equals(1)){
-                                    Toast.makeText(mContext, "Berhasil notif", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    String error_message= jsonRESULT.getString("error_msg");
-                                    Toast.makeText(mContext, error_message, Toast.LENGTH_SHORT).show();
-                                }
-                            }catch (JSONException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }else {
-                            Toast.makeText(mContext, "Error notif", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.e("debug", "OnFailure: ERROR > " +t.toString());
-                    }
-                });
-    }
-
     private void JumlahSapi() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
@@ -276,5 +190,4 @@ public class MenuManajemen extends Fragment {
             }
         });
     }
-
 }

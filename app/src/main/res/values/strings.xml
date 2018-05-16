@@ -2,6 +2,7 @@
     <string name="app_name">KTP Sapi</string>
     <string name="title_activity_login">Masuk</string>
     <string name="title_activity_daftar">Daftar</string>
+    <string name="notification_channel_id">default</string>
 
     <!-- Strings related to login -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

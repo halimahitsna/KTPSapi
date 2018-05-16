@@ -114,12 +114,6 @@
                 android:textColor="@color/alltext"
                 android:textSize="13sp"/>
         </LinearLayout>
-        <Button
-            android:id="@+id/notif"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/indukan"
-            android:text="Custom Notif"/>
     </LinearLayout>
     </ScrollView>
 

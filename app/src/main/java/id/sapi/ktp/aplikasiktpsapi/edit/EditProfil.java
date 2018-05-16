@@ -109,7 +109,7 @@ public class EditProfil extends AppCompatActivity implements AdapterView.OnItemS
         actionBar.setDisplayHomeAsUpEnabled(true);
         // actionBar.setDisplayShowHomeEnabled(true);
         TextView judul = (TextView)findViewById(R.id.toolbar_title);
-        judul.setText(R.string.tambah_data);
+        judul.setText("Edit Profil");
         eid = (EditText)findViewById(R.id.idu);
         euser = (EditText)findViewById(R.id.Eusername) ;
         enama = (EditText)findViewById(R.id.Enama);
@@ -117,8 +117,7 @@ public class EditProfil extends AppCompatActivity implements AdapterView.OnItemS
         foto = (CircleImageView) findViewById(R.id.foto);
         eid.setText(getIntent().getStringExtra("id_user"));
         add = (FloatingActionButton)findViewById(R.id.btnfoto);
-        Picasso.with(mcontext).load(getIntent().getStringExtra("foto")).resize(150, 150)
-                .into(foto);
+        Picasso.with(mcontext).load(getIntent().getStringExtra("foto")).resize(150, 150).centerCrop()                .into(foto);
         enama.setText(getIntent().getStringExtra("nama"));
         euser.setText(getIntent().getStringExtra("username"));
 
@@ -139,7 +138,7 @@ public class EditProfil extends AppCompatActivity implements AdapterView.OnItemS
             public void onClick(View view) {
                 if(imagePath!=null) {
                     //simpan();
-                   uploadImage();
+                    uploadImage();
                 }else
                     Toast.makeText(getApplicationContext(),"Please select image", Toast.LENGTH_LONG).show();
             }
