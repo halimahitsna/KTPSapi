@@ -83,7 +83,7 @@ public class TambahPakan extends AppCompatActivity implements AdapterView.OnItem
         koneksi();
         String id = iduser.trim();
         String pkn = txtpakan.getText().toString().trim();
-        String jml = txtpakan.getText().toString().trim();
+        String jml = txtjml.getText().toString().trim();
         String st = stat.getSelectedItem().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()

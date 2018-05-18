@@ -194,7 +194,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Bundle bundle = new Bundle();
         bundle.putString(FCM_PARAM, data.get(FCM_PARAM));
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, DetailMonitoringKandang.class);
         intent.putExtras(bundle);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -209,7 +209,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentInfo("Hello")
                 .setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(notification.getBody()))
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.sapi2))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_warning_black_24dp))
                 .setColor(getColor(R.color.colorPrimary))
                 .setLights(Color.BLUE, 1000, 300)
                 .setDefaults(Notification.DEFAULT_VIBRATE)

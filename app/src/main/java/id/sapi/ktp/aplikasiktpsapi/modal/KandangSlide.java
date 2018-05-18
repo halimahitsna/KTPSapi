@@ -55,17 +55,18 @@ public class KandangSlide extends RecyclerView.Adapter<KandangSlide.ViewHolder> 
         viewHolder.nama.setText(kandangs.get(i).getKandang());
 
         if(kandangs.get(i).getSuhu() != null)
-            viewHolder.asuhu.setProgress(Integer.valueOf(kandangs.get(i).getSuhu()));
+
+            viewHolder.asuhu.setProgress((int) Double.parseDouble(kandangs.get(i).getSuhu()));
         else
             viewHolder.asuhu.setProgress(0);
 
         if(kandangs.get(i).getGas_amonia() != null)
-            viewHolder.agas.setProgress(Integer.valueOf(kandangs.get(i).getGas_amonia()));
+            viewHolder.agas.setProgress((int) Double.parseDouble(kandangs.get(i).getGas_amonia()));
         else
             viewHolder.agas.setProgress(0);
 
         if(kandangs.get(i).getKelembapan() != null)
-            viewHolder.akelembapan.setProgress(Integer.valueOf(kandangs.get(i).getKelembapan()));
+            viewHolder.akelembapan.setProgress((int) Double.parseDouble(kandangs.get(i).getKelembapan()));
         else
             viewHolder.akelembapan.setProgress(0);
 

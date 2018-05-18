@@ -37,7 +37,12 @@ public class DetailMonitoringKandang extends AppCompatActivity {
     Switch swotomatis, swkipas, swlampu;
     ImageView foto;
     String idkan, stlampu, stkipas;
-    Integer bsuhu, bkelembapan, bgas, suhu, kelembapan, gas;
+    Integer bsuhu;
+    Integer bkelembapan;
+    Integer bgas;
+    double suhu;
+    double kelembapan;
+    double gas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +73,16 @@ public class DetailMonitoringKandang extends AppCompatActivity {
         txtkelembapan.setText(getIntent().getStringExtra("kelembapan") +" %");
         txtgas.setText(getIntent().getStringExtra("gas")+" %");
         Picasso.with(this).load(getIntent().getStringExtra("foto")).into(foto);
-        suhu = Integer.valueOf(i.getStringExtra("suhu"));
-        kelembapan = Integer.valueOf(i.getStringExtra("kelembapan"));
-        gas = Integer.valueOf(i.getStringExtra("gas"));
+        if(getIntent().getStringExtra("suhu") != null || getIntent().getStringExtra("kelembapan") != null || getIntent().getStringExtra("suhu") != null) {
+            suhu = Double.parseDouble(i.getStringExtra("suhu"));
+            kelembapan = Double.parseDouble(i.getStringExtra("kelembapan"));
+            gas = Double.parseDouble(i.getStringExtra("gas"));
+        }else {
+            suhu = 0;
+            kelembapan = 0;
+            gas = 0;
+        }
+
 
         swotomatis.setTextOn("ON");
         swotomatis.setTextOff("OFF");
@@ -112,19 +124,19 @@ public class DetailMonitoringKandang extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    // Show the switch button checked status as toast message
-                    Toast.makeText(getApplicationContext(),"Switch is on", Toast.LENGTH_LONG).show();
-                    stlampu = "0";
+                    // Show the switch button checked status as toast messag
+                   // stlampu = "0";
                     stkipas = "1";
                     update();
+                    Toast.makeText(getApplicationContext(),"Kipas menyala", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    stlampu = "0";
+                   // stlampu = "0";
                     stkipas = "0";
                     update();
                     // Show the switch button checked status as toast message
                     Toast.makeText(getApplicationContext(),
-                            "Switch is off", Toast.LENGTH_LONG).show();
+                            "Kipas Mati", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -134,18 +146,19 @@ public class DetailMonitoringKandang extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     // Show the switch button checked status as toast message
-                    Toast.makeText(getApplicationContext(),"Switch is on", Toast.LENGTH_LONG).show();
+
                     stlampu = "1";
-                    stkipas = "0";
+                   // stkipas = "0";
                     update();
+                    Toast.makeText(getApplicationContext(),"Lampu hidup", Toast.LENGTH_LONG).show();
                 }
                 else {
                     stlampu = "0";
-                    stkipas = "0";
+                   // stkipas = "0";
                     update();
                     // Show the switch button checked status as toast message
                     Toast.makeText(getApplicationContext(),
-                            "Switch is off", Toast.LENGTH_LONG).show();
+                            "Lampu mati", Toast.LENGTH_LONG).show();
                 }
             }
         });

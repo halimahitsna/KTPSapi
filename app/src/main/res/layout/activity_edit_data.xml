@@ -87,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:hint="id Sapi"
                     android:textSize="16sp"
+                    android:textColorHint="@color/hinttext"
                     android:layout_marginTop="10dp"
                     android:enabled="true"
                     android:background="@drawable/rounded_view"
@@ -182,6 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="bobot_lahir"
+                    android:textColorHint="@color/hinttext"
                     android:textSize="16sp"
                     android:background="@drawable/rounded_view"
                     android:textColor="@color/alltext"/>
@@ -191,12 +193,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Bobot Hidup"
+                    android:textColorHint="@color/hinttext"
                     android:textSize="16sp"
                     android:background="@drawable/rounded_view"
                     android:textColor="@color/alltext"/>
                 <EditText
                     android:layout_marginTop="10dp"
                     android:id="@+id/warna"
+                    android:textColorHint="@color/hinttext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Warna"
@@ -209,6 +213,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Harga"
+                    android:textColorHint="@color/hinttext"
                     android:textSize="16sp"
                     android:background="@drawable/rounded_view"
                     android:textColor="@color/alltext"/>
@@ -218,6 +223,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="umur"
+                    android:textColorHint="@color/hinttext"
                     android:textSize="16sp"
                     android:background="@drawable/rounded_view"
                     android:textColor="@color/alltext"/>

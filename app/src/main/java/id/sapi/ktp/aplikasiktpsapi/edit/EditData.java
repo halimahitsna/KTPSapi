@@ -325,6 +325,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
         });
         onBackPressed();
     }
+
     private void initSpinnerJenis() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
@@ -572,7 +573,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
             public void onFailure(Call<BaseResponse> call, Throwable t) {
             }
         });
-        onBackPressed();
+
     }
 
     @Override

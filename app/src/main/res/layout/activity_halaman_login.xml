@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f1f2f2"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
     tools:context="id.sapi.ktp.aplikasiktpsapi.activities.HalamanLogin">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -36,6 +36,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:hint="Username"
+            android:textColorHint="@color/hinttext"
             android:textColor="@color/alltext"
             android:background="@drawable/rounded"
             android:layout_width="match_parent"
@@ -47,6 +48,7 @@
             android:layout_marginLeft="20dp"
             android:background="@drawable/rounded"
             android:layout_width="match_parent"
+            android:textColorHint="@color/hinttext"
             android:hint="Password"
             android:textColor="@color/alltext"
             android:inputType="textPassword"

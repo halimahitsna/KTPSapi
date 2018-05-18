@@ -136,11 +136,16 @@ public class EditProfil extends AppCompatActivity implements AdapterView.OnItemS
         btnsimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imagePath!=null) {
-                    //simpan();
+                if (imagePath != null) {
+                    //
+                    // update();
                     uploadImage();
-                }else
-                    Toast.makeText(getApplicationContext(),"Please select image", Toast.LENGTH_LONG).show();
+                } else if (euser.getText().toString().isEmpty() || eid.getText().toString().isEmpty()){
+                    euser.setError("Username masih kosong!");
+                    enama.setError("Nama masih kosong!");
+                }else {
+                    //update();
+                }
             }
         });
         add.setOnClickListener(new View.OnClickListener() {
@@ -156,8 +161,39 @@ public class EditProfil extends AppCompatActivity implements AdapterView.OnItemS
         });
     }
 
-    private void simpan() {
+    private void update() {
+        String id = eid.getText().toString().trim();
+        String user = euser.getText().toString().trim();
+        String nm = enama.getText().toString().trim();
+
+        //validate();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService api = retrofit.create(ApiService.class);
+        Call<Result> call = api.updateUser(id, user, nm, jenis.getSelectedItem().toString().trim() );
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                String value = response.body().getValue();
+                String message = response.body().getMessage();
+//                loading.dismiss();
+                if (value.equals("1")) {
+                    Toast.makeText(EditProfil.this, message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(EditProfil.this, message, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                // progress.dismiss();
+                Toast.makeText(EditProfil.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        onBackPressed();
     }
+
 
     private void uploadImage(){
         Retrofit retrofit = new Retrofit.Builder()
@@ -263,7 +299,7 @@ public class EditProfil extends AppCompatActivity implements AdapterView.OnItemS
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        String item = jenis.getSelectedItem().toString();
     }
 
     @Override

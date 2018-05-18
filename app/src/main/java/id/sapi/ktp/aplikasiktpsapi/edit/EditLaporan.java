@@ -64,6 +64,11 @@ public class EditLaporan extends AppCompatActivity implements DatePickerDialog.O
         tgl = (ImageView)findViewById(R.id.datepick);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
 
+        eid.setText(getIntent().getStringExtra("id_laporan"));
+        ejudul.setText(getIntent().getStringExtra("judul"));
+        eisi.setText(getIntent().getStringExtra("isi"));
+        etgl.setText(getIntent().getStringExtra("tanggal"));
+
         eisi.setScroller(new Scroller(getApplicationContext()));
         eisi.setVerticalScrollBarEnabled(true);
         eisi.setMinLines(3);

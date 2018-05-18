@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -20,38 +21,28 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.text.format.Time;
+import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.lzyzsd.circleprogress.ArcProgress;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import az.plainpie.PieView;
-import az.plainpie.animation.PieAngleAnimation;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.activities.Config;
 import id.sapi.ktp.aplikasiktpsapi.activities.MainActivity;
@@ -59,12 +50,8 @@ import id.sapi.ktp.aplikasiktpsapi.activities.NotificationIntentService;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
-import id.sapi.ktp.aplikasiktpsapi.modal.Data;
-import id.sapi.ktp.aplikasiktpsapi.modal.DataAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
-import id.sapi.ktp.aplikasiktpsapi.modal.KandangAdapter;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
-import id.sapi.ktp.aplikasiktpsapi.modal.LinePagerIndicator;
 import id.sapi.ktp.aplikasiktpsapi.modal.Peternakan;
 import id.sapi.ktp.aplikasiktpsapi.util.SharedPrefManager;
 import retrofit2.Call;
@@ -72,18 +59,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Beranda extends Fragment {
     String iduser;
-    TextView  tkoneksi;
+    TextView  tkoneksi, ttgl, ttime;
     private ArrayList<Peternakan> data;
     SharedPrefManager sharedPrefManager;
     private ArrayList<Kandang> kandangs;
     private KandangSlide adapter;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    LinearLayout sliderDotspanel;
+    private int dotscount;
+    private ImageView[] dots;
 
     @Nullable
     @Override
@@ -101,12 +93,15 @@ public class Beranda extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("KTP Sapi");
         tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
+        ttgl = (TextView)view.findViewById(R.id.tgl);
+        ttime = (TextView)view.findViewById(R.id.wkt);
+
         tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
         sharedPrefManager = new SharedPrefManager(getActivity());
         SharedPreferences pref = getActivity().getSharedPreferences(Config.SHARED_PREF, 0);
-
+        sliderDotspanel = (LinearLayout) view.findViewById(R.id.SliderDots);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         //mRecyclerView.setItemAnimator(new LinePagerIndicator());
@@ -116,7 +111,21 @@ public class Beranda extends Fragment {
        // mRecyclerView.addItemDecoration(new LinePagerIndicator());
         mRecyclerView.setLayoutManager(layoutManager);
 
-    loadJSON();
+        Time wk = new Time();
+        wk.setToNow();
+        ttgl.setText(wk.monthDay +"-"+ wk.month +"-"+wk.year +"");
+        ttime.setText(wk.format("%k:%M:%S"));
+
+        loadJSON();
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+//                refresh();
+  //              handler.postDelayed((Runnable) getActivity(), 15000);//60 second delay
+            }
+        };handler.postDelayed(runnable, 15000);
+
     }
 
     public void autoScroll(){
@@ -128,14 +137,24 @@ public class Beranda extends Fragment {
             public void run() {
                 if(count == adapter.getItemCount())
                     count = 0;
-                mRecyclerView.smoothScrollToPosition(0);
+                   mRecyclerView.smoothScrollToPosition(count);
 //                    mRecyclerView.smoothScrollToPosition(count);
-//                    handler.postDelayed( this,speedScroll);
+                  //  handler.postDelayed(this, speedScroll);
                 if(count < adapter.getItemCount()){
                     mRecyclerView.smoothScrollToPosition(++count);
                     handler.postDelayed( this,speedScroll);
+                   // dots[count].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
                     }
-                }
+//                    for(int i = 0; i< dotscount; i++){
+//                        if(i < dotscount){
+//                            dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+//                        }else{
+//                            dots[0].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+//                        }
+//                    }
+//                    dots[count].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
+            }
+
             };
         handler.postDelayed(runnable,speedScroll);
     }
@@ -159,6 +178,51 @@ public class Beranda extends Fragment {
                 adapter = new KandangSlide(getActivity(), kandangs);
                 mRecyclerView.setAdapter(adapter);
                 swipeRefreshLayout.setRefreshing(false);
+                int durasi = adapter.getItemCount() * 5000;
+                dotscount = adapter.getItemCount();
+                dots = new ImageView[dotscount];
+//                sliderDotspanel.clearAnimation();
+                for(int i = 0; i < dotscount; i++){
+                    if(dotscount != 0){
+                    dots[i] = new ImageView(getActivity());
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(8, 0, 8, 0);
+                    sliderDotspanel.addView(dots[i], params);
+                    }else{
+                        sliderDotspanel.addView(null);
+                    }
+
+                }
+                autoScroll();
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
+
+    private void refresh() {
+        iduser = sharedPrefManager.getSPId();
+        swipeRefreshLayout.setRefreshing(false);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService request = retrofit.create(ApiService.class);
+        Call<JSONResponse> call = request.getJSONKandang(iduser);
+        call.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+                JSONResponse jsonResponse = response.body();
+                kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
+                adapter = new KandangSlide(getActivity(), kandangs);
+                mRecyclerView.setAdapter(adapter);
                 autoScroll();
             }
 

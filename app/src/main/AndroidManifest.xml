@@ -28,7 +28,8 @@
         <activity android:name=".activities.HalamanDaftar" />
 
         <!-- Firebase Notifications -->
-        <!--<service
+        <!--
+        <service
             android:name=".activities.MyFirebaseMessagingService"
             android:icon="@drawable/ic_notifications_black_24dp">
             <intent-filter>
@@ -47,15 +48,14 @@
             <intent-filter android:priority="10000">
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
-        </service>-->
+        </service>
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/notification_channel_id" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/sapi2" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
@@ -64,15 +64,14 @@
             android:name=".activities.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".activities.MyFirebaseInstanceIDService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -123,7 +122,8 @@
         <activity android:name=".tambah.TambahLaporan" />
         <activity android:name=".edit.EditLaporan" />
         <activity android:name=".edit.EditProfil" />
-        <activity android:name=".activities.DetailLaporan"></activity>
+        <activity android:name=".activities.DetailLaporan" />
+        <activity android:name=".activities.TambahRfid"></activity>
     </application>
 
 </manifest>

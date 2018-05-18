@@ -37,6 +37,7 @@ import id.sapi.ktp.aplikasiktpsapi.activities.MainActivity;
 import id.sapi.ktp.aplikasiktpsapi.activities.Manajemen;
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.activities.NotificationIntentService;
+import id.sapi.ktp.aplikasiktpsapi.activities.TambahRfid;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
 import id.sapi.ktp.aplikasiktpsapi.api.JSONResponse;
 import id.sapi.ktp.aplikasiktpsapi.api.UtilsApi;
@@ -56,7 +57,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class MenuManajemen extends Fragment {
 
     Toolbar toolbar;
-    LinearLayout datasapi, jenis, indukan;
+    LinearLayout datasapi, jenis, indukan, tambahrfid;
     SharedPrefManager sharedPrefManager;
     public TextView nama, idusers, jmlsapi, jmljenis, jmlindukan;
     public ImageView image;
@@ -90,6 +91,7 @@ public class MenuManajemen extends Fragment {
         datasapi = (LinearLayout) view.findViewById(R.id.sapi);
         jenis = (LinearLayout) view.findViewById(R.id.jenis);
         indukan = (LinearLayout) view.findViewById(R.id.indukan);
+        tambahrfid= (LinearLayout)view.findViewById(R.id.rfid);
         jmlsapi = (TextView) view.findViewById(R.id.jumlah);
         jmljenis = (TextView) view.findViewById(R.id.jumlahjenis);
         jmlindukan = (TextView) view.findViewById(R.id.jumlahinduk);
@@ -100,6 +102,14 @@ public class MenuManajemen extends Fragment {
         JumlahSapi();
         JumlahJenis();
         JumlahInduk();
+        tambahrfid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), TambahRfid.class);
+                i.putExtra("id_user", iduser);
+                startActivity(i);
+            }
+        });
         jenis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

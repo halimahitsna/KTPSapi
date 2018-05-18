@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background"
     android:id="@+id/navigation_drawer_layout"
     tools:context=".tambah.TambahLaporan">
@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/alltext"
                 android:textSize="16sp"
+                android:text="Laporan"
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
         </android.support.v7.widget.Toolbar>
@@ -37,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Laporan"
+                android:textColorHint="@color/hinttext"
                 android:textSize="16sp"
                 android:layout_marginTop="20dp"
                 android:enabled="false"
@@ -48,14 +50,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/alltext"
+                android:hint="Judul Laporan"
+                android:textColorHint="@color/hinttext"
                 android:textSize="16sp"
                 android:background="@drawable/rounded_view"
                 android:id="@+id/judul" />
             <EditText
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:textColor="@color/alltext"
+                android:hint="Isi Laporan"
+                android:textColorHint="@color/hinttext"
                 android:textSize="16sp"
                 android:inputType="textMultiLine"
                 android:background="@drawable/rounded_view"

@@ -129,4 +129,5 @@
                 custom:arc_bottom_text="Gas Amonia"/>
         </LinearLayout>
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

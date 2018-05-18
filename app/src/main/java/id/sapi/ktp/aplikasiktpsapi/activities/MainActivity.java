@@ -181,6 +181,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getUsers()));
                 nama.setText(data.get(0).getUser());
                 Picasso.with(MainActivity.this).load( data.get(0).getFoto()).placeholder(R.drawable.load).into(image);
+                image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Fragment mFragment = new Profile();
+                        getSupportFragmentManager().beginTransaction().commit();
+                    }
+                });
                 loadPeternakan();
             }
 

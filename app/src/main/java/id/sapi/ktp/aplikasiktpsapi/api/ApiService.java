@@ -1,6 +1,7 @@
 package id.sapi.ktp.aplikasiktpsapi.api;
 
 
+import id.sapi.ktp.aplikasiktpsapi.modal.ListKondisiKandang;
 import id.sapi.ktp.aplikasiktpsapi.modal.ProfilList;
 import id.sapi.ktp.aplikasiktpsapi.modal.ResponseData;
 import id.sapi.ktp.aplikasiktpsapi.modal.Result;
@@ -92,7 +93,7 @@ public interface ApiService {
     @GET("get_jenis.php")
     Call<JSONResponse> getJSONJenis(@Query("id_user") String id_user);
 
-    @GET("get_kandang.php")
+    @GET("get_suhu.php")
     Call<JSONResponse> getJSONKandang(@Query("id_user") String id_user);
 
     @GET("get_user.php")
@@ -120,7 +121,7 @@ public interface ApiService {
     @GET("get_jenis.php")
     Call<ResponseData> getJen(@Query("id_user") String id_user);
 
-    @GET("get_kandang.php")
+    @GET("get_suhu.php")
     Call<ResponseData> getKan(@Query("id_user") String id_user);
 
     @GET("get_indukan.php")
@@ -131,6 +132,15 @@ public interface ApiService {
 
     @GET("get_penyakit.php")
     Call<ResponseData> getPen(@Query("id_user") String id_user);
+
+    @GET("get_suhu.php")
+    Call<ListKondisiKandang> getSuhuKandang();
+
+    @GET("get_kelembapan.php")
+    Call<ResponseData> getKelembapan(@Query("id_kandang") String id_kandang);
+
+    @GET("get_gas.php")
+    Call<ResponseData> getGas(@Query("id_kandang") String id_kandang);
 
     //hapus
     @GET("hapus_data.php")
@@ -200,6 +210,12 @@ public interface ApiService {
     Call<Result> updateStatus(@Field("id_kandang") String id_kandang,
                               @Field("status_lampu") String status_lampu,
                               @Field("status_kipas") String status_kipas);
+    @FormUrlEncoded
+    @POST("update_user.php")
+    Call<Result> updateUser(@Field("id_user") String id_kandang,
+                            @Field("user") String status_lampu,
+                            @Field("name") String status_kipas,
+                            @Field("jenis_kelamin") String jeniskelamin);
 
     @FormUrlEncoded
     @POST("status_lampu.php")
