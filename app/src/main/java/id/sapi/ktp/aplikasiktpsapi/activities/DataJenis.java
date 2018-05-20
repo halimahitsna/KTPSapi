@@ -125,7 +125,13 @@ public class DataJenis extends AppCompatActivity {
                 JSONResponse jsonResponse = response.body();
                 data1 = new ArrayList<>(Arrays.asList(jsonResponse.getJenis()));
                 adapter1 = new JenisAdapter(getApplicationContext(), data1);
-                recyclerView.setAdapter(adapter1);
+                if(adapter1.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter1);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override
@@ -144,6 +150,7 @@ public class DataJenis extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        tkoneksi.setVisibility(View.INVISIBLE);
         loadJSON();
     }
 

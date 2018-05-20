@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:text="Monitoring Kandang"
                 android:textColor="@color/alltext"
-                android:textSize="16sp" />
+                android:textSize="@dimen/titlesize" />
         </android.support.v7.widget.Toolbar>
         <ScrollView
             android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import id.sapi.ktp.aplikasiktpsapi.R;
@@ -31,6 +32,7 @@ public class TambahJenis extends AppCompatActivity {
     Toolbar toolbars;
     ActionBar actionBar;
     String iduser;
+    TextView tjudul;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,12 @@ public class TambahJenis extends AppCompatActivity {
         setContentView(R.layout.activity_edit_jenis);
         Intent i = getIntent();
         iduser = i.getStringExtra("id_user");
+        Toast.makeText(TambahJenis.this, iduser, Toast.LENGTH_SHORT).show();
         txtid = (EditText) findViewById(R.id.idJenis);
         txtjenis = (EditText)findViewById(R.id.jenis);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
+        tjudul = (TextView)findViewById(R.id.toolbar_title);
+        tjudul.setText("Tambah Jenis");
 
         //Drawerbar
         toolbars = (Toolbar) findViewById(R.id.toolbar);
@@ -114,7 +119,7 @@ public class TambahJenis extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

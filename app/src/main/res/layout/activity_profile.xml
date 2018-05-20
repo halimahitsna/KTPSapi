@@ -10,17 +10,17 @@
         android:id="@+id/fotoframe"
         android:padding="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/side_nav_bar">
+        android:layout_height="250dp"
+        android:background="@drawable/materialdesign">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/foto"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_account_circle_black_24dp"
+            android:src="@drawable/avatar"
             app:civ_border_width="1dp"
             android:layout_centerHorizontal="true"
-            app:civ_border_color="#ffffff"
+            app:civ_border_color="@color/textPutih"
             android:layout_gravity="center" />
 
     </FrameLayout>
@@ -48,22 +48,51 @@
         android:layout_below="@id/fotoframe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_black_24dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nama"
                 android:textSize="16sp"
                 android:padding="5dp"
+                android:textColor="@color/alltext" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama"
+                android:id="@+id/nama"
+                android:padding="5dp"
+                android:textSize="16sp"
+                android:gravity="end"
                 android:layout_below="@id/foto"
-                android:textColor="@color/alltext"
-                android:layout_centerHorizontal="true" />
+                android:textColor="@color/alltext" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/textPutih" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_black_24dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,6 +102,31 @@
                 android:textColor="@color/alltext"
                 android:layout_centerHorizontal="true" />
             <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:id="@+id/username"
+                    android:textSize="16sp"
+                    android:padding="5dp"
+                    android:layout_below="@id/nama"
+                    android:textColor="@color/alltext"
+                    android:gravity="end" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/textPutih" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_wc_black_24dp"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jenis Kelamin"
@@ -80,6 +134,31 @@
                 android:textSize="16sp"
                 android:textColor="@color/alltext"
                 android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jenis Kelamin"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:id="@+id/jk"
+                android:layout_below="@id/username"
+                android:textColor="@color/alltext"
+                android:gravity="end"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/textPutih" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_vpn_key_black_24dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,44 +167,8 @@
                 android:textSize="16sp"
                 android:textColor="@color/alltext"
                 android:layout_centerHorizontal="true" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nama"
-                android:id="@+id/nama"
-                android:padding="5dp"
-                android:textSize="16sp"
-                android:layout_below="@id/foto"
-                android:textColor="@color/alltext"
-                android:layout_centerHorizontal="true" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:id="@+id/username"
-                android:textSize="16sp"
-                android:padding="5dp"
-                android:layout_below="@id/nama"
-                android:textColor="@color/alltext"
-                android:layout_centerHorizontal="true" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jenis Kelamin"
-                android:textSize="16sp"
-                android:padding="5dp"
-                android:id="@+id/jk"
-                android:layout_below="@id/username"
-                android:textColor="@color/alltext"
-                android:layout_centerHorizontal="true" />
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Password"
                 android:inputType="textPassword"
@@ -134,7 +177,13 @@
                 android:id="@+id/password"
                 android:layout_below="@id/jk"
                 android:textColor="@color/alltext"
-                android:layout_centerHorizontal="true" />
+                android:gravity="end" />
         </LinearLayout>
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/textPutih" />
+        </LinearLayout>
+
 </RelativeLayout>

@@ -351,6 +351,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                     }
                     // sjenis = data1.get(0).getId_jenis();
                     jenis.setAdapter(new JenisSpinner(EditData.this, objects));
+
                 } else {
                     Toast.makeText(EditData.this, "Gagal mengambil data jenis", Toast.LENGTH_SHORT).show();
                 }
@@ -385,6 +386,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
                         objects.add(obj);
                     }
 //                    skandang = data3.get(0).getId_kandang();
+
                     kandang.setPrompt("Pilih Kandang");
                     kandang.setAdapter(new KandangSpinner(EditData.this, objects));
 
@@ -620,7 +622,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

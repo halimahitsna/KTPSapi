@@ -20,8 +20,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:textSize="20sp"
+                android:textColor="@color/alltext"
+                android:textSize="@dimen/titlesize"
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
         </android.support.v7.widget.Toolbar>

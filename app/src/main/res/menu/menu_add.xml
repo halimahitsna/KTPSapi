@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/discard_reminder"
+    <!--<item android:id="@+id/discard_reminder"
         android:icon="@drawable/ic_delete_black_24dp"
         android:title="action_discard_reminder"
         app:showAsAction="ifRoom" />
@@ -10,5 +10,5 @@
     <item android:id="@+id/save_reminder"
         android:icon="@drawable/ic_check_black_24dp"
         android:title="action_save"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />-->
 </menu>

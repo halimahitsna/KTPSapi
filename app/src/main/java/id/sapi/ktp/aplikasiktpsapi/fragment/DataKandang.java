@@ -42,8 +42,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataKandang extends Fragment {
 
     Toolbar toolbar;
-    ActionBar actionBar;
-    private TextView textView;
     private RecyclerView recyclerView;
     private ArrayList<Kandang> data;
     private KandangAdapter adapter;
@@ -70,7 +68,7 @@ public class DataKandang extends Fragment {
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId();
         tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
-        tkoneksi.setVisibility(View.VISIBLE);
+        tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         initViews();
 
@@ -112,7 +110,13 @@ public class DataKandang extends Fragment {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
                 adapter = new KandangAdapter(getActivity(), data);
-                recyclerView.setAdapter(adapter);
+                if(adapter.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override
@@ -131,6 +135,7 @@ public class DataKandang extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        tkoneksi.setVisibility(View.INVISIBLE);
         loadJSON();
     }
 

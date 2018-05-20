@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
@@ -44,6 +45,7 @@ public class MonitoringKandang extends Fragment {
     SharedPrefManager sharedPrefManager;
     String iduser;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView tkoneksi;
 
     @Nullable
     @Override
@@ -62,6 +64,8 @@ public class MonitoringKandang extends Fragment {
 
         sharedPrefManager = new SharedPrefManager(getActivity());
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.INVISIBLE);
 
         initViews();
     }
@@ -93,7 +97,13 @@ public class MonitoringKandang extends Fragment {
                 JSONResponse jsonResponse = response.body();
                 kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
                 adapter = new KandangSlide(getActivity(), kandangs);
-                recyclerView.setAdapter(adapter);
+                if(adapter.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override
@@ -112,6 +122,8 @@ public class MonitoringKandang extends Fragment {
 //            Toast.makeText(HalamanUtama.this, "Terhubung ke internet", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(getActivity(), "Tidak ada koneksi internet", Toast.LENGTH_LONG).show();
+            tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada koneksi internet!");
         }
     }
 }

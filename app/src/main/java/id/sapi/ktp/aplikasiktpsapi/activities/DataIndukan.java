@@ -77,7 +77,7 @@ public class DataIndukan extends AppCompatActivity {
         tkoneksi = (TextView)findViewById(R.id.txtkoneksi);
         tkoneksi.setVisibility(View.INVISIBLE);
         tjudul = (TextView)findViewById(R.id.toolbar_title);
-        tjudul.setText("Data Sapi");
+        tjudul.setText("Data Indukan");
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swiperefresh);
         btnadd = (AddFloatingActionButton) findViewById(R.id.add);
         btnadd.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +118,13 @@ public class DataIndukan extends AppCompatActivity {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getIndukan()));
                 adapter = new IndukanAdapter(getApplicationContext(), data);
-                recyclerView.setAdapter(adapter);
+                if(adapter.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override
@@ -137,6 +143,7 @@ public class DataIndukan extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        tkoneksi.setVisibility(View.INVISIBLE);
         loadJSON();
     }
 

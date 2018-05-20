@@ -6,6 +6,5 @@
         android:title="search"
         android:orderInCategory="200"
         android:icon="@drawable/ic_search_black_24dp"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="ifRoom" />
 </menu>

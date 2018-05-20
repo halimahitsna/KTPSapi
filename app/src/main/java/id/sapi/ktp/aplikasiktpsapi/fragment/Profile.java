@@ -73,7 +73,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.app.Activity.RESULT_OK;
 
 public class Profile extends Fragment {
-    TextView tid, tuser, tname, tpass;
+    TextView tid, tuser, tname, tpass, tjk;
     EditText eid;
     CircleImageView ifoto;
     FloatingActionButton btnedit;
@@ -103,6 +103,7 @@ public class Profile extends Fragment {
         tuser = (TextView)view.findViewById(R.id.username);
         tname = (TextView)view.findViewById(R.id.nama);
         tpass = (TextView)view.findViewById(R.id.password);
+        tjk = (TextView)view.findViewById(R.id.jk);
         ifoto= (CircleImageView) view.findViewById(R.id.foto);
         btnedit = (FloatingActionButton)view.findViewById(R.id.edit);
         loadHeader();
@@ -142,6 +143,8 @@ public class Profile extends Fragment {
                 tname.setText(data.get(0).getName());
                 tuser.setText(data.get(0).getUser());
                 tpass.setText(data.get(0).getPassword());
+                tjk.setText(data.get(0).getJenis_kelamin());
+
                 //Picasso.with(MainActivity.class).load(data.get(0).getFoto()).placeholder(R.drawable.load).into(MainActivity.id.byteValue())
             }
 

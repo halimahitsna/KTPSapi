@@ -64,7 +64,7 @@ public class JadwalMakan extends Fragment {
         iduser = sharedPrefManager.getSPId().toString();
 
         tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
-        tkoneksi.setVisibility(View.VISIBLE);
+        tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
         initViews();
         btnAdd = (AddFloatingActionButton)view.findViewById(R.id.add_reminder);
@@ -101,7 +101,13 @@ public class JadwalMakan extends Fragment {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getJadwal()));
                 adapter = new JadwalAdapter(getContext(), data);
-                recyclerView.setAdapter(adapter);
+                if(adapter.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override

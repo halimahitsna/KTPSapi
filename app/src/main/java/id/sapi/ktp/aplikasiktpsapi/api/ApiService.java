@@ -202,7 +202,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("update_peternakan.php")
-    Call<Result> updatePeternakan(@Field("id_peternakan") String id_peternakan,
+    Call<Result> updatePeternakan(@Field("id_user") String id_peternakan,
                                   @Field("peternakan") String peternakan);
 
     @FormUrlEncoded

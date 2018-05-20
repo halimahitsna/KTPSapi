@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Scroller;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -31,6 +32,7 @@ public class EditLaporan extends AppCompatActivity implements DatePickerDialog.O
     EditText eid, ejudul, eisi, etgl;
     ImageView tgl;
     Button btnsimpan;
+    TextView tjudul;
 
     // Constant values in milliseconds
     private static final long milMinute = 60000L;
@@ -63,6 +65,8 @@ public class EditLaporan extends AppCompatActivity implements DatePickerDialog.O
         etgl = (EditText)findViewById(R.id.tgl);
         tgl = (ImageView)findViewById(R.id.datepick);
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
+        tjudul = (TextView)findViewById(R.id.toolbar_title);
+        tjudul.setText("Edit Laporan");
 
         eid.setText(getIntent().getStringExtra("id_laporan"));
         ejudul.setText(getIntent().getStringExtra("judul"));
@@ -111,7 +115,7 @@ public class EditLaporan extends AppCompatActivity implements DatePickerDialog.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

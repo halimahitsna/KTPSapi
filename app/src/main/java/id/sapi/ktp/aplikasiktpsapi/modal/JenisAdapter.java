@@ -1,13 +1,20 @@
 package id.sapi.ktp.aplikasiktpsapi.modal;
 
+import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +30,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * Created by ASUS on 3/9/2018.
@@ -81,18 +90,28 @@ holder.nmjenis.setText(jenis.get(position).getJenis());
                     int pos = getAdapterPosition();
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
-                        Jenis clickedDataItem = jenis.get(pos);
-                        AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
-                        alertbox.setMessage("\nNama Jenis : " + jenis.get(pos).getJenis());
-                        alertbox.setTitle("Detail Jenis");
-                        alertbox.setIcon(R.drawable.ic_info_black_24dp);
-                        alertbox.setCancelable(true);
-                        alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0,
-                                                int arg1) {
+                        final Dialog alert1 = new Dialog(itemView.getRootView().getContext(), android.R.style.Theme_Black_NoTitleBar);
+                        alert1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        alert1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#99000000")));
+                        alert1.setContentView(R.layout.custom_alert1);
+
+                        TextView tjudul = (TextView)alert1.findViewById(R.id.title);
+                        TextView tsub = (TextView)alert1.findViewById(R.id.subjudul);
+                        TextView tisi = (TextView)alert1.findViewById(R.id.isi);
+                        ImageView foto = (ImageView)alert1.findViewById(R.id.gbr);
+                        foto.setVisibility(View.GONE);
+
+                        tjudul.setText("Detail Jenis Sapi");
+                        tsub.setText("Nama Jenis : ");
+                        tisi.setText(jenis.get(pos).getJenis());
+                        Button bkembali = (Button)alert1.findViewById(R.id.kmb);
+                        bkembali.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert1.cancel();
                             }
                         });
-                        alertbox.show();
+                        alert1.show();
                     }
                 }
             });

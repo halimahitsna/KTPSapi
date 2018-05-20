@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name="com.orm.SugarApp"
@@ -16,14 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.SplashScreen" />
-        <activity android:name=".fragment.Beranda" />
-        <activity android:name=".activities.HalamanLogin">
+        <activity android:name=".activities.SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".fragment.Beranda" />
+        <activity android:name=".activities.HalamanLogin">
         </activity>
         <activity android:name=".activities.HalamanDaftar" />
 

@@ -12,12 +12,12 @@ import id.sapi.ktp.aplikasiktpsapi.R;
 public class SplashScreen extends AwesomeSplash{
     @Override
     public void initSplash(ConfigSplash configSplash) {
-        configSplash.setBackgroundColor(R.color.fillColor);
+        configSplash.setBackgroundColor(R.color.background);
         configSplash.setAnimCircularRevealDuration(1500);
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM);
 
-        configSplash.setLogoSplash(R.drawable.sapi2);
+        configSplash.setLogoSplash(R.drawable.sapi);
         configSplash.setAnimLogoSplashDuration(2000);
         configSplash.setAnimLogoSplashTechnique(Techniques.BounceIn);
         configSplash.setTitleTextSize(0);
@@ -25,7 +25,7 @@ public class SplashScreen extends AwesomeSplash{
 
     @Override
     public void animationsFinished() {
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(),HalamanLogin.class);
         startActivity(intent);
         finish();
     }

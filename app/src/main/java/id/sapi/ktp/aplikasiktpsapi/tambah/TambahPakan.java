@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class TambahPakan extends AppCompatActivity implements AdapterView.OnItem
     Toolbar toolbars;
     ActionBar actionBar;
     String iduser;
+    TextView tjudul;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class TambahPakan extends AppCompatActivity implements AdapterView.OnItem
         txtpakan = (EditText)findViewById(R.id.pakan);
         txtjml = (EditText)findViewById(R.id.jml);
         stat = (Spinner)findViewById(R.id.status);
+        tjudul = (TextView)findViewById(R.id.toolbar_title);
+        tjudul.setText("Tambah Pakan");
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
         stat.setOnItemSelectedListener(this);
         stat.setPrompt("Pilih status");
@@ -122,7 +126,7 @@ public class TambahPakan extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

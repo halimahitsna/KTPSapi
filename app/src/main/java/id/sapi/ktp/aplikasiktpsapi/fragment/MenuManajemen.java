@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.os.Bundle;
@@ -95,7 +96,7 @@ public class MenuManajemen extends Fragment {
         jmlsapi = (TextView) view.findViewById(R.id.jumlah);
         jmljenis = (TextView) view.findViewById(R.id.jumlahjenis);
         jmlindukan = (TextView) view.findViewById(R.id.jumlahinduk);
-        Toast.makeText(getActivity(), "" + getArguments().getString("firebase"), Toast.LENGTH_SHORT).show();
+        Snackbar.make(getView(), "" + getArguments().getString("firebase"), Toast.LENGTH_SHORT).show();
 
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId();

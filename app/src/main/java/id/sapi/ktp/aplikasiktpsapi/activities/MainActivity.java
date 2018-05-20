@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.i("token", FirebaseInstanceId.getInstance().getToken());
         regId = FirebaseInstanceId.getInstance().getToken().toString();
         updateRegid();
-        Toast.makeText(MainActivity.this, regId, Toast.LENGTH_LONG).show();
+        //Snackbar.make(Context, regId, Toast.LENGTH_LONG).show();
         //end notif
         if (!sharedPrefManager.getSPSudahLogin()) {
             startActivity(new Intent(MainActivity.this, HalamanLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -154,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                image.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+                Intent i = new Intent(MainActivity.this, Profile.class);
+                startActivity(i);
 
             }
         });
@@ -212,7 +214,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onResponse(Call<JSONResponse> call1, Response<JSONResponse> response) {
                 JSONResponse jsonResponse1 = response.body();
                 data1 = new ArrayList<>(Arrays.asList(jsonResponse1.getPeternakan()));
-                nmpeternakan.setText(data1.get(0).getPeternakan());
+                if(jsonResponse1.getPeternakan().length != 0) {
+                    nmpeternakan.setText(data1.get(0).getPeternakan());
+                }else {
+                    nmpeternakan.setText("Nama Peternakan");
+                }
             }
 
             @Override

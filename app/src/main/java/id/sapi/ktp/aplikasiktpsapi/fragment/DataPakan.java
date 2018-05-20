@@ -110,7 +110,13 @@ public class DataPakan extends Fragment {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getPakan()));
                 adapter = new PakanAdapter(getActivity(), data);
-                recyclerView.setAdapter(adapter);
+                if(adapter.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override
@@ -133,6 +139,7 @@ public class DataPakan extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        tkoneksi.setVisibility(View.INVISIBLE);
         loadJSON();
     }
 

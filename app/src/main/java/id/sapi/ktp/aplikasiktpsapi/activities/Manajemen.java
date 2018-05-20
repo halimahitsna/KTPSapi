@@ -131,8 +131,13 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
                 JSONResponse jsonResponse = response.body();
                 data1 = new ArrayList<>(Arrays.asList(jsonResponse.getData()));
                 adapter1 = new DataAdapter(getApplicationContext(), data1);
-                recyclerView.setAdapter(adapter1);
-                //swipeRefreshLayout.setRefreshing(false);
+                if(adapter1.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter1);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override
@@ -151,6 +156,7 @@ public class Manajemen extends AppCompatActivity implements SwipeRefreshLayout.O
     @Override
     public void onResume(){
         super.onResume();
+        tkoneksi.setVisibility(View.INVISIBLE);
         loadJSON();
     }
 

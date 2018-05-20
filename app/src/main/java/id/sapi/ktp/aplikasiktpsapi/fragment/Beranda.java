@@ -40,6 +40,8 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wang.avi.AVLoadingIndicatorView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -76,6 +78,7 @@ public class Beranda extends Fragment {
     LinearLayout sliderDotspanel;
     private int dotscount;
     private ImageView[] dots;
+    AVLoadingIndicatorView circleload;
 
     @Nullable
     @Override
@@ -95,6 +98,8 @@ public class Beranda extends Fragment {
         tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
         ttgl = (TextView)view.findViewById(R.id.tgl);
         ttime = (TextView)view.findViewById(R.id.wkt);
+        circleload =(AVLoadingIndicatorView)view.findViewById(R.id.loading);
+        circleload.setVisibility(View.INVISIBLE);
 
         tkoneksi.setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
@@ -117,14 +122,12 @@ public class Beranda extends Fragment {
         ttime.setText(wk.format("%k:%M:%S"));
 
         loadJSON();
-        final Handler handler = new Handler();
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-//                refresh();
-  //              handler.postDelayed((Runnable) getActivity(), 15000);//60 second delay
-            }
-        };handler.postDelayed(runnable, 15000);
+//        final Handler handler = new Handler();
+//        final Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {                handler.postDelayed((Runnable) getActivity(), 15000);//60 second delay
+//            }
+//        };handler.postDelayed(runnable, 15000);
 
     }
 
@@ -161,7 +164,9 @@ public class Beranda extends Fragment {
 
     private void loadJSON() {
         iduser = sharedPrefManager.getSPId();
-        swipeRefreshLayout.setRefreshing(true);
+        //swipeRefreshLayout.setRefreshing(true);
+        circleload.setVisibility(View.VISIBLE);
+        circleload.smoothToShow();
         koneksi();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
@@ -172,13 +177,19 @@ public class Beranda extends Fragment {
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-                swipeRefreshLayout.setRefreshing(false);
+                //swipeRefreshLayout.setRefreshing(false);
+                circleload.smoothToHide();
                 JSONResponse jsonResponse = response.body();
                 kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
                 adapter = new KandangSlide(getActivity(), kandangs);
-                mRecyclerView.setAdapter(adapter);
                 swipeRefreshLayout.setRefreshing(false);
-                int durasi = adapter.getItemCount() * 5000;
+                if(adapter.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    mRecyclerView.setAdapter(adapter);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
                 dotscount = adapter.getItemCount();
                 dots = new ImageView[dotscount];
 //                sliderDotspanel.clearAnimation();

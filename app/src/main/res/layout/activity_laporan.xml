@@ -9,6 +9,15 @@
     android:id="@+id/navigation_drawer_layout"
     tools:context="id.sapi.ktp.aplikasiktpsapi.fragment.Laporan">
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtkoneksi"
+        android:text="koneksi"
+        android:textSize="@dimen/titlesize"
+        android:textColor="@color/alltext"
+        android:gravity="center"
+        android:layout_centerInParent="true"/>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/idu"

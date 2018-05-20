@@ -45,7 +45,7 @@ public class DataPenyakit extends Fragment {
 
     Toolbar toolbar;
     AddFloatingActionButton btnadd;
-    private TextView tkoneksi;
+    private TextView tkoneksi, tjudul;
     private RecyclerView recyclerView;
     private ArrayList<Penyakit> data;
     private PenyakitAdapter adapter;
@@ -112,7 +112,13 @@ public class DataPenyakit extends Fragment {
                 JSONResponse jsonResponse = response.body();
                 data = new ArrayList<>(Arrays.asList(jsonResponse.getPenyakit()));
                 adapter = new PenyakitAdapter(getActivity(), data);
-                recyclerView.setAdapter(adapter);
+                if(adapter.getItemCount() !=0) {
+                    tkoneksi.setVisibility(View.INVISIBLE);
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    tkoneksi.setVisibility(View.VISIBLE);
+                    tkoneksi.setText("Belum Ada Data");
+                }
             }
 
             @Override
@@ -130,6 +136,7 @@ public class DataPenyakit extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        tkoneksi.setVisibility(View.INVISIBLE);
         loadJSON();
     }
 

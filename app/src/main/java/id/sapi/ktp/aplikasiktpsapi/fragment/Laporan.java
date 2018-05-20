@@ -30,6 +30,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 import com.github.mikephil.charting.charts.LineChart;
@@ -63,6 +64,7 @@ public class Laporan extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     long initialCount;
     List<LaporanDB> laporans = new ArrayList<>();
+    TextView tkoneksi;
 
     int modifyPos = -1;
 
@@ -89,6 +91,8 @@ public class Laporan extends Fragment {
         gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
 
         recyclerView.setLayoutManager(gridLayoutManager);
+        tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
+        tkoneksi.setVisibility(View.INVISIBLE);
 
         initialCount = LaporanDB.count(LaporanDB.class);
 
@@ -104,7 +108,9 @@ public class Laporan extends Fragment {
             recyclerView.setAdapter(adapter);
 
             if (laporans.isEmpty())
-                Snackbar.make(recyclerView, "No laporan added.", Snackbar.LENGTH_LONG).show();
+                tkoneksi.setVisibility(View.VISIBLE);
+                tkoneksi.setText("Tidak ada data laporan");
+                Snackbar.make(recyclerView, "Tidak ada data laporan.", Snackbar.LENGTH_LONG).show();
 
         }
 

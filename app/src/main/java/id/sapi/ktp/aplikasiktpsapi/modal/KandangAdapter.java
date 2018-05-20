@@ -1,13 +1,18 @@
 package id.sapi.ktp.aplikasiktpsapi.modal;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,13 +54,6 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
     public void onBindViewHolder(KandangAdapter.ViewHolder viewHolder, int i){
         viewHolder.id_kandang.setText(kandang.get(i).getId_kandang());
         viewHolder.txtkandang.setText(kandang.get(i).getKandang());
-        if(kandang.get(i).getFoto() != null) {
-            Picasso.with(context).load(kandang.get(i).getFoto()).centerCrop().placeholder(R.drawable.load).resize(100, 100)
-                    .into(viewHolder.ifoto);
-        }else {
-            Picasso.with(context).load(R.drawable.ic_person_black_24dp).placeholder(R.drawable.load).resize(100, 100)
-                    .into(viewHolder.ifoto);
-        }
     }
 
     @Override
@@ -65,12 +63,11 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView id_kandang, txtkandang;
-        ImageView edit, hapus, ifoto;
+        ImageView edit, hapus;
         public ViewHolder(final View itemView) {
             super(itemView);
             id_kandang = (TextView)itemView.findViewById(R.id.idKandang);
             txtkandang = (TextView)itemView.findViewById(R.id.kandang);
-            ifoto = (ImageView)itemView.findViewById(R.id.foto);
             edit = (ImageView) itemView.findViewById(R.id.edit);
             hapus = (ImageView) itemView.findViewById(R.id.hapus);
 
@@ -85,28 +82,34 @@ public class KandangAdapter extends RecyclerView.Adapter<KandangAdapter.ViewHold
                     int pos = getAdapterPosition();
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
-                        Kandang clickedDataItem = kandang.get(pos);
-//                        Intent intent = new Intent(context,DetailMonitoringKandang.class);
-//                        intent.putExtra("id_kandang", kandang.get(pos).getId_kandang());
-//                        intent.putExtra("kandang", kandang.get(pos).getKandang());
-//                        intent.putExtra("bsuhu", kandang.get(pos).getBatas_suhu());
-//                        intent.putExtra("bkelembapan", kandang.get(pos).getBatas_kelembapan());
-//                        intent.putExtra("bgas", kandang.get(pos).getBatas_gas());
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        context.startActivity(intent);
-//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getKandang(), Toast.LENGTH_SHORT).show();
+                        final Dialog alert1 = new Dialog(context, android.R.style.Theme_Black_NoTitleBar);
+                        alert1.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        alert1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#99000000")));
+                        alert1.setContentView(R.layout.custom_alert1);
 
-                        AlertDialog.Builder alertbox = new AlertDialog.Builder(itemView.getRootView().getContext());
-                        alertbox.setMessage("Kandang : " + kandang.get(pos).getKandang());
-                        alertbox.setTitle("Detail Kandang");
-                        alertbox.setIcon(R.drawable.ic_business_black_24dp);
-                        alertbox.setCancelable(true);
-                        alertbox.setNeutralButton("Kembali", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0,
-                                                int arg1) {
+                        TextView tjudul = (TextView)alert1.findViewById(R.id.title);
+                        TextView tsub = (TextView)alert1.findViewById(R.id.subjudul);
+                        TextView tisi = (TextView)alert1.findViewById(R.id.isi);
+                        ImageView foto = (ImageView)alert1.findViewById(R.id.gbr);
+                        if(kandang.get(pos).getFoto() != null) {
+                            Picasso.with(context).load(kandang.get(pos).getFoto()).centerCrop().placeholder(R.drawable.load).resize(200, 200)
+                                    .into(foto);
+                        }else {
+                            Picasso.with(context).load(R.drawable.ic_person_black_24dp).centerCrop().placeholder(R.drawable.load).resize(200, 200)
+                                    .into(foto);
+                        }
+
+                        tjudul.setText("Detail Data Kandang");
+                        tsub.setText("Nama Kandang : ");
+                        tisi.setText(kandang.get(pos).getKandang());
+                        Button bkembali = (Button)alert1.findViewById(R.id.kmb);
+                        bkembali.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert1.cancel();
                             }
                         });
-                        alertbox.show();
+                        alert1.show();
                     }
 
                 }

@@ -145,8 +145,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         txtumur.setText(getIntent().getStringExtra("umur"));
         txtbobotlahir.setText(getIntent().getStringExtra("bobot_lahir"));
         txtbobothidup.setText(getIntent().getStringExtra("bobot_hidup"));
-        Picasso.with(mcontext).load(getIntent().getStringExtra("foto")).resize(150, 150)
-                .into(foto);
+        //Picasso.with(mcontext).load(getIntent().getStringExtra("foto")).resize(150, 150).into(foto);
 
         jenis = (Spinner) findViewById(R.id.jenis);
         indukan = (Spinner) findViewById(R.id.indukan);
@@ -620,7 +619,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

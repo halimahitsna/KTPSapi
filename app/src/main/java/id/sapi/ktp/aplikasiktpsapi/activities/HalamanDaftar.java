@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import id.sapi.ktp.aplikasiktpsapi.R;
 import id.sapi.ktp.aplikasiktpsapi.api.ApiService;
@@ -30,6 +31,8 @@ public class HalamanDaftar extends AppCompatActivity {
     ProgressDialog loading;
     Button btndaftar;
     EditText txtnama, txtuser, txtpass, txtpassulang;
+    AVLoadingIndicatorView circleload;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +60,15 @@ public class HalamanDaftar extends AppCompatActivity {
         txtuser = (EditText)findViewById(R.id.username);
         txtpass = (EditText)findViewById(R.id.password);
         txtpassulang = (EditText)findViewById(R.id.passwordulangi);
+        circleload =(AVLoadingIndicatorView)findViewById(R.id.loading);
+        circleload.setVisibility(View.INVISIBLE);
         btndaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                circleload.setVisibility(View.VISIBLE);
+                circleload.smoothToShow();
                 daftar();
+                addPeternakan();
             }
         });
     }
@@ -123,7 +131,8 @@ public class HalamanDaftar extends AppCompatActivity {
             public void onResponse(Call<Result> call, Response<Result> response) {
                 String value = response.body().getValue();
                 String message = response.body().getMessage();
-                loading.dismiss();
+                //loading.dismiss();
+                circleload.smoothToHide();
                 if (value.equals("1")) {
                     Toast.makeText(HalamanDaftar.this, message, Toast.LENGTH_SHORT).show();
                     Intent login = new Intent(HalamanDaftar.this, HalamanLogin.class);
@@ -137,6 +146,33 @@ public class HalamanDaftar extends AppCompatActivity {
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
                // progress.dismiss();
+                Toast.makeText(HalamanDaftar.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private void addPeternakan() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService api = retrofit.create(ApiService.class);
+        Call<Result> call = api.insertPeternakan("0","Nama Peternakan");
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                String value = response.body().getValue();
+                String message = response.body().getMessage();
+                loading.dismiss();
+                if (value.equals("1")) {
+
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                // progress.dismiss();
                 Toast.makeText(HalamanDaftar.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
             }
         });

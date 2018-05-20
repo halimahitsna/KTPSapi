@@ -17,6 +17,6 @@
         android:hint="search"
         android:padding="5dp"
         android:gravity="center"
-        android:textColorHint="#e9e4e4"/>
+        android:textColorHint="@color/hinttext"/>
 
 </LinearLayout>

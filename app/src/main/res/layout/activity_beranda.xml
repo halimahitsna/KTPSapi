@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtkoneksi"
         android:text="koneksi"
-        android:textSize="20dp"
+        android:textSize="@dimen/titlesize"
         android:textColor="@color/alltext"
         android:gravity="center"
         android:layout_centerInParent="true"/>
@@ -100,5 +101,13 @@
         android:visibility="gone"
         android:textColor="@color/alltext"
         android:gravity="center_horizontal"/>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:indicatorName="BallClipRotateIndicator"
+        app:indicatorColor="@color/button"/>
 
 </RelativeLayout>

@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/background"
     tools:context="id.sapi.ktp.aplikasiktpsapi.activities.HalamanLogin">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -15,10 +16,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Masuk"
-            android:textSize="20sp"
+            android:textSize="@dimen/titlesize"
             android:layout_gravity="center"
-            android:textColor="#000000"/>
+            android:textColor="@color/alltext"/>
     </android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
@@ -39,6 +41,7 @@
             android:textColorHint="@color/hinttext"
             android:textColor="@color/alltext"
             android:background="@drawable/rounded"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
@@ -51,6 +54,7 @@
             android:textColorHint="@color/hinttext"
             android:hint="Password"
             android:textColor="@color/alltext"
+            android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
             android:inputType="textPassword"
             android:layout_height="wrap_content" />
         <Button
@@ -68,6 +72,14 @@
             android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:indicatorName="BallClipRotateIndicator"
+        app:indicatorColor="@color/button"/>
     <Button
         android:id="@+id/linkdaftar"
         android:layout_width="match_parent"

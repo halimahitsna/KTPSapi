@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -56,6 +57,7 @@ public class EditKandang extends AppCompatActivity {
     CircleImageView ifoto;
     FloatingActionButton add;
     String iduser, imagePath;
+    TextView tjudul;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,8 @@ public class EditKandang extends AppCompatActivity {
         btnsimpan = (Button)findViewById(R.id.btnSimpan);
         ifoto = (CircleImageView)findViewById(R.id.foto);
         add = (FloatingActionButton)findViewById(R.id.btnfoto);
-
+        tjudul = (TextView)findViewById(R.id.toolbar_title);
+        tjudul.setText("Edit Kandang");
         //Drawerbar
         toolbars = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbars);
@@ -243,7 +246,7 @@ public class EditKandang extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 

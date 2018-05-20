@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ public class HalamanLogin extends AppCompatActivity {
     Button btnlogin, btnDaftar;//btn masuk
     EditText Euser, Epass;
     ProgressDialog loading;
+    AVLoadingIndicatorView circleload;
     Context mContext;
     private SharedPreferences pref;
     private static final int REQ_CODE = 9001;
@@ -63,6 +65,8 @@ public class HalamanLogin extends AppCompatActivity {
         loading.setMessage("Please wait...");
         loading.setCancelable(false);
 
+        circleload =(AVLoadingIndicatorView)findViewById(R.id.loading);
+        circleload.setVisibility(View.INVISIBLE);
         Euser = (EditText) findViewById(R.id.username);
         Epass = (EditText)findViewById(R.id.password);
         btnlogin = (Button)findViewById(R.id.btnMasuk);
@@ -70,8 +74,10 @@ public class HalamanLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                if(validate()){
-                   loading = ProgressDialog.show(mContext,null,"tunggu", true, false);
+                   //loading = ProgressDialog.show(mContext,null,"tunggu", true, false);
+                   circleload.setVisibility(View.VISIBLE);
                    validate();
+                   circleload.smoothToShow();
                    login();
                 }
             }
@@ -115,7 +121,8 @@ public class HalamanLogin extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(response.isSuccessful()){
-                            loading.dismiss();
+                            //loading.dismiss();
+                            circleload.smoothToHide();
                             try{
                                 JSONObject jsonRESULT = new JSONObject(response.body().string());
                                 if(jsonRESULT.getString("error").equals("false")){
