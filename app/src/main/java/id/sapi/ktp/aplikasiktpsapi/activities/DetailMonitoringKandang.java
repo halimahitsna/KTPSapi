@@ -3,6 +3,7 @@ package id.sapi.ktp.aplikasiktpsapi.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,7 +72,7 @@ public class DetailMonitoringKandang extends AppCompatActivity {
         txtkandang.setText(getIntent().getStringExtra("kandang"));
         txtsuhu.setText(getIntent().getStringExtra("suhu") +" Celcius");
         txtkelembapan.setText(getIntent().getStringExtra("kelembapan") +" %");
-        txtgas.setText(getIntent().getStringExtra("gas")+" %");
+        txtgas.setText(getIntent().getStringExtra("gas")+" PPm");
         Picasso.with(this).load(getIntent().getStringExtra("foto")).into(foto);
         if(getIntent().getStringExtra("suhu") != null || getIntent().getStringExtra("kelembapan") != null || getIntent().getStringExtra("suhu") != null) {
             suhu = Double.parseDouble(i.getStringExtra("suhu"));
@@ -82,7 +83,14 @@ public class DetailMonitoringKandang extends AppCompatActivity {
             kelembapan = 0;
             gas = 0;
         }
-
+//        final Handler handler = new Handler();
+//        final Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                handler.postDelayed((Runnable) getApplicationContext(), 1000);//60 second delay
+//            }
+//        };handler.postDelayed(runnable, 1000);
 
         swotomatis.setTextOn("ON");
         swotomatis.setTextOff("OFF");
@@ -97,22 +105,25 @@ public class DetailMonitoringKandang extends AppCompatActivity {
                     // Show the switch button checked status as toast message
                     Toast.makeText(getApplicationContext(),
                             "Switch is on", Toast.LENGTH_LONG).show();
-                    if (suhu < 27) {
+                    if (suhu < 17) {
                         stlampu = "1";
                         stkipas = "0";
+                        updateOtomatis();
                     }else if (suhu > 27) {
                         stkipas = "1";
                         stlampu = "0";
+                        updateOtomatis();
                     }else{
                         stlampu = "0";
                         stkipas = "0";
+                        updateOtomatis();
                     }
-                    update();
+
                 }
                 else {
                     stlampu = "0";
                     stkipas = "0";
-                    update();
+                    updateOtomatis();
                     // Show the switch button checked status as toast message
                     Toast.makeText(getApplicationContext(),
                             "Switch is off", Toast.LENGTH_LONG).show();
@@ -125,15 +136,13 @@ public class DetailMonitoringKandang extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     // Show the switch button checked status as toast messag
-                   // stlampu = "0";
                     stkipas = "1";
-                    update();
+                    updateKipas();
                     Toast.makeText(getApplicationContext(),"Kipas menyala", Toast.LENGTH_LONG).show();
                 }
                 else {
-                   // stlampu = "0";
                     stkipas = "0";
-                    update();
+                    updateKipas();
                     // Show the switch button checked status as toast message
                     Toast.makeText(getApplicationContext(),
                             "Kipas Mati", Toast.LENGTH_LONG).show();
@@ -148,14 +157,12 @@ public class DetailMonitoringKandang extends AppCompatActivity {
                     // Show the switch button checked status as toast message
 
                     stlampu = "1";
-                   // stkipas = "0";
-                    update();
+                    updateLampu();
                     Toast.makeText(getApplicationContext(),"Lampu hidup", Toast.LENGTH_LONG).show();
                 }
                 else {
                     stlampu = "0";
-                   // stkipas = "0";
-                    update();
+                    updateLampu();
                     // Show the switch button checked status as toast message
                     Toast.makeText(getApplicationContext(),
                             "Lampu mati", Toast.LENGTH_LONG).show();
@@ -164,7 +171,7 @@ public class DetailMonitoringKandang extends AppCompatActivity {
         });
     }
 
-    private void update() {
+    private void updateOtomatis() {
         koneksi();
         String id = idkan.toString().trim();
         final String lamp = stlampu.trim();
@@ -175,7 +182,7 @@ public class DetailMonitoringKandang extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.updateStatus(id, lamp, fan);
+        Call<Result> call = api.updateOtomatis(id, lamp, fan);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -202,14 +209,45 @@ public class DetailMonitoringKandang extends AppCompatActivity {
         koneksi();
         String id = idkan.toString().trim();
         final String lamp = stlampu.trim();
-        final String fan = stkipas.trim();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService api = retrofit.create(ApiService.class);
-        Call<Result> call = api.updateLampu(id);
+        Call<Result> call = api.updateLampu(id, lamp);
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                String value = response.body().getValue();
+                String message = response.body().getMessage();
+                if (value.equals("1")) {
+                    Toast.makeText(DetailMonitoringKandang.this, message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetailMonitoringKandang.this, message, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                // progress.dismiss();
+                Toast.makeText(DetailMonitoringKandang.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // onBackPressed();
+    }
+
+    private void updateKipas() {
+        koneksi();
+        String id = idkan.toString().trim();
+        final String kip = stkipas.trim();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService api = retrofit.create(ApiService.class);
+        Call<Result> call = api.updateKipas(id, kip);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

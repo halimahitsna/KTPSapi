@@ -65,7 +65,7 @@
             <LinearLayout
                 android:layout_weight="1"
                 android:id="@+id/jenis"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/rounded_view"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             <LinearLayout
                 android:id="@+id/indukan"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/rounded_view"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"

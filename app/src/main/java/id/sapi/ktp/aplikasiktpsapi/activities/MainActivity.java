@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -92,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String regId;
     Context mContext;
     ApiService mApiService;
+    static Button notifCount;
+    static int mNotifCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,9 +159,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Profile.class);
-                startActivity(i);
-
+                Intent intent = new Intent(MainActivity.this, Profile.class);
+                startActivity(intent);
             }
         });
 
@@ -243,6 +246,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        /*MenuItem item = menu.findItem(R.id.action_notif);
+        MenuItemCompat.setActionView(item, R.layout.count_badge);
+        View view = MenuItemCompat.getActionView(item);
+        notifCount = (Button) view.findViewById(R.id.notif_count);
+        notifCount.setText(String.valueOf(mNotifCount));
+        return super.onCreateOptionsMenu(menu);*/
         return true;
     }
 

@@ -206,20 +206,26 @@ public interface ApiService {
                                   @Field("peternakan") String peternakan);
 
     @FormUrlEncoded
-    @POST("pengendali.php")
-    Call<Result> updateStatus(@Field("id_kandang") String id_kandang,
-                              @Field("status_lampu") String status_lampu,
+    @POST("pengendali_kipas.php")
+    Call<Result> updateKipas(@Field("id_kandang") String id_kandang,
                               @Field("status_kipas") String status_kipas);
+    @FormUrlEncoded
+    @POST("pengendali_lampu.php")
+    Call<Result> updateLampu(@Field("id_kandang") String id_kandang,
+                              @Field("status_lampu") String status_lampu);
+
+    @FormUrlEncoded
+    @POST("pengendali_otomatis.php")
+    Call<Result> updateOtomatis(@Field("id_kandang") String id_kandang,
+                             @Field("status_lampu") String status_lampu,
+                             @Field("status_kipas") String status_kipas);
+
     @FormUrlEncoded
     @POST("update_user.php")
     Call<Result> updateUser(@Field("id_user") String id_kandang,
                             @Field("user") String status_lampu,
                             @Field("name") String status_kipas,
                             @Field("jenis_kelamin") String jeniskelamin);
-
-    @FormUrlEncoded
-    @POST("status_lampu.php")
-    Call<Result> updateLampu(@Field("id_kandang") String id_kandang);
 
     //get data by their id
     @GET("jenis.php")
