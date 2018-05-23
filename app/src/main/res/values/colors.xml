@@ -11,16 +11,16 @@
     <color name="blue">#4e9ddc</color>
     <color name="green">#79c942</color>
     <color name="text1">#ffffff</color>
-    <color name="merah">#e72222</color>
+    <color name="merah">#ed4545</color>
     <color name="brown">#f4dfc7</color>
     <color name="button">#27AC5E</color>
     <color name="transparent">#00000000</color>
 
-    <color name="Card1">#f3a683</color>
-    <color name="Card2">#f7d794</color>
-    <color name="Card3">#778beb</color>
-    <color name="Card4">#e77f67</color>
-    <color name="Card5">#cf6a87</color>
+    <color name="Card1">#36D7B7</color>
+    <color name="Card2">#03C9A9</color>
+    <color name="Card3">#1BBC9B</color>
+    <color name="Card4">#16A085</color>
+    <color name="Card5">#019875</color>
 
     <integer-array name="cardColors">
         <item>@color/Card1</item>

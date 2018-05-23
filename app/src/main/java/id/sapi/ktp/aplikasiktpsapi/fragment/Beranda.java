@@ -22,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,8 +74,8 @@ public class Beranda extends Fragment {
     private ArrayList<Peternakan> data;
     SharedPrefManager sharedPrefManager;
     private ArrayList<Kandang> kandangs;
-    private KandangSlide adapter;
-    private RecyclerView mRecyclerView;
+    ViewPager viewPager;
+    private ViewPagerAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     LinearLayout sliderDotspanel;
     private int dotscount;
@@ -103,19 +104,12 @@ public class Beranda extends Fragment {
         circleload.setVisibility(View.INVISIBLE);
 
         tkoneksi.setVisibility(View.INVISIBLE);
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
+        //swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        //mRecyclerView = (RecyclerView) view.findViewById(R.id.card_recycle_view);
         sharedPrefManager = new SharedPrefManager(getActivity());
         SharedPreferences pref = getActivity().getSharedPreferences(Config.SHARED_PREF, 0);
         sliderDotspanel = (LinearLayout) view.findViewById(R.id.SliderDots);
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        //mRecyclerView.setItemAnimator(new LinePagerIndicator());
-
-        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
-        pagerSnapHelper.attachToRecyclerView(mRecyclerView);
-       // mRecyclerView.addItemDecoration(new LinePagerIndicator());
-        mRecyclerView.setLayoutManager(layoutManager);
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
         Time wk = new Time();
         wk.setToNow();
@@ -123,44 +117,6 @@ public class Beranda extends Fragment {
         ttime.setText(wk.format("%k:%M:%S"));
 
         loadJSON();
-//        final Handler handler = new Handler();
-//        final Runnable runnable = new Runnable() {
-//            @Override
-//            public void run() {                handler.postDelayed((Runnable) getActivity(), 15000);//60 second delay
-//            }
-//        };handler.postDelayed(runnable, 15000);
-
-    }
-
-    public void autoScroll(){
-        final int speedScroll = 4000;
-        final Handler handler = new Handler();
-        final Runnable runnable = new Runnable() {
-            int count = 0;
-            @Override
-            public void run() {
-                if(count == adapter.getItemCount())
-                    count = 0;
-                   mRecyclerView.smoothScrollToPosition(count);
-//                    mRecyclerView.smoothScrollToPosition(count);
-                  //  handler.postDelayed(this, speedScroll);
-                if(count < adapter.getItemCount()){
-                    mRecyclerView.smoothScrollToPosition(++count);
-                    handler.postDelayed( this,speedScroll);
-                   // dots[count].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
-                    }
-//                    for(int i = 0; i< dotscount; i++){
-//                        if(i < dotscount){
-//                            dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
-//                        }else{
-//                            dots[0].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
-//                        }
-//                    }
-//                    dots[count].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
-            }
-
-            };
-        handler.postDelayed(runnable,speedScroll);
     }
 
     private void loadJSON() {
@@ -169,6 +125,7 @@ public class Beranda extends Fragment {
         circleload.setVisibility(View.VISIBLE);
         circleload.smoothToShow();
         koneksi();
+        iduser = sharedPrefManager.getSPId();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UtilsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -178,144 +135,61 @@ public class Beranda extends Fragment {
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-                //swipeRefreshLayout.setRefreshing(false);
                 circleload.smoothToHide();
                 JSONResponse jsonResponse = response.body();
                 kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
-                adapter = new KandangSlide(getActivity(), kandangs);
-                swipeRefreshLayout.setRefreshing(false);
-                if(adapter.getItemCount() !=0) {
-                    tkoneksi.setVisibility(View.INVISIBLE);
-                    mRecyclerView.setAdapter(adapter);
-                }else {
-                    tkoneksi.setVisibility(View.VISIBLE);
-                    tkoneksi.setText("Belum Ada Data");
-                }
-                dotscount = adapter.getItemCount();
+                adapter = new ViewPagerAdapter(getActivity(), kandangs);
+                viewPager.setAdapter(adapter);
+                dotscount = adapter.getCount();
                 dots = new ImageView[dotscount];
-//                sliderDotspanel.clearAnimation();
+
                 for(int i = 0; i < dotscount; i++){
-                    if(dotscount != 0){
+
                     dots[i] = new ImageView(getActivity());
                     dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
                     params.setMargins(8, 0, 8, 0);
+
                     sliderDotspanel.addView(dots[i], params);
-                    }else{
-                        sliderDotspanel.addView(null);
-                    }
 
                 }
-                autoScroll();
+
+                dots[0].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
+
+                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+
+                        for(int i = 0; i< dotscount; i++){
+                            dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+                        }
+
+                        dots[position].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
+
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+
             }
 
             @Override
             public void onFailure(Call<JSONResponse> call, Throwable t) {
                 Log.d("Error", t.getMessage());
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
-
     }
 
-    private void refresh() {
-        iduser = sharedPrefManager.getSPId();
-        swipeRefreshLayout.setRefreshing(false);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UtilsApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ApiService request = retrofit.create(ApiService.class);
-        Call<JSONResponse> call = request.getJSONKandang(iduser);
-        call.enqueue(new Callback<JSONResponse>() {
-            @Override
-            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-                JSONResponse jsonResponse = response.body();
-                kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
-                adapter = new KandangSlide(getActivity(), kandangs);
-                mRecyclerView.setAdapter(adapter);
-                autoScroll();
-            }
-
-            @Override
-            public void onFailure(Call<JSONResponse> call, Throwable t) {
-                Log.d("Error", t.getMessage());
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void notif() {
-        /*// Create NotificationManager
-        final NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // NotificationTargetActivity is the activity opened when user click notification.
-        Intent intent = new Intent(getActivity(), MenuManajemen.class);
-        Intent intentArr[] = {intent};
-
-        PendingIntent pendingIntent = PendingIntent.getActivities(getActivity(), 0, intentArr, 0);
-
-        // Create a new Notification instance.
-        Notification notification = new Notification();
-
-        // Set small icon.
-        notification.icon = R.drawable.ic_notifications_black_24dp;
-
-        // Set large icon.
-        BitmapDrawable bitmapDrawable = (BitmapDrawable)getActivity().getDrawable(R.drawable.sapi2);
-        Bitmap largeIconBitmap = bitmapDrawable.getBitmap();
-        notification.largeIcon = largeIconBitmap;
-
-        // Set flags.
-        notification.flags = Notification.FLAG_ONGOING_EVENT;
-
-        // Set send time.
-        notification.when = System.currentTimeMillis();
-
-        // Create and set notification content view.
-        RemoteViews customRemoteViews = new RemoteViews(getActivity().getPackageName(), R.layout.custom_notifications);
-        notification.contentView = customRemoteViews;
-
-        // Set notification intent.
-        notification.contentIntent = pendingIntent;
-
-        notificationManager.notify(5, notification);*/
-            RemoteViews expandedView = new RemoteViews(getActivity().getPackageName(), R.layout.custom_notifications);
-            expandedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-            expandedView.setTextViewText(R.id.notification_message,"Notif");
-            // adding action to left button
-            Intent leftIntent = new Intent(getActivity(), NotificationIntentService.class);
-            leftIntent.setAction("left");
-            expandedView.setOnClickPendingIntent(R.id.left_button, PendingIntent.getService(getActivity(), 0, leftIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-            // adding action to right button
-            Intent rightIntent = new Intent(getActivity(), NotificationIntentService.class);
-            rightIntent.setAction("right");
-            expandedView.setOnClickPendingIntent(R.id.right_button, PendingIntent.getService(getActivity(), 1, rightIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-
-            RemoteViews collapsedView = new RemoteViews(getActivity().getPackageName(), R.layout.view_collapsed_notification);
-            collapsedView.setTextViewText(R.id.timestamp, DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME));
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
-                    // these are the three things a NotificationCompat.Builder object requires at a minimum
-                    .setSmallIcon(R.drawable.sapi2)
-                    .setContentTitle("Judul")
-                    .setContentText("Pesan")
-                    // notification will be dismissed when tapped
-                    .setAutoCancel(true)
-                    // tapping notification will open MainActivity
-                    .setContentIntent(PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(), MainActivity.class), 0))
-                    // setting the custom collapsed and expanded views
-                    .setCustomContentView(collapsedView)
-                    .setCustomBigContentView(expandedView)
-                    // setting style to DecoratedCustomViewStyle() is necessary for custom views to display
-                    .setStyle(new android.support.v7.app.NotificationCompat.DecoratedCustomViewStyle());
-
-            // retrieves android.app.NotificationManager
-            NotificationManager notificationManager = (android.app.NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.notify(0, builder.build());
-    }
     private boolean adaInternet(){
         ConnectivityManager koneksi = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         return koneksi.getActiveNetworkInfo() != null;

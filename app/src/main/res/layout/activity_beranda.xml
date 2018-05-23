@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background">
-    <TextView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@color/background">
+        <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtkoneksi"
@@ -13,22 +18,12 @@
         android:textColor="@color/alltext"
         android:gravity="center"
         android:layout_centerInParent="true"/>
-    <LinearLayout
-        android:id="@+id/SliderDots"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="480dp"
-        android:orientation="horizontal" />
-    <LinearLayout
+        <LinearLayout
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/rounded1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="10dp"
         android:padding="10dp">
         <ImageView
             android:layout_width="wrap_content"
@@ -60,25 +55,113 @@
             android:textColor="@color/alltext"
             android:textSize="20sp"/>
     </LinearLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_below="@+id/date"
-        android:id="@+id/swiperefresh"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/card_recycle_view"
+        <android.support.v4.view.ViewPager
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/date"
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:scrollbars="vertical"
-            android:tooltipText="@string/app_name"
-            android:layout_height="wrap_content"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="420dp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_below="@id/viewPager"
+            android:id="@+id/SliderDots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" />
+        <View
+            android:layout_below="@id/SliderDots"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/textPutih" />
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/SliderDots"
+            android:id="@+id/jadwal"
+            android:background="@drawable/rounded7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+            <ImageView
+                android:id="@+id/imgdate"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_date_range_black_24dp"/>
+            <TextView
+                android:id="@+id/juduljadwal"
+                android:layout_toRightOf="@+id/imgdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jadwal Pakan"
+                android:padding="5dp"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_below="@id/juduljadwal"
+                android:layout_toRightOf="@id/imgdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jadwal Pakan"
+                android:padding="5dp"
+                android:textSize="13dp"/>
+            <ImageView
+                android:id="@+id/jadwalopen"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+        </RelativeLayout>
 
-    <TextView
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/jadwal"
+            android:id="@+id/laporan"
+            android:background="@drawable/rounded6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+            <ImageView
+                android:id="@+id/imglap"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_assessment_black_24dp"/>
+            <TextView
+                android:id="@+id/judullap"
+                android:layout_toRightOf="@+id/imglap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laporan"
+                android:padding="5dp"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_below="@id/judullap"
+                android:layout_toRightOf="@id/imglap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jadwal Pakan"
+                android:padding="5dp"
+                android:textSize="13dp"/>
+            <ImageView
+                android:id="@+id/laporanopen"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+        </RelativeLayout>
+        <TextView
         android:id="@+id/txt_push_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,12 +169,12 @@
         android:gravity="center_horizontal"
         android:textColor="@color/colorPrimary"
         android:textSize="26dp" />
-    <TextView
+        <TextView
         android:id="@+id/txt_reg_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
-    <TextView
+        <TextView
         android:id="@+id/namaPeternakan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +184,7 @@
         android:visibility="gone"
         android:textColor="@color/alltext"
         android:gravity="center_horizontal"/>
-    <com.wang.avi.AVLoadingIndicatorView
+        <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/loading"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -109,5 +192,5 @@
         android:visibility="visible"
         app:indicatorName="BallClipRotateIndicator"
         app:indicatorColor="@color/button"/>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

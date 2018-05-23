@@ -20,149 +20,197 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
         <LinearLayout
-            android:id="@+id/sapi"
-            android:background="@drawable/rounded_view"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_folder_black_24dp"/>
-            <TextView
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_weight="1"
+                android:id="@+id/sapi"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded1"
                 android:layout_height="wrap_content"
-                android:text="Data Sapi"
-                android:paddingTop="20dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="30dp"
-                android:gravity="center"
-                android:textColor="@color/alltext"
-                android:textSize="18sp"/>
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:background="@color/background" />
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/jumlah"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content">
+                <ImageView
+                    android:id="@+id/icon1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_folder_black_24dp"/>
+                <TextView
+                    android:id="@+id/judul1"
+                    android:layout_below="@id/icon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Sapi "
+                    android:paddingTop="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/alltext"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:id="@+id/jumlah"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/judul1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/alltext"
+                    android:textSize="13sp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:id="@+id/rfid"
+                android:background="@drawable/rounded2"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:gravity="right"
-                android:textColor="@color/alltext"
-                android:textSize="13sp"/>
+                android:layout_width="wrap_content">
+                <ImageView
+                    android:id="@+id/icon4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_add_circle_black_24dp"/>
+                <TextView
+                    android:id="@+id/judul4"
+                    android:layout_below="@id/icon4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tambah RFID "
+                    android:paddingTop="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/alltext"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/judul4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/alltext"
+                    android:textSize="13sp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_weight="1"
                 android:id="@+id/jenis"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/rounded_view"
+                android:background="@drawable/rounded3"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_width="wrap_content">
                 <ImageView
+                    android:id="@+id/icon2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_folder_black_24dp"/>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/judul2"
+                    android:layout_below="@id/icon2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Jenis Sapi"
-                    android:padding="20dp"
-                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:textStyle="bold"
                     android:textColor="@color/alltext"
                     android:textSize="18sp"/>
-                <View
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center"
-                    android:background="@color/background" />
                 <TextView
                     android:layout_marginTop="5dp"
+                    android:layout_below="@id/judul2"
                     android:id="@+id/jumlahjenis"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:gravity="right"
                     android:textColor="@color/alltext"
                     android:textSize="13sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/indukan"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/rounded_view"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
                 <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:id="@+id/indukan"
+                android:background="@drawable/rounded4"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+                <ImageView
+                    android:id="@+id/icon3"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_folder_black_24dp"/>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/judul3"
+                    android:layout_below="@id/icon3"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Indukan Sapi"
                     android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
-                    android:gravity="center"
+                    android:textStyle="bold"
                     android:textColor="@color/alltext"
                     android:textSize="18sp"/>
-                <View
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center"
-                    android:background="@color/background" />
                 <TextView
                     android:layout_marginTop="5dp"
+                    android:layout_below="@id/judul3"
                     android:id="@+id/jumlahinduk"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:gravity="right"
                     android:textColor="@color/alltext"
                     android:textSize="13sp"/>
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
         </LinearLayout>
-        <LinearLayout
+       <!-- <RelativeLayout
             android:layout_marginTop="10dp"
             android:id="@+id/rfid"
-            android:background="@drawable/rounded_view"
+            android:background="@drawable/rounded1"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:padding="10dp"
+            android:layout_width="match_parent">
             <ImageView
-                android:layout_marginTop="10dp"
+                android:id="@+id/icon4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/ic_add_circle_black_24dp"/>
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/judul4"
+                android:layout_toRightOf="@id/icon4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Tambah Kode RFID"
-                android:paddingTop="20dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="30dp"
-                android:gravity="center"
-                android:textColor="@color/alltext"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
                 android:textSize="18sp"/>
-        </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+        </RelativeLayout>-->
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

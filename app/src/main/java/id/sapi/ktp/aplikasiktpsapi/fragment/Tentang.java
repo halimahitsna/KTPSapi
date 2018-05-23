@@ -19,6 +19,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +72,7 @@ import id.sapi.ktp.aplikasiktpsapi.modal.IndukanSpinner;
 import id.sapi.ktp.aplikasiktpsapi.modal.Jenis;
 import id.sapi.ktp.aplikasiktpsapi.modal.JenisSpinner;
 import id.sapi.ktp.aplikasiktpsapi.modal.Kandang;
+import id.sapi.ktp.aplikasiktpsapi.modal.KandangSlide;
 import id.sapi.ktp.aplikasiktpsapi.modal.KandangSpinner;
 import id.sapi.ktp.aplikasiktpsapi.modal.Pakan;
 import id.sapi.ktp.aplikasiktpsapi.modal.PakanSpinner;
@@ -91,6 +95,13 @@ import static android.app.Activity.RESULT_OK;
 public class Tentang extends Fragment {
 
     SharedPrefManager sharedPrefManager;
+    ViewPager viewPager;
+    private ArrayList<Kandang> kandangs;
+    private ViewPagerAdapter adapter;
+    LinearLayout sliderDotspanel;
+    private int dotscount;
+    private ImageView[] dots;
+    String iduser;
 
     @Nullable
     @Override
@@ -107,6 +118,81 @@ public class Tentang extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Tentang");
         sharedPrefManager = new SharedPrefManager(getActivity());
-        Intent i = getActivity().getIntent();
+        Intent a = getActivity().getIntent();
+        sliderDotspanel = (LinearLayout) view.findViewById(R.id.SliderDots);
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+loadJSON();
+       // ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
+
+
+
     }
+    private void loadJSON() {
+        iduser = sharedPrefManager.getSPId();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService request = retrofit.create(ApiService.class);
+        Call<JSONResponse> call = request.getJSONKandang(iduser);
+        call.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+
+                JSONResponse jsonResponse = response.body();
+                kandangs = new ArrayList<>(Arrays.asList(jsonResponse.getKandang()));
+                adapter = new ViewPagerAdapter(getActivity(), kandangs);
+                viewPager.setAdapter(adapter);
+                dotscount = adapter.getCount();
+                dots = new ImageView[dotscount];
+
+                for(int i = 0; i < dotscount; i++){
+
+                    dots[i] = new ImageView(getActivity());
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                    params.setMargins(8, 0, 8, 0);
+
+                    sliderDotspanel.addView(dots[i], params);
+
+                }
+
+                dots[0].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
+
+                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+
+                        for(int i = 0; i< dotscount; i++){
+                            dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.inactive_dot));
+                        }
+
+                        dots[position].setImageDrawable(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.active_dot));
+
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+
+    }
+
+
 }

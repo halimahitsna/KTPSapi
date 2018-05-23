@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +59,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class MenuManajemen extends Fragment {
 
     Toolbar toolbar;
-    LinearLayout datasapi, jenis, indukan, tambahrfid;
+    RelativeLayout datasapi, jenis, indukan, tambahrfid;
     SharedPrefManager sharedPrefManager;
     public TextView nama, idusers, jmlsapi, jmljenis, jmlindukan;
     public ImageView image;
@@ -89,10 +90,10 @@ public class MenuManajemen extends Fragment {
         mContext = getContext();
         mApiService = UtilsApi.getAPIService();
         idusers = (TextView) view.findViewById(R.id.idu);
-        datasapi = (LinearLayout) view.findViewById(R.id.sapi);
-        jenis = (LinearLayout) view.findViewById(R.id.jenis);
-        indukan = (LinearLayout) view.findViewById(R.id.indukan);
-        tambahrfid= (LinearLayout)view.findViewById(R.id.rfid);
+        datasapi = (RelativeLayout) view.findViewById(R.id.sapi);
+        jenis = (RelativeLayout) view.findViewById(R.id.jenis);
+        indukan = (RelativeLayout) view.findViewById(R.id.indukan);
+        tambahrfid= (RelativeLayout) view.findViewById(R.id.rfid);
         jmlsapi = (TextView) view.findViewById(R.id.jumlah);
         jmljenis = (TextView) view.findViewById(R.id.jumlahjenis);
         jmlindukan = (TextView) view.findViewById(R.id.jumlahinduk);

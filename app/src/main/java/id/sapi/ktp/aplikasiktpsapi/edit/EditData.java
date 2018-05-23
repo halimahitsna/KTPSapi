@@ -250,13 +250,13 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
             @Override
             public void onClick(View view) {
                 if(imagePath!=null) {
-                    update();
-                    uploadImage();
+                    updateImage();
                 }else if(txtidSapi.getText().toString().isEmpty())
                     txtidSapi.setError("Id Sapi masih kosong!");
                 else {
                     update();
                 }
+
             }
         });
         add.setOnClickListener(new View.OnClickListener() {
@@ -324,6 +324,50 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
         onBackPressed();
+    }
+
+    private void updateImage() {
+        String id = txtidSapi.getText().toString().trim();
+        String bl = txtbobotlahir.getText().toString().trim();
+        String bhdp = txtbobothidup.getText().toString().trim();
+        String hr = txtharga.getText().toString().trim();
+        String umur = txtumur.getText().toString().trim();
+        String wr = txtwarna.getText().toString().trim();
+        String jkel = sjk.trim();
+        String jn = sjenis.trim();
+        String kd = skandang.trim();
+        String in = sindukan.trim();
+        String pkn = spakan.trim();
+        String pny = spakan.trim();
+        String tg = mDate.toString().trim();
+        String user = iduser.toString().trim();
+
+        //validate();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UtilsApi.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService api = retrofit.create(ApiService.class);
+        Call<Result> call = api.updateSapi(id, jn, kd, in, pkn, pny, jkel, tg, bl, bhdp, umur, wr, hr);
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                String value = response.body().getValue();
+                String message = response.body().getMessage();
+//                loading.dismiss();
+                if (value.equals("1")) {
+                    Toast.makeText(EditData.this, message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(EditData.this, message, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                // progress.dismiss();
+                Toast.makeText(EditData.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        uploadImage();
     }
 
     private void initSpinnerJenis() {
@@ -575,7 +619,7 @@ public class EditData extends AppCompatActivity implements DatePickerDialog.OnDa
             public void onFailure(Call<BaseResponse> call, Throwable t) {
             }
         });
-
+        onBackPressed();
     }
 
     @Override
