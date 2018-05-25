@@ -89,30 +89,10 @@ public class Laporan extends Fragment {
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-
         recyclerView.setLayoutManager(gridLayoutManager);
+
         tkoneksi = (TextView)view.findViewById(R.id.txtkoneksi);
         tkoneksi.setVisibility(View.INVISIBLE);
-
-        initialCount = LaporanDB.count(LaporanDB.class);
-
-        if (savedInstanceState != null)
-            modifyPos = savedInstanceState.getInt("modify");
-
-
-        if (initialCount >= 0) {
-
-            laporans = LaporanDB.listAll(LaporanDB.class);
-
-            adapter = new LaporanAdapter(getActivity(), laporans);
-            recyclerView.setAdapter(adapter);
-
-            if (laporans.isEmpty())
-                tkoneksi.setVisibility(View.VISIBLE);
-                tkoneksi.setText("Tidak ada data laporan");
-                Snackbar.make(recyclerView, "Tidak ada data laporan.", Snackbar.LENGTH_LONG).show();
-
-        }
 
         recyclerView.setLayoutManager(gridLayoutManager);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
@@ -126,11 +106,28 @@ public class Laporan extends Fragment {
             }
         });
 
+        initialCount = LaporanDB.count(LaporanDB.class);
+        if (savedInstanceState != null)
+            modifyPos = savedInstanceState.getInt("modify");
+        loadJSON();
     }
 
     public void loadJSON(){
         swipeRefreshLayout.setRefreshing(true);
-        swipeRefreshLayout.setRefreshing(false);
+
+        if (initialCount >= 0) {
+
+            laporans = LaporanDB.listAll(LaporanDB.class);
+            swipeRefreshLayout.setRefreshing(false);
+            adapter = new LaporanAdapter(getActivity(), laporans);
+            recyclerView.setAdapter(adapter);
+
+            if (laporans.isEmpty())
+                tkoneksi.setVisibility(View.VISIBLE);
+            tkoneksi.setText("Tidak ada data laporan");
+            Snackbar.make(recyclerView, "Tidak ada data laporan.", Snackbar.LENGTH_LONG).show();
+
+        }
 
     }
 

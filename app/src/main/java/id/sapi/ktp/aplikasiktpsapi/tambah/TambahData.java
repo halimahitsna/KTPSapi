@@ -87,7 +87,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
     //DatePicker tgl_lahir;
     Context mcontext;
     Retrofit apiService;
-    String iduser, sjenis, skandang, sindukan, spakan, spenyakit,sjk, imagePath;
+    String iduser, sjenis, skandang, sindukan, spakan, spenyakit,sjk, imagePath, tgl;
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
     private String mDate;
@@ -161,6 +161,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         initSpinnerPakan();
         initSpinnerPeny();
         final List<String> status = new ArrayList<String>();
+        status.add("- Pilih Jenis Kelamin -");
         status.add("Jantan");
         status.add("Betina");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status);
@@ -293,7 +294,7 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         String in = sindukan.trim();
         String pkn = spakan.trim();
         String pny = spakan.trim();
-        String tg = mDate.toString().trim();
+        String tg = tgl.trim();
         String user = iduser.toString().trim();
 
         //validate();
@@ -349,7 +350,10 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
                         objects.add(obj);
                     }
                    // sjenis = data1.get(0).getId_jenis();
+                    jenis.setPrompt("Jenis sapi");
                     jenis.setAdapter(new JenisSpinner(TambahData.this, objects));
+                    //jenis.setPromptId(5);
+                    //
                 } else {
                     Toast.makeText(TambahData.this, "Gagal mengambil data jenis", Toast.LENGTH_SHORT).show();
                 }
@@ -518,6 +522,8 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
         mYear = year;
         mDate = dayOfMonth + "/" + monthOfYear + "/" + year;
         txdate.setText(mDate);
+        tgl = year +"-"+monthOfYear+"-"+dayOfMonth;
+        Toast.makeText(TambahData.this, tgl, Toast.LENGTH_SHORT).show();
     }
 
     @Override

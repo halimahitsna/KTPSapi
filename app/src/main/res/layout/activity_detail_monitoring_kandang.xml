@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
-                        android:text="(17-27 PPm)"
+                        android:text="(0-25 PPm)"
                         android:textColor="@color/blue"
                         android:textSize="14sp"/>
             </LinearLayout>
