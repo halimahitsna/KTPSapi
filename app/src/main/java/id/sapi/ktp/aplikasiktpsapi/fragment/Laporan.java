@@ -112,6 +112,7 @@ public class Laporan extends Fragment {
     }
 
     public void loadJSON(){
+        initialCount = -1;
         swipeRefreshLayout.setRefreshing(true);
         initialCount = LaporanDB.count(LaporanDB.class);
         if (initialCount >= 0) {
