@@ -77,7 +77,6 @@ public class TambahData extends AppCompatActivity implements DatePickerDialog.On
 
     ActionBar actionBar;
     Toolbar toolbar;
-    ProgressDialog loading;
     Button btnsimpan;
     EditText txtidSapi, txtbobotlahir, txtbobothidup, txtumur, txtharga, txtwarna, tgllahir, txdate, txiduser;
     ImageView imdate;

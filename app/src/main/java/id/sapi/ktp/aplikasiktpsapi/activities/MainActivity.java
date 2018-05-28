@@ -156,13 +156,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nama = (TextView) header.findViewById(R.id.tvnama);
         image = (CircleImageView) header.findViewById(R.id.imageView);
         nmpeternakan = (TextView)header.findViewById(R.id.txpeternakan);
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Profile.class);
-                startActivity(intent);
-            }
-        });
 
         id_user.setText(sharedPrefManager.getSPId());
         UserDB userDB = new UserDB(id_user.getText().toString(), nama.getText().toString());
@@ -189,8 +182,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Fragment mFragment = new Profile();
-                        getSupportFragmentManager().beginTransaction().commit();
+                        Fragment fragment = new Profile();
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_frame, fragment);
+                        ft.commit();
+                        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
                     }
                 });
                 loadPeternakan();
@@ -269,7 +266,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Bundle bundle = new Bundle();
         switch (itemId) {
             case R.id.menu_utama:
+                bundle.putString("firebase", regId);
                 fragment = new Beranda();
+                fragment.setArguments(bundle);
                 break;
             case R.id.menu_manajemen:
                 bundle.putString("firebase", regId);
@@ -289,7 +288,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new MonitoringKandang();
                 break;
             case R.id.menu_jadwal:
+                bundle.putString("id_user", sharedPrefManager.getSPId().toString());
                 fragment = new JadwalMakan();
+                fragment.setArguments(bundle);
                 break;
             case R.id.menu_laporan:
                 fragment = new Laporan();

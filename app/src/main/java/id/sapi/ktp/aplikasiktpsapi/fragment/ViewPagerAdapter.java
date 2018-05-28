@@ -62,31 +62,34 @@ public class ViewPagerAdapter extends PagerAdapter  {
         tvKel = (TextView)view.findViewById(R.id.tvkelembapan);
         tvGas = (TextView)view.findViewById(R.id.tvgas);
         foto = (ImageView) view.findViewById(R.id.foto);
-        tvSuhu.setText(kandang.get(position).getSuhu());
-        tvKel.setText(kandang.get(position).getKelembapan());
-        tvGas.setText(kandang.get(position).getGas_amonia());
         asuhu = (ArcProgress) view.findViewById(R.id.suhu);
         asuhu.setTextSize(0);
         agas = (ArcProgress) view.findViewById(R.id.gas);
         akelembapan = (ArcProgress)view.findViewById(R.id.kelembapan);
         id.setText(kandang.get(position).getId_kandang());
         nama.setText(kandang.get(position).getKandang());
-        if(kandang.get(position).getSuhu() != null)
-
+        if(kandang.get(position).getSuhu() != null) {
             asuhu.setProgress((int) Double.parseDouble(kandang.get(position).getSuhu()));
-        else
+            tvSuhu.setText(kandang.get(position).getSuhu() +"\n   "+ (char) 0x00B0 +"C");
+        }else {
             asuhu.setProgress(0);
+            tvSuhu.setText("0" + (char) 0x00B0 + "C");
+        }
 
-        if(kandang.get(position).getGas_amonia() != null)
+        if(kandang.get(position).getGas_amonia() != null) {
             agas.setProgress((int) Double.parseDouble(kandang.get(position).getGas_amonia()));
-        else
+            tvGas.setText(kandang.get(position).getGas_amonia()+"\n PPm");
+        }else {
             agas.setProgress(0);
-
-        if(kandang.get(position).getKelembapan() != null)
+            tvGas.setText("0PPm");
+        }
+        if(kandang.get(position).getKelembapan() != null) {
             akelembapan.setProgress((int) Double.parseDouble(kandang.get(position).getKelembapan()));
-        else
+            tvKel.setText(kandang.get(position).getKelembapan() +"\n    %");
+        }else {
             akelembapan.setProgress(0);
-
+            tvKel.setText("0%");
+        }
         if(kandang.get(position).getFoto() != null) {
             Picasso.with(context).load(kandang.get(position).getFoto()).placeholder(R.drawable.load).into(foto);
         }else {

@@ -106,7 +106,6 @@ public class Laporan extends Fragment {
             }
         });
 
-        initialCount = LaporanDB.count(LaporanDB.class);
         if (savedInstanceState != null)
             modifyPos = savedInstanceState.getInt("modify");
         loadJSON();
@@ -114,7 +113,7 @@ public class Laporan extends Fragment {
 
     public void loadJSON(){
         swipeRefreshLayout.setRefreshing(true);
-
+        initialCount = LaporanDB.count(LaporanDB.class);
         if (initialCount >= 0) {
 
             laporans = LaporanDB.listAll(LaporanDB.class);
@@ -122,13 +121,12 @@ public class Laporan extends Fragment {
             adapter = new LaporanAdapter(getActivity(), laporans);
             recyclerView.setAdapter(adapter);
 
-            if (laporans.isEmpty())
+            if (laporans.isEmpty()){
                 tkoneksi.setVisibility(View.VISIBLE);
             tkoneksi.setText("Tidak ada data laporan");
             Snackbar.make(recyclerView, "Tidak ada data laporan.", Snackbar.LENGTH_LONG).show();
-
+            }
         }
-
     }
 
     @Override

@@ -72,6 +72,7 @@ public class JadwalMakan extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent edit = new Intent(getContext(), TambahJadwal.class);
+                edit.putExtra("id_user", iduser);
                 startActivity(edit);
             }
         });

@@ -10,157 +10,239 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:background="@color/background">
         <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtkoneksi"
-        android:text="koneksi"
-        android:textSize="@dimen/titlesize"
-        android:textColor="@color/alltext"
-        android:gravity="center"
-        android:layout_centerInParent="true"/>
-        <LinearLayout
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:background="@drawable/rounded1"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-        <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_date_range_black_24dp"/>
-        <TextView
-            android:id="@+id/tgl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" tanggal"
-            android:layout_weight="1"
+            android:id="@+id/txtkoneksi"
+            android:text="koneksi"
+            android:textSize="@dimen/titlesize"
             android:textColor="@color/alltext"
-            android:textSize="20sp"/>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/background" />
-        <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_access_time_black_24dp"/>
-        <TextView
-            android:id="@+id/wkt"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text=" waktu"
-            android:textColor="@color/alltext"
-            android:textSize="20sp"/>
-    </LinearLayout>
-        <android.support.v4.view.ViewPager
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/date"
-            android:id="@+id/viewPager"
+            android:gravity="center"
+            android:layout_centerInParent="true"/>
+        <FrameLayout
+            android:id="@+id/fr1"
             android:layout_width="match_parent"
-            android:layout_height="420dp"
-            android:layout_marginBottom="8dp"/>
-        <LinearLayout
-            android:layout_below="@id/viewPager"
-            android:id="@+id/SliderDots"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal" />
-        <View
-            android:layout_below="@id/SliderDots"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_gravity="center"
-            android:background="@color/textPutih" />
-        <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/SliderDots"
-            android:id="@+id/jadwal"
-            android:background="@drawable/rounded7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-            <ImageView
-                android:id="@+id/imgdate"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_date_range_black_24dp"/>
-            <TextView
-                android:id="@+id/juduljadwal"
-                android:layout_toRightOf="@+id/imgdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jadwal Pakan"
-                android:padding="5dp"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_below="@id/juduljadwal"
-                android:layout_toRightOf="@id/imgdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jadwal Pakan"
-                android:padding="5dp"
-                android:textSize="13dp"/>
-            <ImageView
-                android:id="@+id/jadwalopen"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
-        </RelativeLayout>
+            android:layout_height="250dp"
+            android:orientation="horizontal">
 
-        <RelativeLayout
+            <android.support.v4.view.ViewPager
+                android:layout_marginTop="10dp"
+                android:id="@+id/viewPagerinfo"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"/>
+            <ImageView
+                android:id="@+id/left_nav"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical|left"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+            <ImageView
+                android:id="@+id/right_nav"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical|right"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            <LinearLayout
+                android:id="@+id/SliderDotsinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|bottom"
+                android:orientation="horizontal" />
+        </FrameLayout>
+        <FrameLayout
             android:layout_marginTop="10dp"
-            android:layout_below="@id/jadwal"
-            android:id="@+id/laporan"
-            android:background="@drawable/rounded6"
+            android:id="@+id/fr2"
+            android:layout_below="@id/fr1"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@drawable/rounded1"
+            android:orientation="horizontal">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPagerkandang"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"/>
+            <LinearLayout
+                android:id="@+id/SliderDots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal|bottom"
+                android:orientation="horizontal" />
+        </FrameLayout>
+        <LinearLayout
+            android:layout_below="@id/fr2"
+            android:id="@+id/linear3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-            <ImageView
-                android:id="@+id/imglap"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_assessment_black_24dp"/>
-            <TextView
-                android:id="@+id/judullap"
-                android:layout_toRightOf="@+id/imglap"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/sapi"
+                android:layout_weight="1"
+                android:background="@drawable/rounded2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Laporan"
-                android:padding="5dp"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_below="@id/judullap"
-                android:layout_toRightOf="@id/imglap"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <ImageView
+                    android:id="@+id/imgsapi"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_folder_black_24dp"/>
+                <TextView
+                    android:id="@+id/judulsapi"
+                    android:layout_below="@+id/imgsapi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="Data Sapi"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_below="@id/judulsapi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah Sapi"
+                    android:textSize="11dp"/>
+                <ImageView
+                    android:id="@+id/sapiopen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/SliderDots"
+                android:layout_toRightOf="@id/sapi"
+                android:id="@+id/kandang"
+                android:layout_weight="1"
+                android:background="@drawable/rounded3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jadwal Pakan"
-                android:padding="5dp"
-                android:textSize="13dp"/>
-            <ImageView
-                android:id="@+id/laporanopen"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <ImageView
+                    android:id="@+id/imgkdg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_business_black_24dp"/>
+                <TextView
+                    android:id="@+id/judulkdg"
+                    android:layout_below="@+id/imgkdg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Kandang"
+                    android:paddingTop="10dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_below="@id/judulkdg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah kandang"
+                    android:textSize="11dp"/>
+                <ImageView
+                    android:id="@+id/kdgopen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@id/linear3"
+            android:id="@+id/linear4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/jdwl"
+                android:layout_weight="1"
+                android:background="@drawable/rounded4"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <ImageView
+                    android:id="@+id/imgjdwl"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_date_range_black_24dp"/>
+                <TextView
+                    android:id="@+id/juduljdwl"
+                    android:layout_below="@+id/imgjdwl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="Jadwal Pakan"
+                    android:fontFamily="@font/proximabold"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_below="@id/juduljdwl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah Jadwal"
+                    android:textSize="11dp"/>
+                <ImageView
+                    android:id="@+id/jdwlopen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@id/SliderDots"
+                android:layout_toRightOf="@id/sapi"
+                android:id="@+id/lap"
+                android:layout_weight="1"
+                android:background="@drawable/rounded5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <ImageView
+                    android:id="@+id/imglap"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_assessment_black_24dp"/>
+                <TextView
+                    android:id="@+id/judullap"
+                    android:layout_below="@+id/imglap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Laporan"
+                    android:paddingTop="10dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_below="@id/judullap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah Laporan"
+                    android:textSize="11dp"/>
+                <ImageView
+                    android:id="@+id/lapopen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
         <TextView
         android:id="@+id/txt_push_message"
         android:layout_width="wrap_content"

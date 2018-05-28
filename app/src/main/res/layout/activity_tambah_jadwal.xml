@@ -15,6 +15,13 @@
         app:contentInsetStart="16dp"
         app:titleTextColor="@color/alltext"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/alltext"
+            android:textSize="@dimen/titlesize"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
     </android.support.v7.widget.Toolbar>
     <ScrollView
         android:layout_below="@id/toolbar"
@@ -38,12 +45,14 @@
             <Spinner
                 android:layout_below="@id/reminder_title"
                 android:id="@+id/kandang"
+                style="@style/Widget.AppCompat.Spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="id Jenis"
                 android:layout_margin="10dp"
                 android:textSize="16sp"
-                android:background="@drawable/rounded_view"
+                android:prompt="@string/app_name"
+                android:background="@drawable/rounded_dropdown"
                 android:textColor="@color/alltext"/>
             <Spinner
                 android:layout_below="@id/kandang"
@@ -53,7 +62,7 @@
                 android:hint="id Jenis"
                 android:layout_margin="10dp"
                 android:textSize="16sp"
-                android:background="@drawable/rounded_view"
+                android:background="@drawable/rounded_dropdown"
                 android:textColor="@color/alltext"/>
             <Spinner
                 android:layout_below="@id/sapi"
@@ -63,7 +72,7 @@
                 android:hint="id Jenis"
                 android:layout_margin="10dp"
                 android:textSize="16sp"
-                android:background="@drawable/rounded_view"
+                android:background="@drawable/rounded_dropdown"
                 android:textColor="@color/alltext"/>
             <EditText
                 android:layout_below="@id/pakan"
@@ -93,11 +102,11 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
                 <ImageView
-                    android:layout_gravity="center"
+                    android:layout_gravity="right|center_vertical"
                     android:layout_width="match_parent"
                     android:id="@+id/set_date"
                     android:onClick="setDate"
-                    android:layout_weight="4"
+                    android:layout_weight="6"
                     android:src="@drawable/ic_date_range_black_24dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -117,11 +126,11 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
                 <ImageView
-                    android:layout_gravity="center"
+                    android:layout_gravity="right|center_vertical"
                     android:layout_width="match_parent"
                     android:id="@+id/set_time"
                     android:onClick="setTime"
-                    android:layout_weight="4"
+                    android:layout_weight="6"
                     android:src="@drawable/ic_access_time_black_24dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

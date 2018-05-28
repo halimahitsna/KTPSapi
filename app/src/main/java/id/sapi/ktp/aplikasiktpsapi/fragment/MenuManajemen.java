@@ -97,7 +97,7 @@ public class MenuManajemen extends Fragment {
         jmlsapi = (TextView) view.findViewById(R.id.jumlah);
         jmljenis = (TextView) view.findViewById(R.id.jumlahjenis);
         jmlindukan = (TextView) view.findViewById(R.id.jumlahinduk);
-        Snackbar.make(getView(), "" + getArguments().getString("firebase"), Toast.LENGTH_SHORT).show();
+//        Snackbar.make(getView(), "" + getArguments().getString("firebase"), Toast.LENGTH_SHORT).show();
 
         sharedPrefManager = new SharedPrefManager(getActivity());
         iduser = sharedPrefManager.getSPId();
@@ -150,7 +150,7 @@ public class MenuManajemen extends Fragment {
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 JSONResponse jsonResponse = response.body();
                 data1 = new ArrayList<>(Arrays.asList(jsonResponse.getData()));
-                jmlsapi.setText("Jumlah Sapi : " +data1.size());
+                jmlsapi.setText("Jumlah Sapi " +data1.size());
             }
 
             @Override
@@ -172,7 +172,7 @@ public class MenuManajemen extends Fragment {
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 JSONResponse jsonResponse = response.body();
                 data2 = new ArrayList<>(Arrays.asList(jsonResponse.getJenis()));
-                jmljenis.setText("Jumlah Jenis : " +data2.size());
+                jmljenis.setText("Jumlah Jenis " +data2.size());
             }
 
             @Override
@@ -193,7 +193,7 @@ public class MenuManajemen extends Fragment {
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
                 JSONResponse jsonResponse = response.body();
                 data3 = new ArrayList<>(Arrays.asList(jsonResponse.getIndukan()));
-                jmlindukan.setText("Jumlah Indukan : " +data3.size());
+                jmlindukan.setText("Jumlah Indukan " +data3.size());
             }
 
             @Override

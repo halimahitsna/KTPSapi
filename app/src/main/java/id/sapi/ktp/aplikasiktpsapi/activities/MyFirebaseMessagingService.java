@@ -1,63 +1,7 @@
 
 package id.sapi.ktp.aplikasiktpsapi.activities;
 
-/*import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.widget.RemoteViews;
-
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Map;
-
-import id.sapi.ktp.aplikasiktpsapi.R;
-
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    public static final String FCM_PARAM = "picture";
-    private static final String CHANNEL_NAME = "FCM";
-    private static final String CHANNEL_DESC = "Firebase Cloud Messaging";
-    private int numMessages = 0;
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        super.onMessageReceived(remoteMessage);
-        RemoteMessage.Notification notification = remoteMessage.getNotification();
-        Map<String, String> data = remoteMessage.getData();
-        Log.d("FROM", remoteMessage.getFrom());
-        sendNotification(notification, data);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void sendNotification(RemoteMessage.Notification notification, Map<String, String> data) {
-        Bundle bundle = new Bundle();
-        bundle.putString(FCM_PARAM, data.get(FCM_PARAM));
-
-        */
-/*Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtras(bundle);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
+/*NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
                 .setContentTitle(notification.getTitle())
                 .setContentText(notification.getBody())
                 .setAutoCancel(true)
@@ -176,6 +120,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String CHANNEL_NAME = "FCM";
     private static final String CHANNEL_DESC = "Firebase Cloud Messaging";
     private int numMessages = 0;
+    private static final String TAG = "MyFirebaseMsgingService";
+    private static final String TITLE = "title";
+    private static final String EMPTY = "";
+    private static final String MESSAGE = "message";
+    private static final String IMAGE = "image";
+    private static final String ACTION = "action";
+    private static final String DATA = "data";
+    private static final String ACTION_DESTINATION = "action_destination";
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -184,7 +136,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         Map<String, String> data = remoteMessage.getData();
+        //tambahan
+        String title = data.get(TITLE);
+        String message = data.get(MESSAGE);
+        String subtitle = data.get("subtitle");
+        String action = data.get(ACTION);
+        String actionDestination = data.get(ACTION_DESTINATION);
         Log.d("FROM", remoteMessage.getFrom());
+        //
         sendNotification(notification, data);
     }
 
@@ -201,7 +160,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getString(R.string.notification_channel_id))
                 .setContentTitle(notification.getTitle())
-                .setContentText(notification.getBody())
+                .setContentText(data.get("dudu"))
                 .setAutoCancel(true)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 //.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.win))

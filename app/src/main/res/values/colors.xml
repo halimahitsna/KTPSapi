@@ -16,11 +16,11 @@
     <color name="button">#27AC5E</color>
     <color name="transparent">#00000000</color>
 
-    <color name="Card1">#36D7B7</color>
-    <color name="Card2">#03C9A9</color>
-    <color name="Card3">#1BBC9B</color>
-    <color name="Card4">#16A085</color>
-    <color name="Card5">#019875</color>
+    <color name="Card1">#05c46b</color>
+    <color name="Card2">#00d8d6</color>
+    <color name="Card3">#ff5e57</color>
+    <color name="Card4">#ffc048</color>
+    <color name="Card5">#d2dae2</color>
 
     <integer-array name="cardColors">
         <item>@color/Card1</item>
