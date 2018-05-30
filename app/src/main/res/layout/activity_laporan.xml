@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
     android:background="@color/background"
     android:id="@+id/navigation_drawer_layout"
     tools:context="id.sapi.ktp.aplikasiktpsapi.fragment.Laporan">

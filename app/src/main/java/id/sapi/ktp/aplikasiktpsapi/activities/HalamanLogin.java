@@ -40,23 +40,35 @@ public class HalamanLogin extends AppCompatActivity {
     ProgressDialog loading;
     AVLoadingIndicatorView circleload;
     Context mContext;
-    private SharedPreferences pref;
     private static final int REQ_CODE = 9001;
     Toolbar toolbar;
     TextView textToolbar;
     SharedPrefManager sharedPrefManager;
     ApiService mApiService;
+    public int log;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halaman_login);
 
+        if(getIntent().hasExtra("berhasil")){
+            log = getIntent().getIntExtra("berhasil",0);
+        }
         mContext = this;
         mApiService = UtilsApi.getAPIService();
         sharedPrefManager = new SharedPrefManager(this);
-
+        if(sharedPrefManager.getSPSudahLogin() == true){
+            startActivity(new Intent(mContext, MainActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
+        }else if(log != 1){
+            startActivity(new Intent(mContext, SplashScreen.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
+        }
         textToolbar = (TextView)findViewById(R.id.toolbar_title);
+
 
         loading = new ProgressDialog(this, R.style.AppTheme);
         DoubleBounce doubleBounce = new DoubleBounce();

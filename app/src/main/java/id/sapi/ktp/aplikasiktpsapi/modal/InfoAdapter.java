@@ -14,7 +14,7 @@ public class InfoAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer [] images = {R.drawable.ktp_sapi, R.drawable.infosapi,R.drawable.ktp_sapi, R.drawable.infosapi};
+    private Integer [] images = {R.drawable.ktp_sapi, R.drawable.infosapi,R.drawable.ktp_sapi};
 
     public InfoAdapter(Context context) {
         this.context = context;

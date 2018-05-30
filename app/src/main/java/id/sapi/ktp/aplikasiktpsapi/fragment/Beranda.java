@@ -69,6 +69,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -87,6 +89,8 @@ public class Beranda extends Fragment {
     AVLoadingIndicatorView circleload;
     ImageView navleft, navright;
     RelativeLayout Rsapi, Rkandang, Rjadwal, Rlap;
+    InfoAdapter adapter2;
+    int currentPage;
 
     @Nullable
     @Override
@@ -185,7 +189,7 @@ public class Beranda extends Fragment {
         });
 
         //infoSlide
-        InfoAdapter adapter2 = new InfoAdapter(getActivity());
+        adapter2 = new InfoAdapter(getActivity());
         viewPagerInfo.setAdapter(adapter2);
 
         //DotsInfo
@@ -240,6 +244,7 @@ public class Beranda extends Fragment {
         autoScroll();
     }
 
+
     public void autoScroll(){
         final int speedScroll = 4000;
         final Handler handler = new Handler();
@@ -268,10 +273,31 @@ public class Beranda extends Fragment {
                         Log.d("Error", t.getMessage());
                     }
                 });
+
                 handler.postDelayed(this, speedScroll);
             }
         };
+
         handler.postDelayed(runnable,speedScroll);
+
+        /*final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == adapter2.getCount()) {
+                    currentPage = 0;
+                    //viewPagerInfo.setCurrentItem(currentPage, true);
+                }
+                viewPagerInfo.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        Timer timer = new Timer(); // This will create a new Thread
+        timer .schedule(new TimerTask() { // task to be scheduled
+
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 5000, 5000);*/
     }
 
     private void loadJSON() {

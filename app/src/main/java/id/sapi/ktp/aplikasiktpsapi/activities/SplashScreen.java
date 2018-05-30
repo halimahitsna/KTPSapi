@@ -26,6 +26,7 @@ public class SplashScreen extends AwesomeSplash{
     @Override
     public void animationsFinished() {
         Intent intent = new Intent(getApplicationContext(),HalamanLogin.class);
+        intent.putExtra("berhasil",1);
         startActivity(intent);
         finish();
     }
