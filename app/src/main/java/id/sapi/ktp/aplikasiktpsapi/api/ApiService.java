@@ -259,4 +259,7 @@ public interface ApiService {
     Call<Result> updateToken(@Field("device_id") String device_id,
                              @Field("id_user") String id_user);
 
+    @GET("spinner.php")
+    Call<JSONResponse> getRFID(@Query("id_user") String id_user);
+
 }
